@@ -1,0 +1,32 @@
+[
+    {
+      "HospitalName": "KBC Zagreb",
+      "Street": "Kišpatićeva 12",
+      "City": "Zagreb",
+      "Country": "Croatia"
+    },
+    {
+      "HospitalName": "KBC Rijeka",
+      "Street": "Krešimirova 42",
+      "City": "Rijeka",
+      "Country": "Croatia"
+    },
+    {
+      "HospitalName": "KBC Split",
+      "Street": "Spinčićeva 1",
+      "City": "Split",
+      "Country": "Croatia"
+    },
+    {
+      "HospitalName": "KBC Sestre Milosrdnice",
+      "Street": "Vinogradska cesta 29",
+      "City": "Zagreb",
+      "Country": "Croatia"
+    },
+    {
+      "HospitalName": "KB Merkur",
+      "Street": "Zajčeva 19",
+      "City": "Zagreb",
+      "Country": "Croatia"
+    }
+  ]
