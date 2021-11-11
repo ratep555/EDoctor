@@ -23,6 +23,7 @@ namespace Core.Entities
         public ICollection<Office> Offices { get; set; }
         public ICollection<Rating> Ratings { get; set; }       
         public ICollection<DoctorSpecialty> DoctorSpecialties { get; set; }
+        public ICollection<DoctorHospital> DoctorHospitals { get; set; }
   
     }
 }

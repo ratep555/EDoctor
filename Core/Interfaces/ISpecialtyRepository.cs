@@ -7,6 +7,8 @@ namespace Core.Interfaces
 {
     public interface ISpecialtyRepository
     {
-        Task<List<Specialty>> GetSpecialties();
+        Task<List<Specialty>> GetAllSpecialties();
+        Task<List<Specialty>> GetSpecialtiesAttributedToDoctors();
+
     }
 }

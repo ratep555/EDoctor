@@ -47,6 +47,9 @@ namespace Infrastructure.Data
 
             modelBuilder.Entity<DoctorSpecialty>()
                 .HasKey(x => new { x.DoctorId, x.SpecialtyId }); 
+
+            modelBuilder.Entity<DoctorHospital>()
+                .HasKey(x => new { x.DoctorId, x.HospitalId }); 
         }
 
         public DbSet<Appointment> Appointments { get; set; }

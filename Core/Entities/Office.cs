@@ -10,9 +10,9 @@ namespace Core.Entities
         [ForeignKey("DoctorId")]
         public Doctor Doctor { get; set; }
 
-        public int? DoctorHospitalId { get; set; }
-        [ForeignKey("DoctorHospitalId")]
-        public DoctorHospital DoctorHospitals { get; set; }
+        public int? HospitalId { get; set; }
+        [ForeignKey("HospitalId")]
+        public Hospital Hospitals { get; set; }
         
         public decimal InitialExaminationFee { get; set; }
         public decimal FollowUpExaminationFee { get; set; }

@@ -29,5 +29,9 @@ namespace Core.Dtos
 
 
         public List<int> SpecialtiesIds { get; set; }
+        public List<int> HospitalsIds { get; set; }
     }
 }
+
+
+

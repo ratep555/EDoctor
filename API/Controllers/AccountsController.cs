@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using API.ErrorHandling;
 using AutoMapper;
 using Core.Dtos;
 using Core.Entities;
@@ -63,8 +64,8 @@ namespace API.Controllers
                 UserId = user.Id            };
         }
 
-        [HttpPost("createdoctor")]
-        public async Task<ActionResult<UserDto>> RegisterDoctor2(DoctorCreateDto doctorCreateDto)
+        [HttpPost("registerdoctor")]
+        public async Task<ActionResult<UserDto>> RegisterDoctor(DoctorCreateDto doctorCreateDto)
         {
             if (await UserExists(doctorCreateDto.Username)) return BadRequest("Username is taken");
 
@@ -86,6 +87,32 @@ namespace API.Controllers
 
            return NoContent();
         }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        {          
+            var user = await _userManager.Users
+                .FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+
+            if (user == null) return BadRequest("Invalid request");
+
+            var result = await _signInManager
+                .CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            if (!result.Succeeded) return Unauthorized(new ServerResponse(401));
+
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = await _tokenService.CreateToken(user),
+                Email = user.Email,
+                RoleName = await _userRepository.GetRoleName(user.Id),
+                UserId = user.Id
+            };
+        }
+
+
+
 
     
 

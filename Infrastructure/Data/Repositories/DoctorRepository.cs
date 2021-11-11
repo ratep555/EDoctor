@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repositories
 {
@@ -24,5 +26,21 @@ namespace Infrastructure.Data.Repositories
             _context.Doctors.Add(doctor);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Doctor> FindDoctorByUserId(int userId)
+        {
+            return await _context.Doctors.Where(x => x.ApplicationUserId == userId)
+                         .FirstOrDefaultAsync();
+        }
+
     }
 }
+
+
+
+
+
+
+
+
+

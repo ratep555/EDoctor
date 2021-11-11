@@ -10,7 +10,7 @@ namespace Core.Entities
         [ForeignKey("PatientId")]
         public Patient Patient { get; set; } 
 
-        public int Office1d { get; set; }     
+        public int OfficeId { get; set; }     
         [ForeignKey("OfficeId")]
         public Office Office { get; set; }     
 

@@ -1,0 +1,52 @@
+.navbar {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 20px;
+  }
+  
+  .navbar .active {
+    color: white;
+  }
+  
+  .navbar-brand {
+    font-size: 27px;
+  }
+  
+  .nav-link {
+    margin-left: 10px;
+  }
+
+  .dropdown-menu {
+    background-color: #338DFF;
+  }
+  
+  .navbar > a {
+    cursor: pointer;
+  }
+
+  
+  .dropdown-menu > a:hover{
+    background-color: #337DFF;
+    cursor: pointer;
+  }
+  
+  .dropdown > a:hover{
+    text-decoration: none;
+  }
+  
+  .dropdown-item {
+    color: white;
+  }
+
+  .pero {
+    cursor: pointer;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  

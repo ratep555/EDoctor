@@ -103,10 +103,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("EndDateAndTimeOfAppointment")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Office1d")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OfficeId")
+                    b.Property<int>("OfficeId")
                         .HasColumnType("int");
 
                     b.Property<int?>("PatientId")
@@ -161,20 +158,13 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.DoctorHospital", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
                     b.Property<int>("HospitalId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
+                    b.HasKey("DoctorId", "HospitalId");
 
                     b.HasIndex("HospitalId");
 
@@ -313,14 +303,14 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DoctorHospitalId")
-                        .HasColumnType("int");
-
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("FollowUpExaminationFee")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("HospitalId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("InitialExaminationFee")
                         .HasColumnType("decimal(18,2)");
@@ -333,9 +323,9 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorHospitalId");
-
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("HospitalId");
 
                     b.ToTable("Offices");
                 });
@@ -493,7 +483,9 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.HasOne("Core.Entities.Office", "Office")
                         .WithMany("Appointments")
-                        .HasForeignKey("OfficeId");
+                        .HasForeignKey("OfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Core.Entities.Patient", "Patient")
                         .WithMany("Appointments")
@@ -518,13 +510,13 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Core.Entities.DoctorHospital", b =>
                 {
                     b.HasOne("Core.Entities.Doctor", "Doctor")
-                        .WithMany()
+                        .WithMany("DoctorHospitals")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Entities.Hospital", "Hospital")
-                        .WithMany()
+                        .WithMany("DoctorHospitals")
                         .HasForeignKey("HospitalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -597,19 +589,19 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Office", b =>
                 {
-                    b.HasOne("Core.Entities.DoctorHospital", "DoctorHospitals")
-                        .WithMany()
-                        .HasForeignKey("DoctorHospitalId");
-
                     b.HasOne("Core.Entities.Doctor", "Doctor")
                         .WithMany("Offices")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Entities.Hospital", "Hospitals")
+                        .WithMany()
+                        .HasForeignKey("HospitalId");
+
                     b.Navigation("Doctor");
 
-                    b.Navigation("DoctorHospitals");
+                    b.Navigation("Hospitals");
                 });
 
             modelBuilder.Entity("Core.Entities.Patient", b =>
@@ -685,11 +677,18 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Doctor", b =>
                 {
+                    b.Navigation("DoctorHospitals");
+
                     b.Navigation("DoctorSpecialties");
 
                     b.Navigation("Offices");
 
                     b.Navigation("Ratings");
+                });
+
+            modelBuilder.Entity("Core.Entities.Hospital", b =>
+                {
+                    b.Navigation("DoctorHospitals");
                 });
 
             modelBuilder.Entity("Core.Entities.Identity.ApplicationRole", b =>
