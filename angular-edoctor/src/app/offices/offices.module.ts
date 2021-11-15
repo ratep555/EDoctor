@@ -6,7 +6,7 @@ import { OfficesRoutingModule } from './offices-routing.module';
 import { OfficesListDoctorComponent } from './offices-list-doctor/offices-list-doctor.component';
 import { EditOfficeDoctorComponent } from './edit-office-doctor/edit-office-doctor.component';
 import { OfficesComponent } from './offices.component';
-
+import { InfoOfficeComponent } from './info-office/info-office.component';
 
 
 @NgModule({
@@ -14,7 +14,8 @@ import { OfficesComponent } from './offices.component';
     AddOfficeDoctorComponent,
     OfficesListDoctorComponent,
     EditOfficeDoctorComponent,
-    OfficesComponent
+    OfficesComponent,
+    InfoOfficeComponent
   ],
   imports: [
     CommonModule,

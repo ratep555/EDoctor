@@ -61,13 +61,14 @@
           <td>{{item.city}}</td>
           <td>{{item.country}}</td>
             <td>{{item.street}}</td>
-            <td>  <a class="done" href="" routerLink="/patient-offices/doctor/{{item.doctorId}}" >{{item.doctor}}</a>  
+            <td>  <a class="done" href="" routerLink="/doctors/infodoctor/{{item.doctorId}}" >
+              {{item.doctor}}</a>  
             </td>
             <td>{{item.initialExaminationFee | number: '1.2-2'}} kn</td>
             <td>{{item.followUpExaminationFee | number: '1.2-2'}} kn</td>
             <td>  
               <div class="text-center">
-                <button routerLink="/patient-offices/office/{{item.id}}" 
+                <button routerLink="/offices/infooffice/{{item.id}}" 
                 type="button" class="btn btn-info mr-3">
                 <i class="fa fa-info-circle mr-1"></i>
                 Office Info</button>

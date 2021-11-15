@@ -12,21 +12,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav" id="navbarSupportedContent" [collapse]="isCollapsed">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link text-uppercase" routerLink="/felipe" routerLinkActive="active" >Felipe</a> 
-        </li> 
-        <li class="nav-item">
-          <a class="nav-link text-uppercase" routerLink="/visitors/felipe1" routerLinkActive="active" >Felipe1</a> 
-        </li> 
 <!--   ovo možeš koristiti  <ng-container *ngIf="(currentUser$ | async) && (currentUser$ | async)?.roleName ==='Admin'">
  -->
+         <li class="nav-item">
+         <a class="nav-link text-uppercase" routerLink="/doctors" routerLinkActive="active">Doctors</a> 
+         </li>    
           <li  class="nav-item">
             <a class="nav-link text-uppercase" routerLink="/offices" routerLinkActive="active">Offices</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-uppercase" routerLink="/visitors/alldoctors" routerLinkActive="active" >Doctors</a> 
-          </li> 
-        
+          </li>   
         <li class="nav-item">
           <a class="nav-link text-uppercase"  routerLink="/appointments" routerLinkActive="active">Appointments</a>  
         </li>  
@@ -36,10 +29,8 @@
           <div class="dropdown-menu" *dropdownMenu>    
               <a routerLink="/account/register-doctor" class="dropdown-item">
                 <i class="fa fa-sign-out mr-3"></i> Register Doctor</a>
-              <a routerLink="/myprofile" class="dropdown-item">
+              <a routerLink="/doctors/infodoctormyprofile" class="dropdown-item">
                 <i class="fa fa-sign-out mr-3"></i> My Profile</a>
-              <a routerLink="/myprofile/edit" class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i> Edit Profile</a>
               <a routerLink="/offices/officeslistdoctor" class="dropdown-item">
                 <i class="fa fa-sign-out mr-3"></i>My Offices</a>
               <a routerLink="/appointments/appointmentslistdoctor" class="dropdown-item">
@@ -61,7 +52,7 @@
                 <i class="fa fa-sign-out mr-3"></i> Offices</a>
               <a routerLink="/patient-offices/test" class="dropdown-item">
                 <i class="fa fa-sign-out mr-3"></i> Offices/Test</a>
-              <a routerLink="/patient-appointments" class="dropdown-item">
+              <a routerLink="/appointments/appointmentslistpatient" class="dropdown-item">
                 <i class="fa fa-sign-out mr-3"></i>My Appointments</a>
                 <a routerLink="/medicalrecords/patientrecords" class="dropdown-item">
                   <i class="fa fa-sign-out mr-3"></i> My Medical Records</a>

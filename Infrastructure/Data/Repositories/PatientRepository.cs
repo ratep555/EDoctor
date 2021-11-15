@@ -25,6 +25,13 @@ namespace Infrastructure.Data.Repositories
                          .FirstOrDefaultAsync();
         }
 
+        public async Task<Patient> FindPatientById(int id)
+        {
+            return await _context.Patients.Include(x => x.ApplicationUser)
+                         .Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
+
+
         public async Task CreatePatient(int userId, string lastname, string firstname, DateTime dateOfBirth)
         {
             var patient = new Patient();

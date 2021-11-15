@@ -35,11 +35,6 @@ namespace Infrastructure.Data
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction); 
 
-            modelBuilder.Entity<MedicalRecord>()
-                .HasOne(s => s.Office)
-                .WithMany()
-                .OnDelete(DeleteBehavior.NoAction);   
-
             modelBuilder.Entity<Rating>()
                 .HasOne(s => s.Patient)
                 .WithMany()

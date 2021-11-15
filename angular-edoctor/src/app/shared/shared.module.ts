@@ -13,9 +13,12 @@ import { DateInputComponent } from './components/date-input/date-input.component
 import { MultipleSelectorComponent } from './components/multiple-selector/multiple-selector.component';
 import { LeafletModule} from '@asymmetrik/ngx-leaflet';
 import { MapComponent } from './components/map/map.component';
+import 'leaflet/dist/images/marker-shadow.png';
 import 'leaflet/dist/images/marker-icon-2x.png';
 import { PagerComponent } from './components/pager/pager.component';
 import { HasRoleDirective } from './directives/has-role.directive';
+import { ImgInputComponent } from './components/img-input/img-input.component';
+import { RatingComponent } from './components/rating/rating.component';
 
 
 @NgModule({
@@ -25,7 +28,9 @@ import { HasRoleDirective } from './directives/has-role.directive';
     MultipleSelectorComponent,
     MapComponent,
     PagerComponent,
-    HasRoleDirective
+    HasRoleDirective,
+    ImgInputComponent,
+    RatingComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +40,8 @@ import { HasRoleDirective } from './directives/has-role.directive';
     CollapseModule.forRoot(),
     BsDatepickerModule.forRoot(),
     LeafletModule,
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    TabsModule.forRoot(),
   ],
   exports: [
     BsDropdownModule,
@@ -45,11 +51,15 @@ import { HasRoleDirective } from './directives/has-role.directive';
     DateInputComponent,
     MultipleSelectorComponent,
     LeafletModule,
+    TabsModule,
     BsDatepickerModule,
     PaginationModule,
     PagerComponent,
     MapComponent,
-  HasRoleDirective  ]
+    HasRoleDirective,
+    ImgInputComponent,
+    RatingComponent
+  ]
 
 })
 export class SharedModule { }

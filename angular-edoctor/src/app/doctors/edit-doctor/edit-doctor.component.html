@@ -1,0 +1,52 @@
+<div class="container-fluid" style="margin-top: 200px; margin-bottom: 100px;">   
+    <div class="d-flex justify-content-center mt-5">
+        <div class="col-7">
+            <form [formGroup]='registerForm' (ngSubmit)="registerForm.valid && onSubmit()">
+                <h2 class="text-center text-primary">Edit Profile</h2>
+                <hr>    
+                 <input formControlName="id" id="id" class="form-control" hidden>
+                 <input formControlName="applicationUserId" class="form-control" hidden>
+ 
+                 <app-text-input [formControl]='registerForm.controls["name"]' 
+                 [label]='"Name"'></app-text-input>      
+                           
+                <app-img-input
+                [urlCurrentImage]="model?.picture"
+                (onImageSelected)="onImageSelected($event)">
+                
+                </app-img-input>                                
+                    <h4>Select Specialty(ies)</h4>
+                    <app-multiple-selector *ngIf="nonSelectedSpecialties"
+                      [NonSelectedItems]="nonSelectedSpecialties"
+                      [SelectedItems]="selectedSpecialties"
+                    ></app-multiple-selector>
+                    <hr>
+
+                    <h4>Select Hospital(s)</h4>
+                    <app-multiple-selector *ngIf="nonSelectedHospitals"
+                      [NonSelectedItems]="nonSelectedHospitals"
+                      [SelectedItems]="selectedHospitals"
+                    ></app-multiple-selector>                  
+                                         
+                    <h4>Resume</h4>
+                  
+                        <div class="form-group row">
+                        <div class="col-md-12">  
+                            <textarea type="text"
+                            placeholder="Resume"
+                            class="form-control"
+                            formControlName="resume"
+                            cols="30"
+                                rows="20"></textarea>
+                         </div>    
+                     </div>  
+
+            
+                <div class="form-group text-center">
+                    <button [disabled]='!registerForm.valid' class="btn btn-success mr-2" type="submit">Edit</button>
+                </div>
+            </form>
+            </div>
+            </div>
+            </div>
+

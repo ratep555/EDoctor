@@ -5,23 +5,9 @@ export interface Appointment {
     doctorId: number;
     officeId: number;
     patient: string;
+    country: string;
     officeAddress: string;
     city: string;
-    startDateAndTimeOfAppointment: Date;
-    endDateAndTimeOfAppointment: Date;
-    status: boolean;
-    remarks: string;
-}
-
-export interface AppointmentSingle {
-    id: number;
-    doctor: string;
-    patient: string;
-    patientId: number;
-    officeId: number;
-    office: string;
-    city: string;
-    country: string;
     startDateAndTimeOfAppointment: Date;
     endDateAndTimeOfAppointment: Date;
     status: boolean;

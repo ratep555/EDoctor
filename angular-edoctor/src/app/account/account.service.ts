@@ -59,7 +59,6 @@ export class AccountService {
     return this.http.get<Hospital[]>(this.baseUrl + 'hospitals');
   }
 
-
   setCurrentUser(user: User) {
     user.roles = [];
     const roles = this.getDecodedToken(user.token).role;

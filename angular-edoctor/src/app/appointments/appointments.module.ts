@@ -7,6 +7,8 @@ import { SharedModule } from '../shared/shared.module';
 import { AppointmentsRoutingModule } from './appointments-routing.module';
 import { AppointmentsListPatientComponent } from './appointments-list-patient/appointments-list-patient.component';
 import { AppointmentsComponent } from './appointments.component';
+import { BookAppointmentPatientComponent } from './book-appointment-patient/book-appointment-patient.component';
+import { ConfirmAppointmentDoctorComponent } from './confirm-appointment-doctor/confirm-appointment-doctor.component';
 
 
 
@@ -16,7 +18,9 @@ import { AppointmentsComponent } from './appointments.component';
     EditAppointmentDoctorComponent,
     AppointmentsListDoctorComponent,
     AppointmentsListPatientComponent,
-    AppointmentsComponent
+    AppointmentsComponent,
+    BookAppointmentPatientComponent,
+    ConfirmAppointmentDoctorComponent
   ],
   imports: [
     CommonModule,

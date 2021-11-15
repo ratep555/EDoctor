@@ -64,12 +64,12 @@
             <td>  
               <div class="text-center">
                 <ng-container *appHasRole='["Patient"]'>
-                    <button routerLink="/patient-appointments/editappointment/{{item.id}}" 
+                    <button routerLink="/appointments/bookappointmentpatient/{{item.id}}" 
                     type="button" class="btn btn-success d-inline mr-3">
                     <i class="fa fa-ticket"></i>
                     Book</button>      
                 </ng-container>              
-                <button routerLink="/patient-offices/office/{{item.officeId}}" 
+                <button routerLink="/offices/infooffice/{{item.officeId}}" 
                 type="button" class="btn btn-info mr-3">
                 <i class="fa fa-info-circle mr-1"></i>
                 Office Info</button>                                                                         

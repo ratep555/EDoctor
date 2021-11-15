@@ -13,6 +13,7 @@ namespace Core.Dtos
         public string Doctor { get; set; } 
         public string OfficeAddress { get; set; }     
         public string City { get; set; } 
+        public string Country { get; set; } 
             
 
         [DataType(DataType.Date)]

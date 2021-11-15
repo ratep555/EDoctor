@@ -8,6 +8,7 @@ namespace Core.Interfaces
 {
     public interface IPatientRepository
     {
+        Task<Patient> FindPatientById(int id);
         Task<Patient> FindPatientByUserId(int userId);
         Task CreatePatient(int userId, string lastname, string firstname, DateTime dateOfBirth);
 

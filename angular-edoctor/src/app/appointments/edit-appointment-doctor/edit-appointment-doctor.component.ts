@@ -35,17 +35,6 @@ export class EditAppointmentDoctorComponent implements OnInit {
                   endDateAndTimeOfAppointment: [new Date(appointment.endDateAndTimeOfAppointment), Validators.required],
                 }));
           });
-
-  /*   this.appointmentForm = this.fb.group({
-      id: [this.id],
-      startDateAndTimeOfAppointment: ['', Validators.required],
-      endDateAndTimeOfAppointment: ['', Validators.required],
-      officeId: [0, Validators.min(1)],
-    }); */
-
-  /*   this.appointmentsService.getAppointmentById(this.id)
-    .pipe(first())
-    .subscribe(x => this.appointmentForm.patchValue(x)); */
   }
 
   recordSubmit(fg: FormGroup) {
@@ -56,25 +45,6 @@ export class EditAppointmentDoctorComponent implements OnInit {
           console.log(error);
         });
       }
-
-
- /*  onSubmit() {
-    if (this.appointmentForm.invalid) {
-        return;
-    }
-    this.updateAppointment();
-  }
-
-  private updateAppointment() {
-  this.appointmentsService.updateAppointment(this.id, this.appointmentForm.value)
-      .pipe(first())
-      .subscribe(() => {
-        this.router.navigateByUrl('appointments/appointmentslistdoctor');
-      }, error => {
-          console.log(error);
-        });
-      } */
-
 
 }
 

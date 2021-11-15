@@ -14,3 +14,14 @@ export class UserParams {
          this.username = user.username;
     }
 }
+
+export class MyParams {
+    specialtyId = 0;
+    officeId = 0;
+    query: string;
+    status: string;
+    page = 1;
+    pageCount = 10;
+    sort = 'city';
+    username: string;
+}

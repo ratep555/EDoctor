@@ -20,7 +20,8 @@ export class OfficesService {
   userParams: UserParams;
   formData: OfficeCreateEdit = new OfficeCreateEdit();
 
-  constructor(private http: HttpClient, private accountService: AccountService) {
+  constructor(private http: HttpClient,
+              private accountService: AccountService) {
     this.accountService.currentUser$.pipe(take (1)).subscribe(user => {
       this.user = user;
       this.userParams = new UserParams(user);

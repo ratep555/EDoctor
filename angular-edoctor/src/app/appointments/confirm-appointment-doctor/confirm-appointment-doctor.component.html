@@ -1,0 +1,92 @@
+<div class="container-fluid" style="margin-top: 200px;">   
+    <div class="d-flex justify-content-center mt-5">
+        <div class="col-3">
+            <h2 class="text-center text-primary">Edit Appointment</h2>
+            <hr>    
+            <div class="form-group row">
+                <div class="col-md-12">           
+                   <input type="text"
+                   style="color: black;"
+                   placeholder="Doctor: {{(appointment?.patient)}}"
+                   class="form-control"
+                   readonly="readonly"                     
+                  >
+                 </div>       
+             </div>   
+            <div class="form-group row">
+                <div class="col-md-12">           
+                   <input type="text"
+                   placeholder="Office: {{appointment?.officeAddress}}"
+                   class="form-control"
+                   readonly="readonly"                     
+                  >
+                 </div>       
+             </div>   
+            <div class="form-group row">
+                <div class="col-md-12">           
+                   <input type="text"
+                   placeholder="City: {{appointment?.city}}"
+                   class="form-control"
+                   readonly="readonly"                     
+                  >
+                 </div>       
+             </div>   
+            <div class="form-group row">
+                <div class="col-md-12">           
+                   <input type="text"
+                   placeholder="Country: {{appointment?.country}}"
+                   class="form-control"
+                   readonly="readonly"                     
+                  >
+                 </div>       
+             </div>   
+            <div class="form-group row">
+                <div class="col-md-12">           
+                   <input type="text"
+                   placeholder="Starts: {{appointment?.startDateAndTimeOfAppointment | date:'dd.MM.yyyy HH:mm'}}"
+                   class="form-control"
+                   readonly="readonly"                     
+                  >
+                 </div>       
+             </div>   
+            <div class="form-group row">
+                <div class="col-md-12">           
+                   <input type="text"
+                   placeholder="Ends: {{appointment?.endDateAndTimeOfAppointment | date:'dd.MM.yyyy HH:mm'}}"
+                   class="form-control"
+                   readonly="readonly"
+                  >
+                 </div>       
+             </div> 
+             <hr>  
+            <form [formGroup]="fg" *ngFor="let fg of appointmentForms.controls" (submit)="recordSubmit(fg)"> 
+                <input formControlName="id" id="id" class="form-control" hidden>          
+                <div class="form-group row">
+                    <div class="col-md-12">  
+                        <label style="font-size: small;"><strong>Special Remarks:</strong></label>       
+                        <textarea type="text"
+                        class="form-control"
+                        formControlName="remarks"
+                        rows="10" readonly="readonly"></textarea>
+                     </div>       
+                 </div>        
+                 <div class="form-group">
+                    <ul label class="radio-inline ml-3">
+                        <input type="radio" value='true' formControlName='status'> Accept application
+                    </ul>
+                    <ul label class="radio-inline">
+                        <input type="radio" formControlName='status' class="ml-3"> Cancel (for this patient)
+                    </ul>
+                    <ul label class="radio-inline">
+                        <input type="radio" formControlName='status' value="false" class="ml-3">
+                         Terminate appointment
+                    </ul>
+                </div>
+                <div class="unique form-group text-center">
+                    <button [disabled]='!fg.valid' class="btn btn-success mr-2" type="submit">Save</button>
+                </div>
+            </form>
+            </div>
+            </div>
+            </div>
+

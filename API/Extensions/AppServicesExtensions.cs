@@ -5,6 +5,7 @@ using AutoMapper;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,11 +23,16 @@ namespace API.Extensions
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IHospitalRepository, HospitalRepository>();
+            services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
             services.AddScoped<IOfficeRepository, OfficeRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IRatingRepository, RatingRepository>();
             services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IFileStorageService, InAppStorageService>();
+            services.AddHttpContextAccessor();
 
             services.AddDbContext<EDoctorContext>(options =>
                options.UseSqlServer(

@@ -7,7 +7,7 @@ import { Appointment, AppointmentCreateEdit } from '../shared/models/appointment
 import { Office } from '../shared/models/office';
 import { PaginationForAppointments } from '../shared/models/pagination';
 import { User } from '../shared/models/user';
-import { UserParams } from '../shared/models/userparams';
+import { MyParams, UserParams } from '../shared/models/userparams';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +57,6 @@ export class AppointmentsService {
     );
   }
 
-
   getAllAppointmentsForDoctor(userParams: UserParams) {
     let params = new HttpParams();
     if (userParams.query) {
@@ -74,6 +73,39 @@ export class AppointmentsService {
     );
   }
 
+  getAllAppointmentsForPatient(userParams: UserParams) {
+    let params = new HttpParams();
+    if (userParams.query) {
+      params = params.append('query', userParams.query);
+    }
+    params = params.append('sort', userParams.sort);
+    params = params.append('page', userParams.page.toString());
+    params = params.append('pageCount', userParams.pageCount.toString());
+    return this.http.get<PaginationForAppointments>(this.baseUrl + 'appointments/singlepatient', {observe: 'response', params})
+    .pipe(
+      map(response  => {
+        return response.body;
+      })
+    );
+  }
+
+  getAvailableAppointmentsForOffice(id: number, myparams: MyParams) {
+    let params = new HttpParams();
+    if (myparams.query) {
+      params = params.append('query', myparams.query);
+    }
+    params = params.append('sort', myparams.sort);
+    params = params.append('page', myparams.page.toString());
+    params = params.append('pageCount', myparams.pageCount.toString());
+    return this.http.get<PaginationForAppointments>
+    (this.baseUrl + 'appointments/availableappointments/' + id, {observe: 'response', params})
+    .pipe(
+      map(response  => {
+        return response.body;
+      })
+    );
+  }
+
   createAppointment(formData) {
     return this.http.post(this.baseUrl + 'appointments', formData);
   }
@@ -82,8 +114,20 @@ export class AppointmentsService {
     return this.http.put(this.baseUrl + 'appointments/' + formData.id, formData);
   }
 
+  bookAppointmentByPatient(formData) {
+    return this.http.put(this.baseUrl + 'appointments/bookappointment/' + formData.id, formData);
+  }
+
+  cancelAppointment(id: number) {
+    return this.http.put(this.baseUrl +  'appointments/cancelappointment/' + id, {});
+}
+
   getAppointmentById(id: number) {
     return this.http.get<AppointmentCreateEdit>(this.baseUrl + 'appointments/' + id);
+  }
+
+  getAppointmentByIdForReadonlyData(id: number) {
+    return this.http.get<Appointment>(this.baseUrl + 'appointments/' + id);
   }
 
   getDoctorOffices() {

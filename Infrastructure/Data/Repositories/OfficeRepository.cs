@@ -117,7 +117,7 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<Office> GetOfficeById(int id)
         {
-            return await _context.Offices.Where(x => x.Id == id).FirstOrDefaultAsync();
+            return await _context.Offices.Include(x => x.Doctor).Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
 

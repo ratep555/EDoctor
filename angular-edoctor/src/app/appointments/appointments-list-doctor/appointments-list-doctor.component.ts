@@ -53,7 +53,6 @@ export class AppointmentsListDoctorComponent implements OnInit {
     this.getAppointments();
   }
 
-
   onSearch() {
     this.userParams.query = this.searchTerm.nativeElement.value;
     this.getAppointments();

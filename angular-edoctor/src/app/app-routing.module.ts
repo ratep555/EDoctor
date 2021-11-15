@@ -9,8 +9,12 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'appointments', canActivate: [AuthGuard],
   loadChildren: () => import('./appointments/appointments.module').then(mod => mod.AppointmentsModule)},
+  {path: 'doctors', canActivate: [AuthGuard],
+  loadChildren: () => import('./doctors/doctors.module').then(mod => mod.DoctorsModule)},
   {path: 'offices', canActivate: [AuthGuard],
   loadChildren: () => import('./offices/offices.module').then(mod => mod.OfficesModule)},
+  {path: 'patients', canActivate: [AuthGuard],
+  loadChildren: () => import('./patients/patients.module').then(mod => mod.PatientsModule)},
   {path: 'account', loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule)},
   {path: '**', component: NotFoundComponent, pathMatch: 'full'}
 ];

@@ -270,19 +270,19 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("OfficeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OfficeId1")
+                    b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PatientId")
+                    b.Property<int?>("PatientId1")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OfficeId");
 
-                    b.HasIndex("OfficeId1");
-
                     b.HasIndex("PatientId");
+
+                    b.HasIndex("PatientId1");
 
                     b.ToTable("MedicalRecords");
                 });
@@ -567,20 +567,20 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Core.Entities.MedicalRecord", b =>
                 {
                     b.HasOne("Core.Entities.Office", "Office")
-                        .WithMany()
-                        .HasForeignKey("OfficeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Office", null)
                         .WithMany("MedicalRecords")
-                        .HasForeignKey("OfficeId1");
+                        .HasForeignKey("OfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Core.Entities.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("Core.Entities.Patient", null)
+                        .WithMany("MedicalRecords")
+                        .HasForeignKey("PatientId1");
 
                     b.Navigation("Office");
 
@@ -706,6 +706,8 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Core.Entities.Patient", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("MedicalRecords");
                 });
 #pragma warning restore 612, 618
         }

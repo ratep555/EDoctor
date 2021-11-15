@@ -5,12 +5,14 @@ import { AddOfficeDoctorComponent } from './add-office-doctor/add-office-doctor.
 import { OfficesListDoctorComponent } from './offices-list-doctor/offices-list-doctor.component';
 import { EditOfficeDoctorComponent } from './edit-office-doctor/edit-office-doctor.component';
 import { OfficesComponent } from './offices.component';
+import { InfoOfficeComponent } from './info-office/info-office.component';
 
 const routes: Routes = [
   {path: '', component: OfficesComponent},
   {path: 'officeslistdoctor', component: OfficesListDoctorComponent},
   {path: 'addofficedoctor', component: AddOfficeDoctorComponent},
   {path: 'editofficedoctor/:id', component: EditOfficeDoctorComponent},
+  {path: 'infooffice/:id', component: InfoOfficeComponent},
 
 ];
 
