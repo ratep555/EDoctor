@@ -43,8 +43,13 @@ namespace API.Helpers
 
             CreateMap<MedicalRecord, MedicalRecordDto>()
                 .ForMember(d => d.Doctor, o => o.MapFrom(s => s.Office.Doctor.Name))
+                .ForMember(d => d.DoctorId, o => o.MapFrom(s => s.Office.Doctor.Id))
+                .ForMember(d => d.Hospital, o => o.MapFrom(s => s.Office.Hospitals.HospitalName))
                 .ForMember(d => d.Office, o => o.MapFrom(s => s.Office.Street))
-                .ForMember(d => d.Patient, o => o.MapFrom(s => s.Patient.Name));
+                .ForMember(d => d.Patient, o => o.MapFrom(s => s.Patient.Name))
+                .ForMember(d => d.PatientId, o => o.MapFrom(s => s.Patient.Id));
+
+            CreateMap<MedicalRecordCreateEditDto, MedicalRecord>().ReverseMap();
 
             CreateMap<Office, OfficeDto>()
                 .ForMember(d => d.Doctor, o => o.MapFrom(s => s.Doctor.Name))

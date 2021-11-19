@@ -65,6 +65,19 @@ namespace Infrastructure.Data.Repositories
             return average;
         }
 
+        public async Task<bool> ChechIfAnyForDoctorByUserId(int id)
+        {
+           return await _context.Ratings.AnyAsync(x => x.Doctor.ApplicationUserId == id);          
+        }
+
+        public async Task<double> AverageVoteForDoctorByUserId(int id)
+        {
+            var average = await _context.Ratings
+                          .Where(x => x.Doctor.ApplicationUserId == id).AverageAsync(x => x.Rate);
+
+            return average;
+        }
+
     }
 }
 

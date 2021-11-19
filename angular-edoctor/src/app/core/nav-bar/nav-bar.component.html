@@ -1,108 +1,170 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-    <a class="navbar-brand text-uppercase" style="margin-left: 40px;" [routerLink]="['/']" routerLinkActive="active" 
-    [routerLinkActiveOptions]="{exact:true}">Home</a>
-  
-    <button class="navbar-toggler" type="button" 
-    data-toggle="collapse" data-target="#navbarNav" 
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a
+    class="navbar-brand text-uppercase"
+    style="margin-left: 40px"
+    [routerLink]="['/']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >Home</a
+  >
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNav"
     (click)="isCollapsed = !isCollapsed"
     [attr.aria-expanded]="!isCollapsed"
-    aria-controls="navbarSupportedContent" 
-    aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav" id="navbarSupportedContent" [collapse]="isCollapsed">
-      <ul class="navbar-nav mr-auto">
-<!--   ovo možeš koristiti  <ng-container *ngIf="(currentUser$ | async) && (currentUser$ | async)?.roleName ==='Admin'">
+    aria-controls="navbarSupportedContent"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div
+    class="collapse navbar-collapse"
+    id="navbarNav"
+    id="navbarSupportedContent"
+    [collapse]="isCollapsed"
+  >
+    <ul class="navbar-nav mr-auto">
+      <!--   ovo možeš koristiti  <ng-container *ngIf="(currentUser$ | async) && (currentUser$ | async)?.roleName ==='Admin'">
  -->
-         <li class="nav-item">
-         <a class="nav-link text-uppercase" routerLink="/doctors" routerLinkActive="active">Doctors</a> 
-         </li>    
-          <li  class="nav-item">
-            <a class="nav-link text-uppercase" routerLink="/offices" routerLinkActive="active">Offices</a>
-          </li>   
-        <li class="nav-item">
-          <a class="nav-link text-uppercase"  routerLink="/appointments" routerLinkActive="active">Appointments</a>  
-        </li>  
-        <div class="dropdown" dropdown>
-          <a class="pero nav-link text-uppercase dropdown-toggle text-white" dropdownToggle (click)="false" 
-          routerLinkActive="active">Doctor</a>
-          <div class="dropdown-menu" *dropdownMenu>    
-              <a routerLink="/account/register-doctor" class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i> Register Doctor</a>
-              <a routerLink="/doctors/infodoctormyprofile" class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i> My Profile</a>
-              <a routerLink="/offices/officeslistdoctor" class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i>My Offices</a>
-              <a routerLink="/appointments/appointmentslistdoctor" class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i>My Appointments</a>
-              <a routerLink="/medicalrecords" class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i> Medical Records</a>
-                <div class="dropdown-divider"></div>
-              <a class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i> Logout</a>
-              <a class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i> Logout</a>
-          </div>
+      <li class="nav-item">
+        <a
+          class="nav-link text-uppercase"
+          routerLink="/doctors"
+          routerLinkActive="active"
+          >Doctors</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link text-uppercase"
+          routerLink="/offices"
+          routerLinkActive="active"
+          >Offices</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link text-uppercase"
+          routerLink="/appointments"
+          routerLinkActive="active"
+          >Appointments</a
+        >
+      </li>
+      <div class="dropdown" dropdown>
+        <a
+          class="pero nav-link text-uppercase dropdown-toggle text-white"
+          dropdownToggle
+          (click)="(false)"
+          routerLinkActive="active"
+          >Doctor</a
+        >
+        <div class="dropdown-menu" *dropdownMenu>
+          <a routerLink="/account/register-doctor" class="dropdown-item">
+            <i class="fa fa-sign-out mr-3"></i> Register Doctor</a
+          >
+          <a routerLink="/doctors/infodoctormyprofile" class="dropdown-item">
+            <i class="fa fa-user-md mr-3"></i> My Profile</a
+          >
+          <a routerLink="/offices/officeslistdoctor" class="dropdown-item">
+            <i class="fa fa-paperclip mr-3"></i>My Offices</a
+          >
+          <a
+            routerLink="/appointments/appointmentslistdoctor"
+            class="dropdown-item"
+          >
+            <i class="fa fa-phone mr-3"></i>My Appointments</a
+          >
+          <a routerLink="/patients/patientslistdoctor" class="dropdown-item">
+            <i class="fa fa-ambulance mr-2"></i> My Patients</a
+          >
+          <a routerLink="/patients/medicalrecordslistdoctor" class="dropdown-item">
+            <i class="fa fa-ambulance mr-2"></i> Medical Records</a
+          >
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">
+            <i class="fa fa-sign-out mr-3"></i> Logout</a
+          >
+          <a class="dropdown-item">
+            <i class="fa fa-sign-out mr-3"></i> Logout</a
+          >
         </div>
-        <div class="dropdown" dropdown>
-          <a class="pero nav-link text-uppercase dropdown-toggle text-white" dropdownToggle (click)="false" 
-          routerLinkActive="active">Patient</a>
-          <div class="dropdown-menu" *dropdownMenu>    
-              <a routerLink="/patient-offices" class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i> Offices</a>
-              <a routerLink="/patient-offices/test" class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i> Offices/Test</a>
-              <a routerLink="/appointments/appointmentslistpatient" class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i>My Appointments</a>
-                <a routerLink="/medicalrecords/patientrecords" class="dropdown-item">
-                  <i class="fa fa-sign-out mr-3"></i> My Medical Records</a>
-              <a class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i> Logout</a>
-                <div class="dropdown-divider"></div>
-              <a class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i> Logout</a>
-              <a class="dropdown-item">
-                <i class="fa fa-sign-out mr-3"></i> Logout</a>
-          </div>
+      </div>
+      <div class="dropdown" dropdown>
+        <a
+          class="pero nav-link text-uppercase dropdown-toggle text-white"
+          dropdownToggle
+          (click)="(false)"
+          routerLinkActive="active"
+          >Patient</a
+        >
+        <div class="dropdown-menu" *dropdownMenu>
+          <a routerLink="/patients/infopatientmyprofile" class="dropdown-item">
+            <i class="fa fa-user mr-3"></i> My Profile</a
+          >
+          <a
+            routerLink="/appointments/appointmentslistpatient"
+            class="dropdown-item"
+          >
+            <i class="fa fa-phone mr-3"></i>My Appointments</a
+          >
+          <a routerLink="/patients/medicalrecordslistpatient" class="dropdown-item">
+            <i class="fa fa-ambulance mr-2"></i> My Medical Records</a
+          >
+          <a class="dropdown-item">
+            <i class="fa fa-sign-out mr-3"></i> Logout</a
+          >
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">
+            <i class="fa fa-sign-out mr-3"></i> Logout</a
+          >
+          <a class="dropdown-item">
+            <i class="fa fa-sign-out mr-3"></i> Logout</a
+          >
         </div>
-       
-      </ul>
-      <ng-container *ngIf="(currentUser$ | async) ===null">
-        <div>
-          <ul class="nav navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link"
+      </div>
+    </ul>
+    <ng-container *ngIf="(currentUser$ | async) === null">
+      <div>
+        <ul class="nav navbar-nav">
+          <li class="nav-item">
+            <a
+              class="nav-link"
               routerLink="/account/register"
               routerLinkActive="active"
-              >Register</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link"
+              >Register</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
               routerLink="/account/login"
               routerLinkActive="active"
-              >Login</a>
-            </li>
-          </ul>
-        </div>
-      </ng-container>
-      
-      
-        <div *ngIf="(currentUser$ | async)" >
-        <ul class="nav navbar-nav">
-          <li class="nav-item" >
-            <a class="nav-link">
-              Welcome {{(currentUser$ | async).username | titlecase}} 
-            </a>
-          </li>  
-          <li class="nav-item" >
-            <a (click)='logout()' class="nav-link"
-            routerLink="/account/login"
-            routerLinkActive="active"
-            >Logout</a>
-          </li>  
+              >Login</a
+            >
+          </li>
         </ul>
       </div>
+    </ng-container>
 
-     
+    <div *ngIf="currentUser$ | async">
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link">
+            Welcome {{ (currentUser$ | async).username | titlecase }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            (click)="logout()"
+            class="nav-link"
+            routerLink="/account/login"
+            routerLinkActive="active"
+            >Logout</a
+          >
+        </li>
+      </ul>
+    </div>
   </div>
-  </nav>
+</nav>

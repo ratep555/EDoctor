@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Dtos;
 using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
@@ -30,5 +31,25 @@ namespace Infrastructure.Data.Repositories
 
             return roleName;
         }
+
+        public async Task UpdateUserProfile(DoctorEditDto doctorDto)
+        {
+            var user = await _context.Users.Where(x => x.Id == doctorDto.ApplicationUserId).FirstOrDefaultAsync();
+
+            string[] fullname = doctorDto.Name.Split(' ');
+            user.LastName = fullname[0];
+            user.FirstName = fullname[1];
+
+             _context.Entry(user).State = EntityState.Modified;     
+        }
     }
 }
+
+
+
+
+
+
+
+
+

@@ -74,7 +74,7 @@ namespace API.Controllers
         }
 
         [HttpGet("availableappointments/{id}")]
-         public async Task<ActionResult<Pagination<AppointmentDto>>> GetAllAvailableAppointmentsFroOffice(
+         public async Task<ActionResult<Pagination<AppointmentDto>>> GetAllAvailableAppointmentsForOffice(
             int id, [FromQuery] QueryParameters queryParameters)
         {
             var count = await _appointmentRepository.GetCountForAvailableAppointmentsForOffice(id);
@@ -141,6 +141,11 @@ namespace API.Controllers
             var appointment = _mapper.Map<Appointment>(appointmentDto);
 
             if (id != appointment.Id) return BadRequest();
+
+            var office = await _appointmentRepository.GetOfficeByAppointment(appointment);
+
+            if (patient.MBO == null && office.HospitalId != null )
+            return BadRequest("You have not provided MBO in your registration form!");
             
             appointment.PatientId = patient.Id;
 
@@ -167,10 +172,6 @@ namespace API.Controllers
 
             return NoContent();
         }
-
-   
-
-     
 
         [HttpGet("offices")]
         public async Task<ActionResult<List<OfficeDto>>> GetDoctorsOffices()

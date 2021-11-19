@@ -1,0 +1,77 @@
+<div class="container" style="margin-top: 100px; margin-bottom: 100px">
+  <div class="card col-10 p-3">
+    <div class="card-header bg-info text-light">
+      <div class="col-12 d-none d-md-block col-md-6 pb-1">
+        <i class="fa fa-ambulance"></i> &nbsp; Medical Record No.
+        {{ medicalrecord?.id }}
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="container-rounded p-2">
+        <div class="row">
+          <div class="col-12 pb-4">
+            <div class="row my-1">
+              <div class="col-3">
+                <strong>Patient Name:</strong>
+              </div>
+              <div class="col-9">
+                <input
+                  type="text"
+                  readonly="readonly"
+                  class="form-control"
+                  placeholder="{{ medicalrecord?.patient }}"
+                />
+              </div>
+            </div>
+            <div class="row my-1">
+              <div class="col-3">
+                <strong>Doctor Name:</strong>
+              </div>
+              <div class="col-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  readonly="readonly"
+                  placeholder="{{ medicalrecord?.doctor }}"
+                />
+              </div>
+            </div>
+            <div class="row my-1">
+              <div class="col-3">
+                <strong>Created:</strong>
+              </div>
+              <div class="col-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  readonly="readonly"
+                  placeholder="{{
+                    medicalrecord?.created | date: 'dd.MM.yyyy HH:mm'
+                  }}"
+                />
+              </div>
+            </div>
+            <div class="row text-center my-1 mt-4 mb-2">
+              <div class="col-12">
+                <strong>Anamnesys, Diagnosys, and Therapy</strong>
+              </div>
+            </div>
+            <div class="row my-1">
+              <div class="col-12">
+                <textarea
+                  name=""
+                  readonly="readonly"
+                  placeholder="{{ medicalrecord?.anamnesisDiagnosisTherapy }}"
+                  class="form-control"
+                  id=""
+                  cols="30"
+                  rows="20"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

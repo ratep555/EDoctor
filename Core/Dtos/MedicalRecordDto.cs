@@ -14,5 +14,8 @@ namespace Core.Dtos
         public string Doctor { get; set; }
         public string Patient { get; set; }
         public string Office { get; set; }  
+        public string Hospital { get; set; }  
+        public int PatientId { get; set; }
+        public int DoctorId { get; set; }
     }
 }

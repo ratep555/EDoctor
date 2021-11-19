@@ -31,9 +31,11 @@ namespace Infrastructure.Data
                 .IsRequired();
             
             modelBuilder.Entity<MedicalRecord>()
-                .HasOne(s => s.Patient)
-                .WithMany()
-                .OnDelete(DeleteBehavior.NoAction); 
+                .HasOne<Patient>(s => s.Patient)
+                .WithMany(s => s.MedicalRecords)
+                .HasForeignKey(s => s.PatientId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade); 
 
             modelBuilder.Entity<Rating>()
                 .HasOne(s => s.Patient)

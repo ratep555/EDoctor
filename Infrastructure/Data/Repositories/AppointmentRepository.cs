@@ -48,11 +48,11 @@ namespace Infrastructure.Data.Repositories
             {
                 switch (queryParameters.Sort)
                 {
-                    case "dateAsc":
-                        appointments = appointments.OrderBy(p => p.StartDateAndTimeOfAppointment);
+                    case "dateDesc":
+                        appointments = appointments.OrderByDescending(p => p.StartDateAndTimeOfAppointment);
                         break;
                     default:
-                        appointments = appointments.OrderByDescending(n => n.StartDateAndTimeOfAppointment);
+                        appointments = appointments.OrderBy(n => n.StartDateAndTimeOfAppointment);
                         break;
                 }
             }           
@@ -220,7 +220,9 @@ namespace Infrastructure.Data.Repositories
         }
 
         public async Task UpdateAppointment(Appointment appointment)
-        {          
+        {       
+            _context.ChangeTracker.Clear();
+
              _context.Entry(appointment).State = EntityState.Modified;        
              await _context.SaveChangesAsync();
         }
@@ -237,6 +239,14 @@ namespace Infrastructure.Data.Repositories
                          .ToListAsync();
         }
 
+        public async Task<Office> GetOfficeByAppointment(Appointment appointment)
+        {
+            var list = await _context.Appointments.Where(x => x.Id == appointment.Id).ToListAsync();
+
+            IEnumerable<int> ids = list.Select(x => x.OfficeId);
+
+            return await _context.Offices.Where(x => ids.Contains(x.Id)).FirstOrDefaultAsync();
+        }
     }
 }
 

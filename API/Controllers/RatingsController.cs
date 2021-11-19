@@ -16,7 +16,7 @@ namespace API.Controllers
             _mapper = mapper;
             _ratingRepository = ratingRepository;
         }
-        
+
         [HttpPost]
         public async Task<ActionResult> CreateRate([FromBody] RatingDto ratingDto)
         {
@@ -24,7 +24,7 @@ namespace API.Controllers
 
             if (await _ratingRepository.CheckIfThisIsDoctorsPatient(ratingDto.DoctorId, userId))
             {
-                return BadRequest("You have not visited this doctor yet!");            
+                return BadRequest("You have not visited this doctor yet!");
             }
 
             var currentRate = await _ratingRepository.FindCurrentRate(ratingDto.DoctorId, userId);
@@ -37,10 +37,9 @@ namespace API.Controllers
             {
                 currentRate.Rate = ratingDto.Rating;
                 await _ratingRepository.Save();
-            }   
+            }
 
             return NoContent();
         }
     }
 }
-    

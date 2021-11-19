@@ -5,6 +5,8 @@ import { map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AccountService } from '../account/account.service';
 import { Doctor, DoctorEditDto, DoctorPutGetDto } from '../shared/models/doctor';
+import { MedicalrecordCreateEdit } from '../shared/models/medicalrecord';
+import { Office } from '../shared/models/office';
 import { PaginationForDoctors } from '../shared/models/pagination';
 import { User } from '../shared/models/user';
 import { UserParams } from '../shared/models/userparams';
@@ -67,6 +69,10 @@ export class DoctorsService {
 
   putGetDoctor(id: number): Observable<DoctorPutGetDto>{
     return this.http.get<DoctorPutGetDto>(this.baseUrl + 'doctors/putget/' + id);
+  }
+
+  getAllOfficesForDoctorByUserId() {
+    return this.http.get<Office[]>(this.baseUrl + 'doctors/doctorsofficesbyuserid');
   }
 
   updatingDoctorsProfile(id: number, doctorEditDTO: DoctorEditDto){

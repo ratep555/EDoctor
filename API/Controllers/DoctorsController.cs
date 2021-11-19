@@ -17,17 +17,20 @@ namespace API.Controllers
     {
         private readonly IDoctorRepository _doctorRepository;
         private readonly IRatingRepository _ratingRepository;
+        private readonly IUserRepository _userRepository1;
         private readonly IMapper _mapper;
         private readonly IFileStorageService _fileStorageService;
         private string container = "doctors";
 
         public DoctorsController(IDoctorRepository doctorRepository, 
             IRatingRepository ratingRepository,
+            IUserRepository userRepository,
             IMapper mapper, 
             IFileStorageService fileStorageService)
         {
             _doctorRepository = doctorRepository;
             _ratingRepository = ratingRepository;
+            _userRepository1 = userRepository;
             _mapper = mapper;
             _fileStorageService = fileStorageService;
         }
@@ -92,9 +95,9 @@ namespace API.Controllers
 
             var averageVote = 0.0;
 
-            if (await _ratingRepository.ChechIfAny(id))
+            if (await _ratingRepository.ChechIfAnyForDoctorByUserId(id))
             {
-                averageVote = await _ratingRepository.AverageVote(id);
+                averageVote = await _ratingRepository.AverageVoteForDoctorByUserId(id);
             }
 
             var offices = await _doctorRepository.GetAllOfficesForDoctorByUserId(id);
@@ -142,6 +145,16 @@ namespace API.Controllers
             return response;
         }
 
+        [HttpGet("doctorsofficesbyuserid")]
+        public async Task<ActionResult<List<OfficeDto>>> GetAllOfficesForDoctorByUserId()
+        {
+            var userId = User.GetUserId();
+
+            var list = await _doctorRepository.GetAllOfficesForDoctorByUserId(userId);
+
+            return _mapper.Map<List<OfficeDto>>(list);
+        }
+
         [HttpPut("updatingdoctorsprofile/{id}")]
         public async Task<ActionResult> UpdatingDoctorsProfile(int id, [FromForm] DoctorEditDto doctorDto)
         {
@@ -155,6 +168,8 @@ namespace API.Controllers
             {
                 doctor.Picture = await _fileStorageService.EditFile(container, doctorDto.Picture, doctor.Picture);
             }
+
+            await _userRepository1.UpdateUserProfile(doctorDto);
  
             await _doctorRepository.Save();
 

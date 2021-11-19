@@ -53,15 +53,15 @@ namespace API.Controllers
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
-            await _patientRepository.CreatePatient(user.Id, user.LastName, user.FirstName, registerDto.DateOfBirth);
-
+            await _patientRepository.CreatePatient(user, registerDto);
             return new UserDto
             {
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
                 RoleName = await _userRepository.GetRoleName(user.Id),
-                UserId = user.Id            };
+                UserId = user.Id            
+            };
         }
 
         [HttpPost("registerdoctor")]
@@ -110,11 +110,6 @@ namespace API.Controllers
                 UserId = user.Id
             };
         }
-
-
-
-
-    
 
         private async Task<bool> UserExists(string username)
         {

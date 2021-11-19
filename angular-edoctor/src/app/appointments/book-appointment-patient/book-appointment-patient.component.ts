@@ -25,7 +25,7 @@ export class BookAppointmentPatientComponent implements OnInit {
     this.loadAppointment();
 
     this.appointmentsService.getAppointmentById(this.id).subscribe(
-  (appointment: AppointmentCreateEdit) => {
+    (appointment: AppointmentCreateEdit) => {
     this.appointmentForms.push(this.fb.group({
               id: [this.id],
               officeId: [appointment.officeId],

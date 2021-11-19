@@ -13,7 +13,6 @@ const routes: Routes = [
   {path: 'addofficedoctor', component: AddOfficeDoctorComponent},
   {path: 'editofficedoctor/:id', component: EditOfficeDoctorComponent},
   {path: 'infooffice/:id', component: InfoOfficeComponent},
-
 ];
 
 @NgModule({

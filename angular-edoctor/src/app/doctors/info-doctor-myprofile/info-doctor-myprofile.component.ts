@@ -18,7 +18,6 @@ export class InfoDoctorMyprofileComponent implements OnInit {
               private doctorsService: DoctorsService)
   { this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user); }
 
-
   ngOnInit(): void {
     this.loadDoctor();
   }

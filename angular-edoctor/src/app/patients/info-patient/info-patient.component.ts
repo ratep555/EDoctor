@@ -40,7 +40,7 @@ export class InfoPatientComponent implements OnInit {
 
     getMedicalrecords() {
     this.patientsService
-    .getMedicalrecordsForDoctorsPatient(+this.activatedRoute.snapshot.paramMap.get('id'), this.myParams)
+    .getMedicalRecordsForOnePatientOfDoctor(+this.activatedRoute.snapshot.paramMap.get('id'), this.myParams)
     .subscribe(response => {
       this.medicalrecords = response.data;
       this.myParams.page = response.page;

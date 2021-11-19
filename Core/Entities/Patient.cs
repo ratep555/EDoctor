@@ -13,6 +13,10 @@ namespace Core.Entities
 
         public string Name { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string MBO { get; set; }
         public ICollection<Appointment> Appointments { get; set; }
         public ICollection<MedicalRecord> MedicalRecords { get; set; }
     }

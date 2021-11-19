@@ -5,4 +5,8 @@ export interface Patient {
     dateOfBirth: Date;
     phoneNumber: string;
     email: string;
+    country: string;
+    city: string;
+    street: string;
+    mbo: string;
 }

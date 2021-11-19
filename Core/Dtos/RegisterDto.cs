@@ -19,6 +19,17 @@ namespace Core.Dtos
         public string Email { get; set; }
 
         [Required]
+        public string Country { get; set; }
+
+        [Required]
+        public string City { get; set; }
+
+        [Required]
+        public string Street { get; set; }
+        
+        public string MBO { get; set; }
+
+        [Required]
         public string PhoneNumber { get; set; }
         
         [Required]

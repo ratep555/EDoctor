@@ -11,6 +11,8 @@ namespace Core.Interfaces
         Task<bool> CheckIfThisIsDoctorsPatient(int id, int userId);
         Task<bool> ChechIfAny(int id);
         Task<double> AverageVote(int id);
+        Task<bool> ChechIfAnyForDoctorByUserId(int id);
+        Task<double> AverageVoteForDoctorByUserId(int id);
         Task Save();
     }
 }
