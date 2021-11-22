@@ -20,7 +20,8 @@ namespace Core.Dtos
         public List<int> SpecialtiesIds { get; set; }
 
         [ModelBinder(BinderType = typeof(TypeBinder<List<int>>))]
-        public List<int> HospitalsIds { get; set; }    }
+        public List<int> HospitalsIds { get; set; }    
+    }
 }
 
 

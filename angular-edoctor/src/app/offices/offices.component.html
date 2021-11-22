@@ -69,8 +69,16 @@
             {{ item.doctor }}</a
           >
         </td>
-        <td>{{ item.initialExaminationFee | number: "1.2-2" }} kn</td>
-        <td>{{ item.followUpExaminationFee | number: "1.2-2" }} kn</td>
+        <td *ngIf="item.initialExaminationFee === 0; else elseBlock">
+          MBO Insurance
+        </td>
+        <ng-template #elseBlock
+          ><td>
+            {{ item.initialExaminationFee | number: "1.2-2" }} kn
+          </td></ng-template>
+          <td>
+            {{ item.followUpExaminationFee | number: "1.2-2" }} kn
+          </td>
         <td>
           <div class="text-center">
             <button

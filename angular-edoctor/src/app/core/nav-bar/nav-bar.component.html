@@ -52,78 +52,121 @@
           >Appointments</a
         >
       </li>
-      <div class="dropdown" dropdown>
-        <a
-          class="pero nav-link text-uppercase dropdown-toggle text-white"
-          dropdownToggle
-          (click)="(false)"
-          routerLinkActive="active"
-          >Doctor</a
-        >
-        <div class="dropdown-menu" *dropdownMenu>
-          <a routerLink="/account/register-doctor" class="dropdown-item">
-            <i class="fa fa-sign-out mr-3"></i> Register Doctor</a
-          >
-          <a routerLink="/doctors/infodoctormyprofile" class="dropdown-item">
-            <i class="fa fa-user-md mr-3"></i> My Profile</a
-          >
-          <a routerLink="/offices/officeslistdoctor" class="dropdown-item">
-            <i class="fa fa-paperclip mr-3"></i>My Offices</a
-          >
+      <ng-container
+        *ngIf="
+          (currentUser$ | async) &&
+          (currentUser$ | async)?.roles.includes('Doctor')
+        "
+      >
+        <div class="dropdown" dropdown>
           <a
-            routerLink="/appointments/appointmentslistdoctor"
-            class="dropdown-item"
+            class="pero nav-link text-uppercase dropdown-toggle text-white"
+            dropdownToggle
+            (click)="(false)"
+            routerLinkActive="active"
+            >Doctor</a
           >
-            <i class="fa fa-phone mr-3"></i>My Appointments</a
-          >
-          <a routerLink="/patients/patientslistdoctor" class="dropdown-item">
-            <i class="fa fa-ambulance mr-2"></i> My Patients</a
-          >
-          <a routerLink="/patients/medicalrecordslistdoctor" class="dropdown-item">
-            <i class="fa fa-ambulance mr-2"></i> Medical Records</a
-          >
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item">
-            <i class="fa fa-sign-out mr-3"></i> Logout</a
-          >
-          <a class="dropdown-item">
-            <i class="fa fa-sign-out mr-3"></i> Logout</a
-          >
+          <div class="dropdown-menu" *dropdownMenu>
+            <a routerLink="/doctors/infodoctormyprofile" class="dropdown-item">
+              <i class="fa fa-user-md mr-3"></i> My Profile</a
+            >
+            <div class="dropdown-divider"></div>
+            <a routerLink="/offices/officeslistdoctor" class="dropdown-item">
+              <i class="fa fa-paperclip mr-3"></i>My Offices</a
+            >
+            <a
+              routerLink="/appointments/appointmentslistdoctor"
+              class="dropdown-item"
+            >
+              <i class="fa fa-phone mr-3"></i>My Appointments</a
+            >
+            <a routerLink="/patients/patientslistdoctor" class="dropdown-item">
+              <i class="fa fa-ambulance mr-2"></i> My Patients</a
+            >
+            <a
+              routerLink="/patients/medicalrecordslistdoctor"
+              class="dropdown-item"
+            >
+              <i class="fa fa-ambulance mr-2"></i> Medical Records</a
+            >
+          </div>
         </div>
-      </div>
-      <div class="dropdown" dropdown>
-        <a
-          class="pero nav-link text-uppercase dropdown-toggle text-white"
-          dropdownToggle
-          (click)="(false)"
-          routerLinkActive="active"
-          >Patient</a
-        >
-        <div class="dropdown-menu" *dropdownMenu>
-          <a routerLink="/patients/infopatientmyprofile" class="dropdown-item">
-            <i class="fa fa-user mr-3"></i> My Profile</a
-          >
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          (currentUser$ | async) &&
+          (currentUser$ | async)?.roles.includes('Patient')
+        "
+      >
+        <div class="dropdown" dropdown>
           <a
-            routerLink="/appointments/appointmentslistpatient"
-            class="dropdown-item"
+            class="pero nav-link text-uppercase dropdown-toggle text-white"
+            dropdownToggle
+            (click)="(false)"
+            routerLinkActive="active"
+            >Patient</a
           >
-            <i class="fa fa-phone mr-3"></i>My Appointments</a
-          >
-          <a routerLink="/patients/medicalrecordslistpatient" class="dropdown-item">
-            <i class="fa fa-ambulance mr-2"></i> My Medical Records</a
-          >
-          <a class="dropdown-item">
-            <i class="fa fa-sign-out mr-3"></i> Logout</a
-          >
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item">
-            <i class="fa fa-sign-out mr-3"></i> Logout</a
-          >
-          <a class="dropdown-item">
-            <i class="fa fa-sign-out mr-3"></i> Logout</a
-          >
+          <div class="dropdown-menu" *dropdownMenu>
+            <a
+              routerLink="/patients/infopatientmyprofile"
+              class="dropdown-item"
+            >
+              <i class="fa fa-user mr-3"></i> My Profile</a
+            >
+            <div class="dropdown-divider"></div>
+            <a
+              routerLink="/appointments/appointmentslistpatient"
+              class="dropdown-item"
+            >
+              <i class="fa fa-phone mr-3"></i>My Appointments</a
+            >
+            <a
+              routerLink="/patients/medicalrecordslistpatient"
+              class="dropdown-item"
+            >
+              <i class="fa fa-ambulance mr-2"></i> My Medical Records</a
+            >
+          </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-container
+        *ngIf="
+          (currentUser$ | async) &&
+          (currentUser$ | async)?.roles.includes('Admin')
+        "
+      >
+        <div class="dropdown" dropdown>
+          <a
+            class="pero nav-link text-uppercase dropdown-toggle text-white"
+            dropdownToggle
+            (click)="(false)"
+            routerLinkActive="active"
+            >Admin</a
+          >
+          <div class="dropdown-menu" *dropdownMenu>
+            <a routerLink="/account/register-doctor" class="dropdown-item">
+              <i class="fa fa-registered mr-3"></i> Register Doctor</a
+            >
+            <div class="dropdown-divider"></div>
+            <a routerLink="/admin/userslist" href="#" class="dropdown-item">
+              <i class="fa fa-list mr-3"></i> Users</a
+            >
+            <a
+              routerLink="/appointments/appointmentslistpatient"
+              class="dropdown-item"
+            >
+              <i class="fa fa-phone mr-3"></i>My Appointments</a
+            >
+            <a
+              routerLink="/patients/medicalrecordslistpatient"
+              class="dropdown-item"
+            >
+              <i class="fa fa-ambulance mr-2"></i> My Medical Records</a
+            >
+          </div>
+        </div>
+      </ng-container>
     </ul>
     <ng-container *ngIf="(currentUser$ | async) === null">
       <div>

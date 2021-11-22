@@ -24,3 +24,4 @@ export class OfficeCreateEdit {
     longitude: number;
     hospitalId: number;
 }
+

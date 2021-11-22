@@ -8,7 +8,6 @@ namespace API.Helpers
 {
     public class MappingHelper : Profile
     {
-       
         public MappingHelper(GeometryFactory geometryFactory)
         {
             CreateMap<Appointment, AppointmentDto>()
@@ -63,6 +62,8 @@ namespace API.Helpers
             CreateMap<Patient, PatientDto>()
                 .ForMember(d => d.PhoneNumber, o => o.MapFrom(s => s.ApplicationUser.PhoneNumber))
                 .ForMember(d => d.Email, o => o.MapFrom(s => s.ApplicationUser.Email));
+            
+            CreateMap<PatientEditDto, Patient>();
 
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();     
         }

@@ -19,6 +19,9 @@ import { PagerComponent } from './components/pager/pager.component';
 import { HasRoleDirective } from './directives/has-role.directive';
 import { ImgInputComponent } from './components/img-input/img-input.component';
 import { RatingComponent } from './components/rating/rating.component';
+import {NgxPrintModule} from 'ngx-print';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { RolesModalComponent } from './components/roles-modal/roles-modal.component';
 
 
 @NgModule({
@@ -30,7 +33,8 @@ import { RatingComponent } from './components/rating/rating.component';
     PagerComponent,
     HasRoleDirective,
     ImgInputComponent,
-    RatingComponent
+    RatingComponent,
+    RolesModalComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +46,8 @@ import { RatingComponent } from './components/rating/rating.component';
     LeafletModule,
     PaginationModule.forRoot(),
     TabsModule.forRoot(),
+    NgxPrintModule,
+    ModalModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
@@ -54,11 +60,14 @@ import { RatingComponent } from './components/rating/rating.component';
     TabsModule,
     BsDatepickerModule,
     PaginationModule,
+    NgxPrintModule,
+    ModalModule,
     PagerComponent,
     MapComponent,
     HasRoleDirective,
     ImgInputComponent,
-    RatingComponent
+    RatingComponent,
+    RolesModalComponent
   ]
 
 })

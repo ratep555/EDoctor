@@ -17,20 +17,20 @@ namespace API.Controllers
     {
         private readonly IDoctorRepository _doctorRepository;
         private readonly IRatingRepository _ratingRepository;
-        private readonly IUserRepository _userRepository1;
+        private readonly IAdminRepository _adminRepository;
         private readonly IMapper _mapper;
         private readonly IFileStorageService _fileStorageService;
         private string container = "doctors";
 
         public DoctorsController(IDoctorRepository doctorRepository, 
             IRatingRepository ratingRepository,
-            IUserRepository userRepository,
+            IAdminRepository adminRepository,
             IMapper mapper, 
             IFileStorageService fileStorageService)
         {
             _doctorRepository = doctorRepository;
             _ratingRepository = ratingRepository;
-            _userRepository1 = userRepository;
+            _adminRepository = adminRepository;
             _mapper = mapper;
             _fileStorageService = fileStorageService;
         }
@@ -169,7 +169,7 @@ namespace API.Controllers
                 doctor.Picture = await _fileStorageService.EditFile(container, doctorDto.Picture, doctor.Picture);
             }
 
-            await _userRepository1.UpdateUserProfile(doctorDto);
+            await _adminRepository.UpdateUserProfile(doctorDto);
  
             await _doctorRepository.Save();
 

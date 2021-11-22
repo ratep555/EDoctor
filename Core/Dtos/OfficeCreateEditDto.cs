@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace Core.Dtos
 {
@@ -17,5 +18,12 @@ namespace Core.Dtos
         public double Latitude { get; set; }
         [Range(-180, 180)]
         public double Longitude { get; set; }
+
     }
 }
+
+
+
+
+
+

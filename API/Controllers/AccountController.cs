@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    public class AccountsController : BaseApiController
+    public class AccountController : BaseApiController
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -19,12 +19,12 @@ namespace API.Controllers
         private readonly ITokenService _tokenService;
         private readonly IDoctorRepository _doctorRepository;
         private readonly IPatientRepository _patientRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IAdminRepository _adminRepository;
        
-        public AccountsController(UserManager<ApplicationUser> userManager, 
+        public AccountController(UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager, ITokenService tokenService, 
             IMapper mapper, IDoctorRepository doctorRepository, IPatientRepository patientRepository,
-            IUserRepository userRepository)
+            IAdminRepository adminRepository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -32,7 +32,7 @@ namespace API.Controllers
             _tokenService = tokenService;
             _doctorRepository = doctorRepository;
             _patientRepository = patientRepository;
-            _userRepository = userRepository;
+            _adminRepository = adminRepository;
         }
 
         [HttpPost("register")]
@@ -59,7 +59,7 @@ namespace API.Controllers
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
-                RoleName = await _userRepository.GetRoleName(user.Id),
+                RoleName = await _adminRepository.GetRoleName(user.Id),
                 UserId = user.Id            
             };
         }
@@ -101,12 +101,14 @@ namespace API.Controllers
 
             if (!result.Succeeded) return Unauthorized(new ServerResponse(401));
 
+            if (user.LockoutEnd != null) return Unauthorized(new ServerResponse(401));
+
             return new UserDto
             {
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
-                RoleName = await _userRepository.GetRoleName(user.Id),
+                RoleName = await _adminRepository.GetRoleName(user.Id),
                 UserId = user.Id
             };
         }

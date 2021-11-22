@@ -1,0 +1,142 @@
+<div class="container" style="margin-top: 100px; margin-bottom: 100px">
+  <div class="d-flex justify-content-center mt-5">
+    <div class="col-4">
+      <form
+        [formGroup]="fg"
+        *ngFor="let fg of patientForms.controls"
+        (submit)="recordSubmit(fg)"
+      >
+        <h2 class="text-center text-primary">Edit Profile</h2>
+        <hr />
+        <input formControlName="id" id="id" class="form-control" hidden />
+        <input
+          formControlName="applicationUserId"
+          class="form-control"
+          hidden
+        />
+        <div class="form-group">
+          <input
+            formControlName="name"
+            type="text"
+            placeholder="Name"
+            class="form-control"
+          />
+          <span
+          style="font-size: 14px"
+          class="text-danger ml-3"
+          *ngIf="
+            fg.get('name').invalid &&
+            fg.get('name').touched &&
+            fg.get('name').errors['required']
+          "
+        >
+          Please enter name
+        </span>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <input
+              type="text"
+              formControlName="dateOfBirth"
+              placeholder="Date of birth"
+              class="form-control"
+              bsDatepicker
+              [bsConfig]="{
+                containerClass: 'theme-green',
+                dateInputFormat: 'DD.MM.YYYY'
+              }"
+            />
+          </div>
+          <span
+            style="font-size: 14px"
+            class="text-danger ml-3"
+            *ngIf="
+              fg.get('dateOfBirth').invalid &&
+              fg.get('dateOfBirth').touched &&
+              fg.get('dateOfBirth').errors['required']
+            "
+          >
+            Please select date of birth
+          </span>
+        </div>
+        <div class="form-group">
+          <input
+            formControlName="street"
+            type="text"
+            placeholder="Street"
+            class="form-control"
+          />
+          <span
+          style="font-size: 14px"
+          class="text-danger ml-3"
+          *ngIf="
+            fg.get('street').invalid &&
+            fg.get('street').touched &&
+            fg.get('street').errors['required']
+          "
+        >
+          Please enter street
+        </span>
+        </div>
+        <div class="form-group">
+          <input
+            formControlName="city"
+            type="text"
+            placeholder="City"
+            class="form-control"
+          />
+          <span
+          style="font-size: 14px"
+          class="text-danger ml-3"
+          *ngIf="
+            fg.get('city').invalid &&
+            fg.get('city').touched &&
+            fg.get('city').errors['required']
+          "
+        >
+          Please enter city
+        </span>
+        </div>
+        <div class="form-group">
+          <input
+            formControlName="country"
+            type="text"
+            placeholder="Country"
+            class="form-control"
+          />
+          <span
+          style="font-size: 14px"
+          class="text-danger ml-3"
+          *ngIf="
+            fg.get('country').invalid &&
+            fg.get('country').touched &&
+            fg.get('country').errors['required']
+          "
+        >
+          Please enter country
+        </span>
+        </div>
+        <label style="font-size: small"
+          >Optional/Required for hospital appointment</label
+        >
+        <div class="form-group">
+          <input
+            formControlName="mBO"
+            type="text"
+            placeholder="MBO - Id number of insured"
+            class="form-control"
+          />
+        </div>      
+        <div class="unique form-group text-center">
+          <button
+            [disabled]="!patientForms.valid"
+            class="btn btn-success mr-2"
+            type="submit"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

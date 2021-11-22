@@ -20,7 +20,7 @@ export class AccountService {
   constructor(private http: HttpClient, private router: Router) { }
 
   login(values: any) {
-    return this.http.post(this.baseUrl + 'accounts/login', values)
+    return this.http.post(this.baseUrl + 'account/login', values)
      .pipe(
       map((response: User) => {
         const user = response;
@@ -32,7 +32,7 @@ export class AccountService {
   }
 
   register(values: any) {
-    return this.http.post(this.baseUrl + 'accounts/register', values).pipe(
+    return this.http.post(this.baseUrl + 'account/register', values).pipe(
       map((user: User) => {
         if (user) {
           this.setCurrentUser(user);
@@ -42,7 +42,7 @@ export class AccountService {
   }
 
   registerDoctor(values: any) {
-    return this.http.post(this.baseUrl + 'accounts/registerdoctor', values).pipe(
+    return this.http.post(this.baseUrl + 'account/registerdoctor', values).pipe(
       map((user: User) => {
         if (user) {
           this.setCurrentUser(user);

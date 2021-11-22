@@ -14,6 +14,6 @@ namespace Core.Interfaces
         Task<Patient> FindPatientById(int id);
         Task<Patient> FindPatientByUserId(int userId);
         Task CreatePatient(ApplicationUser user, RegisterDto registerDto);
-
+        Task Save();
     }
 }

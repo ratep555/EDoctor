@@ -50,21 +50,15 @@
         <td>{{ item.country }}</td>
         <td>{{ item.street }}</td>
         <td *ngIf="item.initialExaminationFee === 0; else elseBlock">
-          General Insurance
+          MBO Insurance
         </td>
         <ng-template #elseBlock
           ><td>
             {{ item.initialExaminationFee | number: "1.2-2" }} kn
-          </td></ng-template
-        >
-        <td *ngIf="item.initialExaminationFee === 0; else elseBlock">
-          General Insurance
-        </td>
-        <ng-template #elseBlock
-          ><td>
+          </td></ng-template>
+          <td>
             {{ item.followUpExaminationFee | number: "1.2-2" }} kn
-          </td></ng-template
-        >
+          </td>
         <td>
           <div class="text-center">
             <button

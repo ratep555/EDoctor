@@ -82,7 +82,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<OfficeCreateEditDto>> UpdateOffice(int id, [FromBody] OfficeCreateEditDto officeDto)
+        public async Task<ActionResult> UpdateOffice(int id, [FromBody] OfficeCreateEditDto officeDto)
         {
             var userId = User.GetUserId();
             var docor = await _officeRepository.FindDoctorByUserId(userId);

@@ -92,7 +92,11 @@ namespace Infrastructure.Data.Repositories
 
             _context.Patients.Add(patient);
             await _context.SaveChangesAsync();
+        }
 
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

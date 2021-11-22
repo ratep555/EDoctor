@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AccountService } from '../account/account.service';
 import { MedicalRecord, MedicalrecordCreateEdit } from '../shared/models/medicalrecord';
 import { PaginationForMedicalRecords, PaginationForPatients } from '../shared/models/pagination';
-import { Patient } from '../shared/models/patient';
+import { Patient, PatientEdit } from '../shared/models/patient';
 import { User } from '../shared/models/user';
 import { MyParams, UserParams } from '../shared/models/userparams';
 
@@ -17,6 +17,7 @@ export class PatientsService {
   user: User;
   userParams: UserParams;
   formData: MedicalrecordCreateEdit = new MedicalrecordCreateEdit();
+  formData1: PatientEdit = new PatientEdit();
 
  constructor(private http: HttpClient,
              private accountService: AccountService) {
@@ -121,10 +122,16 @@ export class PatientsService {
     return this.http.get<Patient>(this.baseUrl + 'patients/userid/' + id);
   }
 
+  updatingPatientssProfile(formData1){
+    return this.http.put(this.baseUrl + 'patients/updatingpatientsprofile/' + formData1.id, formData1);
+  }
+
   createMedicalRecord(values: any) {
     return this.http.post(this.baseUrl + 'medicalRecords/' + this.formData.patientId, values);
   }
 
 }
+
+
 
 

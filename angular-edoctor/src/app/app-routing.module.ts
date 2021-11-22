@@ -7,6 +7,8 @@ import { HomeComponent } from './home/home/home.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'admin', canActivate: [IsAdminGuard],
+  loadChildren: () => import('./admin/admin.module').then(mod => mod.AdminModule)},
   {path: 'appointments', canActivate: [AuthGuard],
   loadChildren: () => import('./appointments/appointments.module').then(mod => mod.AppointmentsModule)},
   {path: 'doctors', canActivate: [AuthGuard],

@@ -3,6 +3,7 @@ import { Doctor } from './doctor';
 import { Office } from './office';
 import { MedicalRecord } from './medicalrecord';
 import { Patient } from './patient';
+import { User } from './user';
 
 export interface PaginationForOffices {
     page: number;
@@ -39,3 +40,12 @@ export interface PaginationForMedicalRecords {
     count: number;
     data: MedicalRecord[];
   }
+
+export interface PaginationForUsers {
+    page: number;
+    pageCount: number;
+    count: number;
+    data: User[];
+  }
+
+

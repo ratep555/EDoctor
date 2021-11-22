@@ -1,6 +1,6 @@
 <div class="container" style="margin-top: 100px; margin-bottom: 100px">
   <div class="d-flex justify-content-center mt-5">
-    <div class="col-3">
+    <div class="col-4">
       <form
         [formGroup]="officeForm"
         (ngSubmit)="officeForm.valid && onSubmit()"
@@ -67,11 +67,11 @@
         <label style="font-size: small"
           ><strong>Select Location:</strong></label
         >
-        <div class="mb-15" style="position: relative; width: 600px">
+        <div class="mb-15" style="position: relative; width: 745px">
           <app-map (selectedLocation)="onSelectedLocation($event)"></app-map>
         </div>
         <div
-          style="margin-top: 530px; margin-bottom: 70px"
+          style="margin-top: 530px; margin-bottom: 40px"
           class="form-group text-center"
         >
           <button

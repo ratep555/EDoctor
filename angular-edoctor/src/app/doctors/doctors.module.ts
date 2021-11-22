@@ -13,8 +13,7 @@ import { DoctorsComponent } from './doctors.component';
     EditDoctorComponent,
     InfoDoctorComponent,
     InfoDoctorMyprofileComponent,
-    DoctorsComponent
-  ],
+    DoctorsComponent  ],
   imports: [
     CommonModule,
     SharedModule,

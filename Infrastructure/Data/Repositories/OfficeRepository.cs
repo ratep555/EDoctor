@@ -23,8 +23,8 @@ namespace Infrastructure.Data.Repositories
         {
                                  
             var doctorSpecialty = await _context.DoctorSpecialties.
-                                          Where(x => x.SpecialtyId == queryParameters.SpecialtyId) 
-                                          .FirstOrDefaultAsync();
+                                        Where(x => x.SpecialtyId == queryParameters.SpecialtyId) 
+                                        .FirstOrDefaultAsync();
 
             IQueryable<Office> offices = _context.Offices.Include(x => x.Doctor)
                                         .ThenInclude(x => x.DoctorSpecialties).ThenInclude(x => x.Doctor)

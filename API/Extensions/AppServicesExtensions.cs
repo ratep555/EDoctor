@@ -20,6 +20,7 @@ namespace API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, 
             IConfiguration config)
         {
+            services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IHospitalRepository, HospitalRepository>();
@@ -28,7 +29,6 @@ namespace API.Extensions
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IRatingRepository, RatingRepository>();
             services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IFileStorageService, InAppStorageService>();

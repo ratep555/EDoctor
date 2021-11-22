@@ -13,11 +13,15 @@ namespace API.Controllers
 {
     public class PatientsController : BaseApiController
     {
-        private readonly IMapper _mapper;
         private readonly IPatientRepository _patientRepository;
-        public PatientsController(IPatientRepository patientRepository, IMapper mapper)
+        private readonly IAdminRepository _adminRepository;
+        private readonly IMapper _mapper;
+        public PatientsController(IPatientRepository patientRepository,
+            IAdminRepository adminRepository,
+            IMapper mapper)
         {
             _patientRepository = patientRepository;
+            _adminRepository = adminRepository;
             _mapper = mapper;
         }
 
@@ -55,6 +59,22 @@ namespace API.Controllers
             if (patient == null) return NotFound();
 
             return _mapper.Map<PatientDto>(patient);
+        }
+
+        [HttpPut("updatingpatientsprofile/{id}")]
+        public async Task<ActionResult> UpdatingPatientsProfile(int id, [FromBody] PatientEditDto patientDto)
+        {
+            var patient = await _patientRepository.FindPatientById(id);
+
+            if (patient == null) return NotFound();
+
+            patient =  _mapper.Map(patientDto, patient);
+
+            await _adminRepository.UpdateUserPatientProfile(patientDto);
+ 
+            await _patientRepository.Save();
+
+            return NoContent();
         }
     }
 }

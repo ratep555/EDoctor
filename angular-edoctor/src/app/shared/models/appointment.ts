@@ -15,11 +15,11 @@ export interface Appointment {
 }
 
 export class AppointmentCreateEdit {
-        id: number;
-        officeId: number;
-        patientId: number;
-        startDateAndTimeOfAppointment: Date;
-        endDateAndTimeOfAppointment: Date;
-        remarks: string;
-        status: string;
+    id: number;
+    officeId: number;
+    patientId: number;
+    startDateAndTimeOfAppointment: Date;
+    endDateAndTimeOfAppointment: Date;
+    remarks: string;
+    status: string;
 }

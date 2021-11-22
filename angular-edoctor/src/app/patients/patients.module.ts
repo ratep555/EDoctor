@@ -9,6 +9,7 @@ import { MedicalrecordsListDoctorComponent } from './medicalrecords-list-doctor/
 import { PatientsListDoctorComponent } from './patients-list-doctor/patients-list-doctor.component';
 import { MedicalrecordsListPatientComponent } from './medicalrecords-list-patient/medicalrecords-list-patient.component';
 import { InfoPatientMyprofileComponent } from './info-patient-myprofile/info-patient-myprofile.component';
+import { EditPatientComponent } from './edit-patient/edit-patient.component';
 
 
 
@@ -20,7 +21,8 @@ import { InfoPatientMyprofileComponent } from './info-patient-myprofile/info-pat
     MedicalrecordsListDoctorComponent,
     PatientsListDoctorComponent,
     MedicalrecordsListPatientComponent,
-    InfoPatientMyprofileComponent
+    InfoPatientMyprofileComponent,
+    EditPatientComponent
   ],
   imports: [
     CommonModule,

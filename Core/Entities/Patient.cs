@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities
@@ -12,7 +13,10 @@ namespace Core.Entities
         public ApplicationUser ApplicationUser { get; set; }   
 
         public string Name { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
+        
         public string Country { get; set; }
         public string City { get; set; }
         public string Street { get; set; }

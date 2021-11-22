@@ -27,14 +27,14 @@ export class EditAppointmentDoctorComponent implements OnInit {
     .subscribe(res => this.officeList = res as []);
 
     this.appointmentsService.getAppointmentById(this.id).subscribe(
-      (appointment: AppointmentCreateEdit) => {
-        this.appointmentForms.push(this.fb.group({
-                  id: [this.id],
-                  officeId: [appointment.officeId, Validators.required],
-                  startDateAndTimeOfAppointment: [new Date(appointment.startDateAndTimeOfAppointment), Validators.required],
-                  endDateAndTimeOfAppointment: [new Date(appointment.endDateAndTimeOfAppointment), Validators.required],
-                }));
-          });
+    (appointment: AppointmentCreateEdit) => {
+    this.appointmentForms.push(this.fb.group({
+      id: [this.id],
+      officeId: [appointment.officeId, Validators.required],
+      startDateAndTimeOfAppointment: [new Date(appointment.startDateAndTimeOfAppointment), Validators.required],
+      endDateAndTimeOfAppointment: [new Date(appointment.endDateAndTimeOfAppointment), Validators.required],
+      }));
+    });
   }
 
   recordSubmit(fg: FormGroup) {

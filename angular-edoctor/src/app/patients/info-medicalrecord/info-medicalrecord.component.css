@@ -9,3 +9,9 @@
 ::placeholder {
     color: black;
   }
+
+.card {
+    position: absolute;
+    width: 65%;
+}
+
