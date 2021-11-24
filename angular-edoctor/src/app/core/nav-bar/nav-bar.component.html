@@ -81,7 +81,7 @@
               <i class="fa fa-phone mr-3"></i>My Appointments</a
             >
             <a routerLink="/patients/patientslistdoctor" class="dropdown-item">
-              <i class="fa fa-ambulance mr-2"></i> My Patients</a
+              <i class="fa fa-stethoscope mr-2 ml-1"></i> My Patients</a
             >
             <a
               routerLink="/patients/medicalrecordslistdoctor"
@@ -145,24 +145,30 @@
             >Admin</a
           >
           <div class="dropdown-menu" *dropdownMenu>
-            <a routerLink="/account/register-doctor" class="dropdown-item">
+            <a routerLink="/admin/register-doctor" class="dropdown-item">
               <i class="fa fa-registered mr-3"></i> Register Doctor</a
             >
             <div class="dropdown-divider"></div>
             <a routerLink="/admin/userslist" href="#" class="dropdown-item">
-              <i class="fa fa-list mr-3"></i> Users</a
+              <i class="fa fa-user mr-3"></i> Users</a
             >
             <a
-              routerLink="/appointments/appointmentslistpatient"
+              routerLink="/admin/hospitalslistadmin"
               class="dropdown-item"
             >
-              <i class="fa fa-phone mr-3"></i>My Appointments</a
+              <i class="fa fa-list mr-3"></i>Hospitals</a
             >
             <a
-              routerLink="/patients/medicalrecordslistpatient"
+              routerLink="/admin/specialtieslistadmin"
               class="dropdown-item"
             >
-              <i class="fa fa-ambulance mr-2"></i> My Medical Records</a
+              <i class="fa fa-list mr-3"></i>Specialties</a
+            >
+            <a
+              routerLink="/admin/statistics"
+              class="dropdown-item"
+            >
+              <i class="fa fa-bar-chart mr-3"></i>Statistics</a
             >
           </div>
         </div>

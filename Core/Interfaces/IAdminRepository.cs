@@ -16,5 +16,8 @@ namespace Core.Interfaces
         Task<string> GetRoleName(int userId);
         Task UpdateUserProfile(DoctorEditDto doctorDto);
         Task UpdateUserPatientProfile(PatientEditDto patientDto);
+        Task<StatisticsDto> ShowCountForEntities();
+        Task<IEnumerable<ChartDto1>> GetNumberAndTypeOfDoctorsForChart();
+        Task<IEnumerable<ChartDto2>> GetNumberAndTypeOfOfficesForChart();
     }
 }

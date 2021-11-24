@@ -19,11 +19,12 @@ export class OfficesComponent implements OnInit {
   specialties: Specialty[];
 
   sortOptions = [
-    {name: 'Sort Alphabetical by City', value: 'city'},
-    {name: 'Initial Fee Price: Low to High', value: 'priceAsc'},
-    {name: 'Initial Fee Price: High to Low', value: 'priceDesc'},
-    {name: 'Follow Up Fee Price: Low to High', value: 'priceAscFollowUp'},
-    {name: 'Follow Up Fee Price: High to Low', value: 'priceDescFollowUp'}
+    {name: 'All offices', value: 'city'},
+    {name: 'Hospital offices', value: 'hospital'},
+    {name: 'Private offices', value: 'private'},
+    {name: 'Price: Low to High', value: 'priceAsc'},
+    {name: 'Price: High to Low', value: 'priceDesc'},
+
   ];
 
   constructor(private officesService: OfficesService,

@@ -27,8 +27,8 @@ namespace Infrastructure.Data.Repositories
                                         .FirstOrDefaultAsync();
 
             IQueryable<Office> offices = _context.Offices.Include(x => x.Doctor)
-                                        .ThenInclude(x => x.DoctorSpecialties).ThenInclude(x => x.Doctor)
-                                        .AsQueryable().OrderBy(x => x.City);
+                                         .ThenInclude(x => x.DoctorSpecialties).ThenInclude(x => x.Doctor)
+                                         .AsQueryable().OrderBy(x => x.City);
             
             if (queryParameters.HasQuery())
             {
@@ -40,7 +40,6 @@ namespace Infrastructure.Data.Repositories
             if (queryParameters.SpecialtyId.HasValue)
             {
                 offices = offices.Where(x => x.DoctorId == doctorSpecialty.DoctorId);
-
             }
 
             offices = offices.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
@@ -56,11 +55,11 @@ namespace Infrastructure.Data.Repositories
                     case "priceDesc":
                         offices = offices.OrderByDescending(p => p.InitialExaminationFee);
                         break;
-                    case "priceAscFollowUp":
-                        offices = offices.OrderBy(p => p.FollowUpExaminationFee);
+                    case "hospital":
+                        offices = offices.Where(p => p.HospitalId != null);
                         break;
-                    case "priceDescFollowUp":
-                        offices = offices.OrderByDescending(p => p.FollowUpExaminationFee);
+                    case "private":
+                        offices = offices.Where(p => p.HospitalId == null);
                         break;
                     default:
                         offices = offices.OrderBy(n => n.City);

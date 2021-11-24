@@ -22,6 +22,7 @@ import { RatingComponent } from './components/rating/rating.component';
 import {NgxPrintModule} from 'ngx-print';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { RolesModalComponent } from './components/roles-modal/roles-modal.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { RolesModalComponent } from './components/roles-modal/roles-modal.compon
     PaginationModule.forRoot(),
     TabsModule.forRoot(),
     NgxPrintModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    GoogleChartsModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
@@ -62,6 +64,7 @@ import { RolesModalComponent } from './components/roles-modal/roles-modal.compon
     PaginationModule,
     NgxPrintModule,
     ModalModule,
+    GoogleChartsModule,
     PagerComponent,
     MapComponent,
     HasRoleDirective,

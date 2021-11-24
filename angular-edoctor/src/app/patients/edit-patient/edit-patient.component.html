@@ -14,25 +14,10 @@
           class="form-control"
           hidden
         />
-        <div class="form-group">
-          <input
-            formControlName="name"
-            type="text"
-            placeholder="Name"
-            class="form-control"
-          />
-          <span
-          style="font-size: 14px"
-          class="text-danger ml-3"
-          *ngIf="
-            fg.get('name').invalid &&
-            fg.get('name').touched &&
-            fg.get('name').errors['required']
-          "
-        >
-          Please enter name
-        </span>
-        </div>
+        <app-text-input
+          formControlName="name"
+          [label]="'Name'"
+        ></app-text-input>
         <div class="form-group row">
           <div class="col-md-12">
             <input
@@ -59,74 +44,22 @@
             Please select date of birth
           </span>
         </div>
-        <div class="form-group">
-          <input
-            formControlName="street"
-            type="text"
-            placeholder="Street"
-            class="form-control"
-          />
-          <span
-          style="font-size: 14px"
-          class="text-danger ml-3"
-          *ngIf="
-            fg.get('street').invalid &&
-            fg.get('street').touched &&
-            fg.get('street').errors['required']
-          "
-        >
-          Please enter street
-        </span>
-        </div>
-        <div class="form-group">
-          <input
-            formControlName="city"
-            type="text"
-            placeholder="City"
-            class="form-control"
-          />
-          <span
-          style="font-size: 14px"
-          class="text-danger ml-3"
-          *ngIf="
-            fg.get('city').invalid &&
-            fg.get('city').touched &&
-            fg.get('city').errors['required']
-          "
-        >
-          Please enter city
-        </span>
-        </div>
-        <div class="form-group">
-          <input
-            formControlName="country"
-            type="text"
-            placeholder="Country"
-            class="form-control"
-          />
-          <span
-          style="font-size: 14px"
-          class="text-danger ml-3"
-          *ngIf="
-            fg.get('country').invalid &&
-            fg.get('country').touched &&
-            fg.get('country').errors['required']
-          "
-        >
-          Please enter country
-        </span>
-        </div>
+        <app-text-input
+          formControlName="street"
+          [label]="'Street'"
+        ></app-text-input>
+        <app-text-input
+          formControlName="city"
+          [label]="'City'"
+        ></app-text-input>
+        <app-text-input
+          formControlName="country"
+          [label]="'Country'"
+        ></app-text-input>
         <label style="font-size: small"
           >Optional/Required for hospital appointment</label
         >
-        <div class="form-group">
-          <input
-            formControlName="mBO"
-            type="text"
-            placeholder="MBO - Id number of insured"
-            class="form-control"
-          />
-        </div>      
+        <app-text-input formControlName="mBO" [label]="'MBO - Id number of insured'"></app-text-input>
         <div class="unique form-group text-center">
           <button
             [disabled]="!patientForms.valid"

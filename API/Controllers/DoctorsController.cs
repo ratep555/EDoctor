@@ -174,10 +174,7 @@ namespace API.Controllers
             await _doctorRepository.Save();
 
             return NoContent();
-        }
-
-
-
-
+        }       
+      
     }
 }

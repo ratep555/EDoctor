@@ -56,7 +56,7 @@ export class AccountService {
   }
 
   getAllHospitals() {
-    return this.http.get<Hospital[]>(this.baseUrl + 'hospitals');
+    return this.http.get<Hospital[]>(this.baseUrl + 'hospitals/office');
   }
 
   setCurrentUser(user: User) {

@@ -106,6 +106,65 @@ namespace Infrastructure.Data.Repositories
 
             _context.Entry(user).State = EntityState.Modified;     
         }
+
+        public async Task<StatisticsDto> ShowCountForEntities()
+        {
+            var statistics = new StatisticsDto();
+
+            statistics.PatientsCount = await _context.Patients.CountAsync();
+            statistics.DoctorsCount = await _context.Doctors.CountAsync();
+            statistics.OfficesCount = await _context.Offices.CountAsync();
+            statistics.AppointmentsCount = await _context.Appointments.Where(x => x.Status == true).CountAsync();
+
+            return statistics;
+        }
+
+        public async Task<IEnumerable<ChartDto1>> GetNumberAndTypeOfDoctorsForChart()
+        {
+            List<ChartDto1> list = new List<ChartDto1>();
+
+            var alloffices = await _context.Offices.ToListAsync();
+
+            IEnumerable<int> ids = alloffices.Select(x => x.DoctorId);
+
+            var hospitaloffices = await _context.Offices.Where(x => x.HospitalId != null).ToListAsync();
+
+            IEnumerable<int> ids1 = hospitaloffices.Select(x => x.DoctorId);
+
+            var nonhospitaloffices = await _context.Offices.Where(x => x.HospitalId == null).ToListAsync();
+
+            IEnumerable<int> ids2 = nonhospitaloffices.Select(x => x.DoctorId);
+
+            list.Add(new ChartDto1 { DoctorType = "Hospital and Private Doctors", 
+                NumberOfDoctors = await _context.Doctors.Where(p => ids.Contains(p.Id) && ids1.Contains(p.Id)
+                && ids2.Contains(p.Id)).CountAsync()  });
+
+            list.Add(new ChartDto1 { DoctorType = "Hospital Doctors", 
+                NumberOfDoctors = await _context.Doctors.Where(p => ids.Contains(p.Id) 
+                && ids1.Contains(p.Id) && !ids2.Contains(p.Id)).CountAsync()  });
+
+            list.Add(new ChartDto1 { DoctorType = "Private Doctors", 
+                NumberOfDoctors = await _context.Doctors.Where(p => ids.Contains(p.Id) 
+                && !ids1.Contains(p.Id) && ids2.Contains(p.Id)).CountAsync()  });        
+
+            return list;
+        }
+
+        public async Task<IEnumerable<ChartDto2>> GetNumberAndTypeOfOfficesForChart()
+        {
+            List<ChartDto2> list = new List<ChartDto2>();
+
+            list.Add(new ChartDto2 { OfficeType = "Hospital Offices", 
+                NumberOfOffices = await _context.Offices.Where(x => x.HospitalId != null).CountAsync()  });
+
+            list.Add(new ChartDto2 { OfficeType = "Private Offices", 
+                NumberOfOffices = await _context.Offices.Where(x => x.HospitalId == null).CountAsync()  });
+            
+            return list;
+        }
+
+
+ 
     }
 }
 

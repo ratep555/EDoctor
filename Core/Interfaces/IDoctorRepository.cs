@@ -18,6 +18,5 @@ namespace Core.Interfaces
         Task<List<Specialty>> GetNonSelectedSpecialties(List<int> ids);
         Task<List<Hospital>> GetNonSelectedHospitals(List<int> ids);
         Task Save();
-
     }
 }

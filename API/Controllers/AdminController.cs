@@ -7,7 +7,6 @@ using Core.Interfaces;
 using Core.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -22,6 +21,7 @@ namespace API.Controllers
             _adminRepository = adminRepository;
         }
 
+     // [Authorize(Policy = "RequireAdminRole")]
         [HttpGet]
         public async Task<ActionResult<Pagination<UserToReturnDto>>> GetAllUsers(
             [FromQuery] QueryParameters queryParameters)
@@ -31,27 +31,6 @@ namespace API.Controllers
 
             return Ok(new Pagination<UserToReturnDto>
             (queryParameters.Page, queryParameters.PageCount, count, list));
-        }
-
-
-       // [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("users-with-roles")]
-        public async Task<ActionResult> GetUsersWithRoles()
-        {
-            var users = await _userManager.Users
-                .Include(r => r.UserRoles)
-                .ThenInclude(r => r.Role)
-                .OrderBy(u => u.UserName)
-
-                .Select(u => new
-                {
-                    u.Id,
-                    Username = u.UserName,
-                    Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
-                })
-                .ToListAsync();
-
-            return Ok(users);
         }
 
         [HttpPost("edit-roles/{username}")]
@@ -111,8 +90,39 @@ namespace API.Controllers
            return NoContent();
         }
 
+        [HttpGet("statistics")]
+        public async Task<ActionResult<StatisticsDto>> ShowCountForEntities()
+        {
+            var list = await _adminRepository.ShowCountForEntities();
+
+            if (list == null) return NotFound(new ServerResponse(404));
+
+            return Ok(list);
+        }
+
+        [HttpGet("charts1")]
+        public async Task<ActionResult> ShowNumberAndTypeOfDoctorsForChart()
+        {
+            var list = await _adminRepository.GetNumberAndTypeOfDoctorsForChart();
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest();        
+        }
+
+        [HttpGet("charts2")]
+        public async Task<ActionResult> ShowNumberAndTypeOfOfficesForChart()
+        {
+            var list = await _adminRepository.GetNumberAndTypeOfOfficesForChart();
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest();        
+        }
     }
+
 }
+
 
 
 

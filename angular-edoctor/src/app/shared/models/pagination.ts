@@ -4,6 +4,8 @@ import { Office } from './office';
 import { MedicalRecord } from './medicalrecord';
 import { Patient } from './patient';
 import { User } from './user';
+import { Hospital } from './hospital';
+import { Specialty } from './specialty';
 
 export interface PaginationForOffices {
     page: number;
@@ -46,6 +48,20 @@ export interface PaginationForUsers {
     pageCount: number;
     count: number;
     data: User[];
+  }
+
+export interface PaginationForHospitals {
+    page: number;
+    pageCount: number;
+    count: number;
+    data: Hospital[];
+  }
+
+export interface PaginationForSpecialties {
+    page: number;
+    pageCount: number;
+    count: number;
+    data: Specialty[];
   }
 
 
