@@ -19,6 +19,7 @@ namespace Core.Interfaces
         Task CreateAppointment(Appointment appointment);
         Task<List<Office>> GetDoctorOffices(int userId);
         Task UpdateAppointment(Appointment appointment);
+        Task DeleteAppointment(Appointment apponitment);
         Task<Office> GetOfficeByAppointment(Appointment appointment);
 
 

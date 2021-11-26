@@ -52,33 +52,13 @@ export class StatisticsComponent implements OnInit {
     this.adminService.showNumberOfDoctors().subscribe(
       result => {
         this.data = [];
-        this.title = 'Practicing Doctors';
+        this.title = 'Practicing doctors';
         this.type = ChartType.PieChart;
         console.log(result.list);
         for (const data in result.list) {
           if (data) {
             this.data.push([result.list[data].doctorType.toString(),
               result.list[data].numberOfDoctors]);
-          }
-        }
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  showNumberOfOffices() {
-    this.adminService.showNumberOfOffices().subscribe(
-      result => {
-        this.data = [];
-        this.title = 'Offices';
-        this.type = ChartType.PieChart;
-        console.log(result.list);
-        for (const data in result.list) {
-          if (data) {
-            this.data.push([result.list[data].officeType.toString(),
-              result.list[data].numberOfOffices]);
           }
         }
       },

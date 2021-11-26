@@ -130,6 +130,23 @@ export class AdminService {
   );
 }
 
+  showNumberOfAppointments() {
+  return this.http.get<any>(this.baseUrl + 'admin/charts3').pipe(
+  map( result => {
+    console.log(result);
+    return result;
+  })
+  );
+}
+  showNumberOfPatients() {
+  return this.http.get<any>(this.baseUrl + 'admin/charts4').pipe(
+  map( result => {
+    console.log(result);
+    return result;
+  })
+  );
+}
+
 }
 
 

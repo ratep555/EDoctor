@@ -1,4 +1,4 @@
-<div class="container" style="margin-top: 200px">
+<div class="container" style="margin-top: 100px; margin-bottom: 100px">
   <div class="zeko">
     <ul class="list-group list-group-horizontal-sm">
       <li
@@ -56,8 +56,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of appointments" style="color: black">
-        <td>{{ item.doctor }}</td>
-        <td>{{ item.patient }}</td>
+        <td>
+          <a
+            class="done"
+            href=""
+            routerLink="/doctors/infodoctor/{{ item.doctorId }}"
+            >{{ item.doctor }}</a
+          >
+        </td>                <td>{{ item.patient }}</td>
         <td>{{ item.officeAddress }}</td>
         <td>{{ item.city }}</td>
         <td>
@@ -67,28 +73,18 @@
           {{ item.endDateAndTimeOfAppointment | date: "dd.MM.yyyy HH:mm" }}
         </td>
         <td>{{ item.status }}</td>
-        <td class="text-center" *ngIf="item.patient === null; else elseBlock">
-          <button
-            routerLink="/appointments/bookappointmentpatient/{{ item.id }}"
-            type="button"
-            class="btn btn-success d-inline"
-          >
-            <i class="fa fa-ticket"></i>
-            Book
-          </button>
-        </td>
-        <ng-template #elseBlock
-          ><td class="text-center">
-            <button
-              (click)="cancelAppointment(item.id)"
-              type="button"
-              class="btn btn-danger d-inline"
-            >
-              <i class="fa fa-times-circle"></i>
-              Cancel
-            </button>
-          </td></ng-template
-        >
+       <td *ngIf="item.status === true && 
+       ((item.startDateAndTimeOfAppointment | date: 'dd.MM.yyyy HH:mm') > (currentDate | date: 'dd.MM.yyyy HH:mm'))" 
+       class="text-center">
+                  <button
+                    (click)="cancelAppointment(item.id)"
+                    type="button"
+                    class="btn btn-danger d-inline"
+                  >
+                    <i class="fa fa-times-circle"></i>
+                    Cancel
+                  </button>
+                </td>
       </tr>
     </tbody>
   </table>

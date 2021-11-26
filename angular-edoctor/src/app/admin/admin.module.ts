@@ -11,6 +11,9 @@ import { SpecialtiesListAdminComponent } from './specialties/specialties-list-ad
 import { AddSpecialtyAdminComponent } from './specialties/add-specialty-admin/add-specialty-admin.component';
 import { EditSpecialtyAdminComponent } from './specialties/edit-specialty-admin/edit-specialty-admin.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { ChartOfficesComponent } from './charts/chart-offices/chart-offices.component';
+import { ChartAppointmentsComponent } from './charts/chart-appointments/chart-appointments.component';
+import { ChartPatientsComponent } from './charts/chart-patients/chart-patients.component';
 
 
 
@@ -25,6 +28,9 @@ import { StatisticsComponent } from './statistics/statistics.component';
     AddSpecialtyAdminComponent,
     EditSpecialtyAdminComponent,
     StatisticsComponent,
+    ChartOfficesComponent,
+    ChartAppointmentsComponent,
+    ChartPatientsComponent,
   ],
   imports: [
     CommonModule,

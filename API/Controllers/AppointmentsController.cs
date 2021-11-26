@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.ErrorHandling;
 using API.Extensions;
 using AutoMapper;
 using Core.Dtos;
@@ -49,7 +50,7 @@ namespace API.Controllers
 
             var count = await _appointmentRepository.GetCountForAppointmentsForSingleDoctor(userId);
             var list = await _appointmentRepository
-                             .GetAppointmentsForSingleDoctor(queryParameters, userId);
+                .GetAppointmentsForSingleDoctor(queryParameters, userId);
 
             var data = _mapper.Map<IEnumerable<AppointmentDto>>(list);
 
@@ -64,8 +65,7 @@ namespace API.Controllers
             var userId = User.GetUserId();
 
             var count = await _appointmentRepository.GetCountForAppointmentsForSinglePatient(userId);
-            var list = await _appointmentRepository
-                             .GetAppointmentsForSinglePatient(userId, queryParameters);
+            var list = await _appointmentRepository.GetAppointmentsForSinglePatient(userId, queryParameters);
 
             var data = _mapper.Map<IEnumerable<AppointmentDto>>(list);
 
@@ -78,9 +78,7 @@ namespace API.Controllers
             int id, [FromQuery] QueryParameters queryParameters)
         {
             var count = await _appointmentRepository.GetCountForAvailableAppointmentsForOffice(id);
-            var list = await _appointmentRepository
-                             .GetAvailableAppointmentsForOffice(
-                                 id, queryParameters);
+            var list = await _appointmentRepository.GetAvailableAppointmentsForOffice(id, queryParameters);
 
             var data = _mapper.Map<IEnumerable<AppointmentDto>>(list);
 
@@ -121,12 +119,12 @@ namespace API.Controllers
                 appointment.PatientId = null;
                 appointment.Remarks = "";
             }
+            
+                appointment.StartDateAndTimeOfAppointment = appointmentDto.StartDateAndTimeOfAppointment.AddHours(1);
+                appointment.EndDateAndTimeOfAppointment = appointmentDto.EndDateAndTimeOfAppointment.AddHours(1);
+
+                await _appointmentRepository.UpdateAppointment(appointment);
                         
-            appointment.StartDateAndTimeOfAppointment = appointmentDto.StartDateAndTimeOfAppointment.AddHours(1);
-            appointment.EndDateAndTimeOfAppointment = appointmentDto.EndDateAndTimeOfAppointment.AddHours(1);
-
-            await _appointmentRepository.UpdateAppointment(appointment);
-
             return NoContent();
         }
 
@@ -165,6 +163,11 @@ namespace API.Controllers
 
             if (appointment == null) return NotFound();
 
+            if (appointment.Status == true) 
+            {
+                appointment.Status = null;
+            }
+
             appointment.PatientId = null;
             appointment.Remarks = "";
 
@@ -172,6 +175,18 @@ namespace API.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAppointment(int id)
+        {
+            var appointment = await _appointmentRepository.GetApointmentById(id);
+
+            if (appointment == null) return NotFound(new ServerResponse(404));
+
+            await _appointmentRepository.DeleteAppointment(appointment);
+
+            return NoContent();
+        }      
 
         [HttpGet("offices")]
         public async Task<ActionResult<List<OfficeDto>>> GetDoctorsOffices()

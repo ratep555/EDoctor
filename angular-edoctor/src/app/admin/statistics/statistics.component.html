@@ -1,23 +1,9 @@
 <div class="container" style="width: 100%; margin-top: 70px;">
-    <div class="row" *ngIf="statistics">
+    <div class="row">
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <div>{{statistics.patientsCount}}</div>
-                    <div class="row no-gutters">
-                        <div class="text-md-left font-weight-bold text-primary text-uppercase mb-xl-0">
-                        Total patients</div>
-                        <div class="col-auto">
-                            <i class="fa fa-stethoscope fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div>{{statistics.doctorsCount}}</div>
+                    <div>{{statistics?.doctorsCount}}</div>
                     <div class="row no-gutters align-items-center">
                         <div class="text-md-left font-weight-bold text-info text-uppercase mb-xl-0">
                         Total doctors</div>
@@ -31,7 +17,21 @@
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <div>{{statistics.officesCount}}</div>
+                    <div>{{statistics?.appointmentsCount}}</div>
+                    <div class="row no-gutters align-items-center">
+                        <div class="text-md-left font-weight-bold text-success text-uppercase mb-xl-0">
+                        Upcoming <br> Appointments</div>
+                        <div class="col-auto">
+                            <i class="fa fa-comments fa-2x text-gray-300 ml-10"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div>{{statistics?.officesCount}}</div>
                     <div class="row no-gutters align-items-center">
                         <div class="text-md-left font-weight-bold text-warning text-uppercase mb-xl-0">
                         Total Offices</div>
@@ -45,12 +45,12 @@
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <div>{{statistics.appointmentsCount}}</div>
-                    <div class="row no-gutters align-items-center">
-                        <div class="text-md-left font-weight-bold text-success text-uppercase mb-xl-0">
-                        Appointments</div>
+                    <div>{{statistics?.patientsCount}}</div>
+                    <div class="row no-gutters">
+                        <div class="text-md-left font-weight-bold text-primary text-uppercase mb-xl-0">
+                        Total patients</div>
                         <div class="col-auto">
-                            <i class="fa fa-comments fa-2x text-gray-300 ml-10"></i>
+                            <i class="fa fa-stethoscope fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -66,4 +66,7 @@
     [width]="width"
     [height]="height">
  </google-chart>
+ <app-chart-appointments></app-chart-appointments>
+ <app-chart-offices></app-chart-offices>
+ <app-chart-patients></app-chart-patients>
 </div>

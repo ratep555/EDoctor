@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using API.ErrorHandling;
 using API.Extensions;
 using AutoMapper;
 using Core.Dtos;
@@ -75,6 +77,54 @@ namespace API.Controllers
             await _patientRepository.Save();
 
             return NoContent();
+        }
+
+        [HttpGet("patientstatistics")]
+        public async Task<ActionResult<StatisticsDto>> ShowCountForEntitiesForPatient()
+        {
+            var userId = User.GetUserId();
+
+            var list = await _patientRepository.ShowCountForEntitiesForPatient(userId);
+
+            if (list == null) return NotFound(new ServerResponse(404));
+
+            return Ok(list);
+        }
+
+        [HttpGet("patientcharts1")]
+        public async Task<ActionResult> ShowNumberAndTypeOfMedicalRecordsForChartForPatient()
+        {
+            var userId = User.GetUserId();
+
+            var list = await _patientRepository.GetNumberAndTypeOfMedicalRecordsForPatientForChart(userId);
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest();        
+        }
+
+        [HttpGet("patientcharts2")]
+        public async Task<ActionResult> ShowNumberAndTypeOfOfficesForPatient()
+        {
+            var userId = User.GetUserId();
+
+            var list = await _patientRepository.GetNumberAndTypeOfOfficesForPatientForChart(userId);
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest();        
+        }
+
+        [HttpGet("patientcharts3")]
+        public async Task<ActionResult> ShowNumberAndTypeOfAppointmentsForPatient()
+        {
+            var userId = User.GetUserId();
+
+            var list = await _patientRepository.GetNumberAndTypeOfAppointmentsForPatientForChart(userId);
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest();        
         }
     }
 }

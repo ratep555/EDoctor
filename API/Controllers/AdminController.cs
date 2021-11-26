@@ -119,6 +119,26 @@ namespace API.Controllers
 
             return BadRequest();        
         }
+
+        [HttpGet("charts3")]
+        public async Task<ActionResult> ShowNumberAndTypeOfAppointmentsForChart()
+        {
+            var list = await _adminRepository.GetNumberAndTypeOfAppointmentsForChart();
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest();        
+        }
+
+        [HttpGet("charts4")]
+        public async Task<ActionResult> ShowNumberAndTypeOfPatientsForChart()
+        {
+            var list = await _adminRepository.GetNumberAndTypeOfPatientsForChart();
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest();        
+        }
     }
 
 }

@@ -1,0 +1,71 @@
+<div class="container" style="width: 100%; margin-top: 70px;">
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div>{{doctorstatistics?.upcomingAppointmentsCount}}</div>
+                    <div class="row no-gutters align-items-center">
+                        <div class="text-md-left font-weight-bold text-success text-uppercase mb-xl-0">
+                        Upcoming <br> Appointments</div>
+                        <div class="col-auto">
+                            <i class="fa fa-comments fa-2x text-gray-300 ml-10"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div>{{doctorstatistics?.availableAppointmentsCount}}</div>
+                    <div class="row no-gutters align-items-center">
+                        <div class="text-md-left font-weight-bold text-warning text-uppercase mb-xl-0">
+                        Available <br> Appointments</div>
+                        <div class="col-auto">
+                            <i class="fa fa-comments fa-2x text-gray-300 ml-10"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div>{{doctorstatistics?.patientsCount}}</div>
+                    <div class="row no-gutters align-items-center">
+                        <div class="text-md-left font-weight-bold text-primary text-uppercase mb-xl-0">
+                        Patients <br> examined</div>
+                        <div class="col-auto">
+                            <i class="fa fa-stethoscope fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+            </div>
+        </div>     
+    </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div>{{doctorstatistics?.medicalRecordsCount}}</div>
+                    <div class="row no-gutters align-items-center">
+                        <div class="text-md-left font-weight-bold text-info text-uppercase mb-xl-0">
+                        Medical <br> records issued</div>
+                        <div class="col-auto">
+                            <i class="fa fa-ambulance fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <google-chart #chart
+    [title]="title"
+    [type]="type"
+    [data]="data"
+    [columns]="columnNames"
+    [options]="options"
+    [width]="width"
+    [height]="height">
+ </google-chart>
+ <app-chart-patients-doctor></app-chart-patients-doctor>
+ <app-chart-records-doctor></app-chart-records-doctor>
+</div>

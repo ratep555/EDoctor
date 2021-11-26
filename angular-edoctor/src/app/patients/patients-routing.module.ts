@@ -8,6 +8,7 @@ import { PatientsListDoctorComponent } from './patients-list-doctor/patients-lis
 import { MedicalrecordsListPatientComponent } from './medicalrecords-list-patient/medicalrecords-list-patient.component';
 import { InfoPatientMyprofileComponent } from './info-patient-myprofile/info-patient-myprofile.component';
 import { EditPatientComponent } from './edit-patient/edit-patient.component';
+import { StatisticsPatientComponent } from './statistics-patient/statistics-patient.component';
 
 
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'medicalrecordslistdoctor', component: MedicalrecordsListDoctorComponent},
   {path: 'medicalrecordslistpatient', component: MedicalrecordsListPatientComponent},
   {path: 'infopatientmyprofile', component: InfoPatientMyprofileComponent},
+  {path: 'statisticspatient', component: StatisticsPatientComponent},
   {path: 'addmedicalrecord/:id', component: AddMedicalrecordComponent},
   {path: 'editpatient/:id', component: EditPatientComponent},
   {path: 'infopatient/:id', component: InfoPatientComponent},

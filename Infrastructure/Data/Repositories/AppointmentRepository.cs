@@ -87,21 +87,32 @@ namespace Infrastructure.Data.Repositories
                     case "all":
                         appointment = appointment.OrderBy(p => p.StartDateAndTimeOfAppointment);
                         break;
-                    case "pending":
-                        appointment = appointment.Where(p => p.Status == null & p.PatientId == null);
+                    case "active":
+                        appointment = appointment.Where(p => p.StartDateAndTimeOfAppointment > DateTime.Now);
                         break;
-                    case "booked":
-                        appointment = appointment.Where(p => p.Status == null && p.PatientId != null);
+                    case "upcoming":
+                        appointment = appointment.Where(p => p.Status == true & p.PatientId != null
+                        && p.StartDateAndTimeOfAppointment > DateTime.Now);
                         break;
-                    case "confirmed":
-                        appointment = appointment.Where(p => p.Status == true && p.PatientId != null);
+                    case "available":
+                        appointment = appointment.Where(p => p.Status == null & p.PatientId == null
+                        && p.StartDateAndTimeOfAppointment > DateTime.Now);
                         break;
-                    case "cancelled":
-                        appointment = appointment.Where(p => p.Status == false && p.PatientId != null);
+                    case "unconfirmed":
+                        appointment = appointment.Where(p => p.Status == null && p.PatientId != null
+                        && p.StartDateAndTimeOfAppointment > DateTime.Now);
+                        break;
+                    case "previousattended":
+                        appointment = appointment.Where(x => x.EndDateAndTimeOfAppointment < DateTime.Now
+                        && x.Status == true);
+                        break;
+                    case "previousnonattended":
+                        appointment = appointment.Where(x => x.EndDateAndTimeOfAppointment < DateTime.Now
+                        && x.Status == null);
                         break;
                     default:
                         appointment = appointment
-                            .Where(n => n.StartDateAndTimeOfAppointment > DateTime.Now && n.PatientId != null);
+                           .Where(p => p.StartDateAndTimeOfAppointment > DateTime.Now);
                         break;
                 }
             }    
@@ -139,15 +150,17 @@ namespace Infrastructure.Data.Repositories
             {
                 switch (queryParameters.Sort)
                 {
-                     case "booked":
-                        appointments = appointments.Where(p => p.Status == null && p.PatientId != null);
+                     case "pending":
+                        appointments = appointments.Where(p => p.Status == null
+                        && p.StartDateAndTimeOfAppointment > DateTime.Now);
                         break;
                     case "confirmed":
-                        appointments = appointments.Where(p => p.Status == true && p.PatientId != null);
+                        appointments = appointments.Where(p => p.Status == true
+                        && p.StartDateAndTimeOfAppointment > DateTime.Now);
                         break;
                     case "previous":
                         appointments = appointments.
-                            Where(p => p.EndDateAndTimeOfAppointment < DateTime.Now && p.PatientId != null);
+                            Where(p => p.EndDateAndTimeOfAppointment < DateTime.Now);
                         break;
                     case "dateDesc":
                         appointments = appointments.OrderByDescending(p => p.StartDateAndTimeOfAppointment);

@@ -8,6 +8,7 @@ import { Doctor, DoctorEditDto, DoctorPutGetDto } from '../shared/models/doctor'
 import { MedicalrecordCreateEdit } from '../shared/models/medicalrecord';
 import { Office } from '../shared/models/office';
 import { PaginationForDoctors } from '../shared/models/pagination';
+import { DoctorStatistics } from '../shared/models/statistics';
 import { User } from '../shared/models/user';
 import { UserParams } from '../shared/models/userparams';
 
@@ -52,6 +53,26 @@ export class DoctorsService {
     params = params.append('page', userParams.page.toString());
     params = params.append('pageCount', userParams.pageCount.toString());
     return this.http.get<PaginationForDoctors>(this.baseUrl + 'doctors', {observe: 'response', params})
+    .pipe(
+      map(response  => {
+        return response.body;
+      })
+    );
+  }
+
+  getAllDoctorsOfPatient(userParams: UserParams) {
+    let params = new HttpParams();
+    if (userParams.specialtyId !== 0) {
+      params = params.append('specialtyId', userParams.specialtyId.toString());
+    }
+    if (userParams.query) {
+      params = params.append('query', userParams.query);
+    }
+    params = params.append('sort', userParams.sort);
+    params = params.append('page', userParams.page.toString());
+    params = params.append('pageCount', userParams.pageCount.toString());
+    return this.http.get<PaginationForDoctors>
+    (this.baseUrl + 'doctors/doctorsofpatient', {observe: 'response', params})
     .pipe(
       map(response  => {
         return response.body;
@@ -106,4 +127,40 @@ export class DoctorsService {
     return formData;
   }
 
+  getCountForEntitiesForDoctor() {
+    return this.http.get<DoctorStatistics>(this.baseUrl + 'doctors/doctorstatistics');
+  }
+
+  showNumberOfAppointmentsForDoctor() {
+    return this.http.get<any>(this.baseUrl + 'doctors/doctorcharts1').pipe(
+    map( result => {
+      console.log(result);
+      return result;
+    })
+    );
+  }
+
+  showNumberOfPatientsForDoctor() {
+    return this.http.get<any>(this.baseUrl + 'doctors/doctorcharts2').pipe(
+    map( result => {
+      console.log(result);
+      return result;
+    })
+    );
+  }
+
+  showNumberOfMedicalRecordsForDoctor() {
+    return this.http.get<any>(this.baseUrl + 'doctors/doctorcharts3').pipe(
+    map( result => {
+      console.log(result);
+      return result;
+    })
+    );
+  }
+
 }
+
+
+
+
+

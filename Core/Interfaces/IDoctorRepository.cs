@@ -10,6 +10,8 @@ namespace Core.Interfaces
     {
         Task<List<DoctorDto>> GetAllDoctors(QueryParameters queryParameters);
         Task<int> GetCountForAllDoctors();
+        Task<List<DoctorDto>> GetAllDoctorsOfPatient(int userId, QueryParameters queryParameters);
+        Task<int> GetCountForAllDoctorsOfPatient(int userId, QueryParameters queryParameters);
         Task<Doctor> FindDoctorById(int id);
         Task<Doctor> FindDoctorByUserId(int userId);
         Task CreateDoctor(int userId, Doctor doctor, string lastname, string firstname);
@@ -18,5 +20,20 @@ namespace Core.Interfaces
         Task<List<Specialty>> GetNonSelectedSpecialties(List<int> ids);
         Task<List<Hospital>> GetNonSelectedHospitals(List<int> ids);
         Task Save();
+        Task<DoctorStatisticsDto> ShowCountForEntitiesForDoctor(int userId);
+        Task<IEnumerable<DoctorChartDto1>> GetNumberAndTypeOfAppointmentsForDoctorForChart(int userId);
+        Task<IEnumerable<DoctorChartDto2>> GetNumberAndTypeOfPatientsForDoctorForChart(int userId);
+        Task<IEnumerable<DoctorChartDto3>> GetNumberAndTypeOfMedicalRecordsForDoctorForChart(int userId);
     }
 }
+
+
+
+
+
+
+
+
+
+
+

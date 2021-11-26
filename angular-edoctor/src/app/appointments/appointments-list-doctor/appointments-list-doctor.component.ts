@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Appointment } from 'src/app/shared/models/appointment';
 import { UserParams } from 'src/app/shared/models/userparams';
 import { AppointmentsService } from '../appointments.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-appointments-list-doctor',
@@ -17,16 +19,18 @@ export class AppointmentsListDoctorComponent implements OnInit {
   totalCount: number;
 
   sortOptions = [
-    {name: 'Upcoming', value: 'city'},
+    {name: 'Upcoming appointments', value: 'upcoming'},
+    {name: 'All active', value: 'city'},
+    {name: 'Available', value: 'available'},
+    {name: 'Unconfirmed active', value: 'unconfirmed'},
+    {name: 'Previous attended', value: 'previousattended'},
+    {name: 'Previous non-attended', value: 'previousnonattended'},
     {name: 'All', value: 'all'},
-    {name: 'Pending', value: 'pending'},
-    {name: 'Booked', value: 'booked'},
-    {name: 'Confirmed', value: 'confirmed'},
-    {name: 'Cancelled', value: 'cancelled'}
   ];
 
   constructor(private appointmentsService: AppointmentsService,
-              private  router: Router) {
+              private  router: Router,
+              private toastr: ToastrService) {
   this.userParams = this.appointmentsService.getUserParams();
   }
 
@@ -80,5 +84,27 @@ export class AppointmentsListDoctorComponent implements OnInit {
 onSortSelected(sort: string) {
   this.userParams.sort = sort;
   this.getAppointments();
+}
+
+onDelete(id: number) {
+  Swal.fire({
+    title: 'Are you sure want to terminate this appointment?',
+    text: 'You will not be able to recover it afterwards!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, terminate it!',
+    confirmButtonColor: '#DD6B55',
+    cancelButtonText: 'No, keep it'
+  }).then((result) => {
+    if (result.value) {
+        this.appointmentsService.deleteAppointment(id)
+    .subscribe(
+      res => {
+        this.getAppointments();
+        this.toastr.error('Deleted successfully!');
+      }, err => { console.log(err);
+       });
+  }
+});
 }
 }

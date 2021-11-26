@@ -6,6 +6,7 @@ import { AccountService } from '../account/account.service';
 import { MedicalRecord, MedicalrecordCreateEdit } from '../shared/models/medicalrecord';
 import { PaginationForMedicalRecords, PaginationForPatients } from '../shared/models/pagination';
 import { Patient, PatientEdit } from '../shared/models/patient';
+import { PatientStatistics } from '../shared/models/statistics';
 import { User } from '../shared/models/user';
 import { MyParams, UserParams } from '../shared/models/userparams';
 
@@ -128,6 +129,37 @@ export class PatientsService {
 
   createMedicalRecord(values: any) {
     return this.http.post(this.baseUrl + 'medicalRecords/' + this.formData.patientId, values);
+  }
+
+  getCountForEntitiesForPatient() {
+    return this.http.get<PatientStatistics>(this.baseUrl + 'patients/patientstatistics');
+  }
+
+  showNumberOfMedicalRecordsForPatient() {
+    return this.http.get<any>(this.baseUrl + 'patients/patientcharts1').pipe(
+    map( result => {
+      console.log(result);
+      return result;
+    })
+    );
+  }
+
+  showNumberOfOfficesForPatient() {
+    return this.http.get<any>(this.baseUrl + 'patients/patientcharts2').pipe(
+    map( result => {
+      console.log(result);
+      return result;
+    })
+    );
+  }
+
+  showNumberOfAppointmentsForPatient() {
+    return this.http.get<any>(this.baseUrl + 'patients/patientcharts3').pipe(
+    map( result => {
+      console.log(result);
+      return result;
+    })
+    );
   }
 
 }

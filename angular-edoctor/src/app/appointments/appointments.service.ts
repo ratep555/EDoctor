@@ -122,6 +122,10 @@ export class AppointmentsService {
     return this.http.put(this.baseUrl +  'appointments/cancelappointment/' + id, {});
 }
 
+  deleteAppointment(id: number) {
+    return this.http.delete(this.baseUrl + 'appointments/' + id);
+}
+
   getAppointmentById(id: number) {
     return this.http.get<AppointmentCreateEdit>(this.baseUrl + 'appointments/' + id);
   }

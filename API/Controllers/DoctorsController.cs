@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.ErrorHandling;
 using API.Extensions;
 using AutoMapper;
 using Core.Dtos;
@@ -42,6 +43,20 @@ namespace API.Controllers
             var count = await _doctorRepository.GetCountForAllDoctors();
 
             var list = await _doctorRepository.GetAllDoctors(queryParameters);
+
+            return Ok(new Pagination<DoctorDto>
+            (queryParameters.Page, queryParameters.PageCount, count, list));
+        }
+
+        [HttpGet("doctorsofpatient")]
+        public async Task<ActionResult<DoctorDto>> GetAllDoctorsOfPatient(
+            [FromQuery] QueryParameters queryParameters)
+        {
+            var userId = User.GetUserId();
+
+            var count = await _doctorRepository.GetCountForAllDoctorsOfPatient(userId, queryParameters);
+
+            var list = await _doctorRepository.GetAllDoctorsOfPatient(userId, queryParameters);
 
             return Ok(new Pagination<DoctorDto>
             (queryParameters.Page, queryParameters.PageCount, count, list));
@@ -174,7 +189,58 @@ namespace API.Controllers
             await _doctorRepository.Save();
 
             return NoContent();
-        }       
+        }    
+
+        [HttpGet("doctorstatistics")]
+        public async Task<ActionResult<StatisticsDto>> ShowCountForEntitiesForDoctor()
+        {
+            var userId = User.GetUserId();
+
+            var list = await _doctorRepository.ShowCountForEntitiesForDoctor(userId);
+
+            if (list == null) return NotFound(new ServerResponse(404));
+
+            return Ok(list);
+        }
+
+        [HttpGet("doctorcharts1")]
+        public async Task<ActionResult> ShowNumberAndTypeOfAppointmentsForDoctor()
+        {
+            var userId = User.GetUserId();
+
+            var list = await _doctorRepository.GetNumberAndTypeOfAppointmentsForDoctorForChart(userId);
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest();        
+        }
+
+        [HttpGet("doctorcharts2")]
+        public async Task<ActionResult> ShowNumberAndTypeOfPatientsForDoctor()
+        {
+            var userId = User.GetUserId();
+
+            var list = await _doctorRepository.GetNumberAndTypeOfPatientsForDoctorForChart(userId);
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest();        
+        }
+
+        [HttpGet("doctorcharts3")]
+        public async Task<ActionResult> ShowNumberAndTypeOfMedicalRecordsForDoctor()
+        {
+            var userId = User.GetUserId();
+
+            var list = await _doctorRepository.GetNumberAndTypeOfMedicalRecordsForDoctorForChart(userId);
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest();        
+        }
       
     }
 }
+
+
+

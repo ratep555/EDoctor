@@ -10,6 +10,9 @@ import { PatientsListDoctorComponent } from './patients-list-doctor/patients-lis
 import { MedicalrecordsListPatientComponent } from './medicalrecords-list-patient/medicalrecords-list-patient.component';
 import { InfoPatientMyprofileComponent } from './info-patient-myprofile/info-patient-myprofile.component';
 import { EditPatientComponent } from './edit-patient/edit-patient.component';
+import { StatisticsPatientComponent } from './statistics-patient/statistics-patient.component';
+import { ChartOfficesPatientComponent } from './charts-patient/chart-offices-patient/chart-offices-patient.component';
+import { ChartAppointmentsPatientComponent } from './charts-patient/chart-appointments-patient/chart-appointments-patient.component';
 
 
 
@@ -22,7 +25,10 @@ import { EditPatientComponent } from './edit-patient/edit-patient.component';
     PatientsListDoctorComponent,
     MedicalrecordsListPatientComponent,
     InfoPatientMyprofileComponent,
-    EditPatientComponent
+    EditPatientComponent,
+    StatisticsPatientComponent,
+    ChartOfficesPatientComponent,
+    ChartAppointmentsPatientComponent
   ],
   imports: [
     CommonModule,

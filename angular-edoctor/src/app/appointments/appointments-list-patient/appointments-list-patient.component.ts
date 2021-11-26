@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Appointment } from 'src/app/shared/models/appointment';
@@ -15,12 +16,13 @@ export class AppointmentsListPatientComponent implements OnInit {
   appointments: Appointment[];
   userParams: UserParams;
   totalCount: number;
+  currentDate: Date = new Date();
 
   sortOptions1 = [
-    {name: 'All Appointments', value: 'city'},
-    {name: 'Booked', value: 'booked'},
-    {name: 'Confirmed', value: 'confirmed'},
+    {name: 'Upcoming Appointments', value: 'confirmed'},
+    {name: 'Pending', value: 'pending'},
     {name: 'Previous', value: 'previous'},
+    {name: 'All', value: 'city'},
   ];
 
   sortOptions = [

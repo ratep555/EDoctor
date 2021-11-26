@@ -15,5 +15,9 @@ namespace Core.Interfaces
         Task<Patient> FindPatientByUserId(int userId);
         Task CreatePatient(ApplicationUser user, RegisterDto registerDto);
         Task Save();
+        Task<PatientStatisticsDto> ShowCountForEntitiesForPatient(int userId);
+        Task<IEnumerable<PatientChartDto1>> GetNumberAndTypeOfMedicalRecordsForPatientForChart(int userId);
+        Task<IEnumerable<PatientChartDto2>> GetNumberAndTypeOfOfficesForPatientForChart(int userId);
+        Task<IEnumerable<PatientChartDto3>> GetNumberAndTypeOfAppointmentsForPatientForChart(int userId);
     }
 }

@@ -114,7 +114,9 @@ namespace Infrastructure.Data.Repositories
             statistics.PatientsCount = await _context.Patients.CountAsync();
             statistics.DoctorsCount = await _context.Doctors.CountAsync();
             statistics.OfficesCount = await _context.Offices.CountAsync();
-            statistics.AppointmentsCount = await _context.Appointments.Where(x => x.Status == true).CountAsync();
+            statistics.AppointmentsCount = await _context.Appointments
+                .Where(x => x.Status == true && x.PatientId != null
+                && x.EndDateAndTimeOfAppointment > DateTime.Now).CountAsync();
 
             return statistics;
         }
@@ -135,15 +137,15 @@ namespace Infrastructure.Data.Repositories
 
             IEnumerable<int> ids2 = nonhospitaloffices.Select(x => x.DoctorId);
 
-            list.Add(new ChartDto1 { DoctorType = "Hospital and Private Doctors", 
+            list.Add(new ChartDto1 { DoctorType = "Hospital and private doctors", 
                 NumberOfDoctors = await _context.Doctors.Where(p => ids.Contains(p.Id) && ids1.Contains(p.Id)
                 && ids2.Contains(p.Id)).CountAsync()  });
 
-            list.Add(new ChartDto1 { DoctorType = "Hospital Doctors", 
+            list.Add(new ChartDto1 { DoctorType = "Hospital doctors", 
                 NumberOfDoctors = await _context.Doctors.Where(p => ids.Contains(p.Id) 
                 && ids1.Contains(p.Id) && !ids2.Contains(p.Id)).CountAsync()  });
 
-            list.Add(new ChartDto1 { DoctorType = "Private Doctors", 
+            list.Add(new ChartDto1 { DoctorType = "Private doctors", 
                 NumberOfDoctors = await _context.Doctors.Where(p => ids.Contains(p.Id) 
                 && !ids1.Contains(p.Id) && ids2.Contains(p.Id)).CountAsync()  });        
 
@@ -154,16 +156,48 @@ namespace Infrastructure.Data.Repositories
         {
             List<ChartDto2> list = new List<ChartDto2>();
 
-            list.Add(new ChartDto2 { OfficeType = "Hospital Offices", 
+            list.Add(new ChartDto2 { OfficeType = "Hospital offices", 
                 NumberOfOffices = await _context.Offices.Where(x => x.HospitalId != null).CountAsync()  });
 
-            list.Add(new ChartDto2 { OfficeType = "Private Offices", 
+            list.Add(new ChartDto2 { OfficeType = "Private offices", 
                 NumberOfOffices = await _context.Offices.Where(x => x.HospitalId == null).CountAsync()  });
             
             return list;
         }
 
+        public async Task<IEnumerable<ChartDto3>> GetNumberAndTypeOfAppointmentsForChart()
+        {
+            List<ChartDto3> list = new List<ChartDto3>();
 
+            list.Add(new ChartDto3 { AppointmentType = "Previous", 
+                NumberOfAppointments = await _context.Appointments
+                .Where(x => x.EndDateAndTimeOfAppointment < DateTime.Now && x.Status == true).CountAsync()  });
+
+            list.Add(new ChartDto3 { AppointmentType = "Upcoming", 
+                NumberOfAppointments = await _context.Appointments
+                .Where(x => x.Status == true && x.PatientId != null
+                && x.EndDateAndTimeOfAppointment > DateTime.Now).CountAsync()  });
+
+            list.Add(new ChartDto3 { AppointmentType = "Available", 
+                NumberOfAppointments = await _context.Appointments.Include(x => x.Office)
+                .Where(x => x.Status == null && x.PatientId == null 
+                && x.StartDateAndTimeOfAppointment > DateTime.Now).CountAsync()  });
+            
+            return list;
+        }
+ 
+        public async Task<IEnumerable<ChartDto4>> GetNumberAndTypeOfPatientsForChart()
+        {
+            List<ChartDto4> list = new List<ChartDto4>();
+
+            list.Add(new ChartDto4 { PatientType = "Patients with MBO", 
+                NumberOfPatients = await _context.Patients.Where(x => x.MBO != null).CountAsync()  });
+
+            list.Add(new ChartDto4 { PatientType = "Patients without MBO", 
+                NumberOfPatients = await _context.Patients.Where(x => x.MBO == null).CountAsync()  });
+            
+            return list;
+        }
  
     }
 }

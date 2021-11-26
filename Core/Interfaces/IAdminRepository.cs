@@ -19,5 +19,9 @@ namespace Core.Interfaces
         Task<StatisticsDto> ShowCountForEntities();
         Task<IEnumerable<ChartDto1>> GetNumberAndTypeOfDoctorsForChart();
         Task<IEnumerable<ChartDto2>> GetNumberAndTypeOfOfficesForChart();
+        Task<IEnumerable<ChartDto3>> GetNumberAndTypeOfAppointmentsForChart();
+        Task<IEnumerable<ChartDto4>> GetNumberAndTypeOfPatientsForChart();
+
+
     }
 }
