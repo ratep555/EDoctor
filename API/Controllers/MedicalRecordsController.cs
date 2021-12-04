@@ -6,10 +6,12 @@ using Core.Dtos;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class MedicalRecordsController : BaseApiController
     {
         private readonly IMedicalRecordRepository _medicalRecordRepository;
@@ -57,8 +59,6 @@ namespace API.Controllers
             (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
-    
-
         [HttpGet("onepatientofdoctor/{id}")]
         public async Task<ActionResult<Pagination<MedicalRecordDto>>> GetMedicalRecordsForOnePatientOfDoctor(
             int id, [FromQuery] QueryParameters queryParameters)
@@ -81,8 +81,19 @@ namespace API.Controllers
             (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MedicalRecordDto>> GetMedicalRecordById(int id)
+        {
+            var record = await _medicalRecordRepository.FindMedicalRecordById(id);
+
+            if (record == null) return NotFound();
+
+            return _mapper.Map<MedicalRecordDto>(record);         
+        }
+
+        [Authorize(Policy = "RequireDoctorRole")]
         [HttpPost("{id}")]
-        public async Task<ActionResult> CreateMedicalRecord(int id, 
+        public async Task<ActionResult<MedicalRecordDto>> CreateMedicalRecord(int id, 
             [FromBody] MedicalRecordCreateEditDto medicalRecordDto)
         {
             var medicalrecord = _mapper.Map<MedicalRecord>(medicalRecordDto);
@@ -91,21 +102,9 @@ namespace API.Controllers
 
             await _medicalRecordRepository.CreateMedicalRecord(medicalrecord);
            
-            return NoContent();
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<MedicalRecordDto>> GetMedicalRecord(int id)
-        {
-            var record = await _medicalRecordRepository.FindMedicalRecordById(id);
-
-            if (record == null) return NotFound();
-
-            return _mapper.Map<MedicalRecordDto>(record);
-            
-        }
-
-     
+            return CreatedAtAction("GetMedicalRecordById", new {id = medicalrecord.Id }, 
+                _mapper.Map<MedicalRecordDto>(medicalrecord));
+        }    
     }
 }
 

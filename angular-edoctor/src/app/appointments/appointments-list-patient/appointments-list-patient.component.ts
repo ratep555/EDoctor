@@ -19,10 +19,10 @@ export class AppointmentsListPatientComponent implements OnInit {
   currentDate: Date = new Date();
 
   sortOptions1 = [
-    {name: 'Upcoming Appointments', value: 'confirmed'},
+    {name: 'Upcoming Appointments', value: 'city'},
     {name: 'Pending', value: 'pending'},
     {name: 'Previous', value: 'previous'},
-    {name: 'All', value: 'city'},
+    {name: 'All', value: 'all'},
   ];
 
   sortOptions = [

@@ -5,7 +5,7 @@ import { map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AccountService } from '../account/account.service';
 import { Hospital } from '../shared/models/hospital';
-import { Office, OfficeCreateEdit } from '../shared/models/office';
+import { Office, OfficeCreateEdit, OfficeCreateEdit1 } from '../shared/models/office';
 import { PaginationForOffices } from '../shared/models/pagination';
 import { Specialty } from '../shared/models/specialty';
 import { User } from '../shared/models/user';
@@ -79,16 +79,18 @@ export class OfficesService {
     );
   }
 
-  createOffice(formData) {
+  getOfficeById(id: number) {
+    return this.http.get<Office>(this.baseUrl + 'offices/' + id);
+  }
+
+  createOffice(office: OfficeCreateEdit1) {
+    const formData = this.BuildFormData(office);
     return this.http.post(this.baseUrl + 'offices', formData);
   }
 
-  updateOffice(id: number, params: any) {
-    return this.http.put(this.baseUrl + 'offices/' + id, params);
-  }
-
-  getOfficeById(id: number) {
-    return this.http.get<Office>(this.baseUrl + 'offices/' + id);
+  updateOffice(id: number, office: OfficeCreateEdit1){
+    const formData = this.BuildFormData1(office);
+    return this.http.put(this.baseUrl + 'offices/' + id, formData);
   }
 
   getHospitals() {
@@ -98,6 +100,66 @@ export class OfficesService {
   getSpecialtiesAttributedToDoctors() {
     return this.http.get<Specialty[]>(this.baseUrl + 'specialties/attributedtodoctors');
   }
+
+  private BuildFormData(office: OfficeCreateEdit1): FormData {
+    const formData = new FormData();
+    formData.append('initialExaminationFee', JSON.stringify(office.initialExaminationFee));
+    formData.append('followUpExaminationFee', JSON.stringify(office.followUpExaminationFee));
+    formData.append('hospitalId', JSON.stringify(office.hospitalId));
+    if (office.street){
+    formData.append('street', office.street);
+    }
+    if (office.city){
+    formData.append('city', office.city);
+    }
+    if (office.country){
+    formData.append('country', office.country);
+    }
+    if (office.description){
+    formData.append('description', office.description);
+    }
+    if (office.picture){
+      formData.append('picture', office.picture);
+    }
+    if (office.latitude) {
+    formData.append('latitude', JSON.stringify(office.latitude));
+    }
+    if (office.longitude) {
+    formData.append('longitude', JSON.stringify(office.longitude));
+    }
+    return formData;
+  }
+
+  private BuildFormData1(office: OfficeCreateEdit1): FormData {
+    const formData = new FormData();
+    formData.append('id', JSON.stringify(office.id));
+    formData.append('initialExaminationFee', JSON.stringify(office.initialExaminationFee));
+    formData.append('followUpExaminationFee', JSON.stringify(office.followUpExaminationFee));
+    formData.append('hospitalId', JSON.stringify(office.hospitalId));
+    if (office.street){
+    formData.append('street', office.street);
+    }
+    if (office.city){
+    formData.append('city', office.city);
+    }
+    if (office.country){
+    formData.append('country', office.country);
+    }
+    if (office.description){
+    formData.append('description', office.description);
+    }
+    if (office.picture){
+      formData.append('picture', office.picture);
+    }
+    if (office.latitude) {
+    formData.append('latitude', JSON.stringify(office.latitude));
+    }
+    if (office.longitude) {
+    formData.append('longitude', JSON.stringify(office.longitude));
+    }
+    return formData;
+  }
+
 
 }
 

@@ -150,24 +150,24 @@ namespace Infrastructure.Data.Repositories
             {
                 switch (queryParameters.Sort)
                 {
-                     case "pending":
-                        appointments = appointments.Where(p => p.Status == null
-                        && p.StartDateAndTimeOfAppointment > DateTime.Now);
+                    case "all":
+                         appointments = appointments.OrderBy(n => n.StartDateAndTimeOfAppointment);
                         break;
-                    case "confirmed":
-                        appointments = appointments.Where(p => p.Status == true
+                    case "pending":
+                        appointments = appointments.Where(p => p.Status == null
                         && p.StartDateAndTimeOfAppointment > DateTime.Now);
                         break;
                     case "previous":
                         appointments = appointments.
-                            Where(p => p.EndDateAndTimeOfAppointment < DateTime.Now);
+                        Where(p => p.EndDateAndTimeOfAppointment < DateTime.Now);
                         break;
                     case "dateDesc":
                         appointments = appointments.OrderByDescending(p => p.StartDateAndTimeOfAppointment);
                         break;
                     default:
-                        appointments = appointments.OrderBy(n => n.StartDateAndTimeOfAppointment);
-                        break;
+                        appointments = appointments.Where(p => p.Status == true
+                        && p.StartDateAndTimeOfAppointment > DateTime.Now);
+                        break;                     
                 }
             }               
             return await appointments.ToListAsync();        
@@ -192,7 +192,7 @@ namespace Infrastructure.Data.Repositories
             if (queryParameters.HasQuery())
             {
                 appointment = appointment
-                .Where(x => x.StartDateAndTimeOfAppointment.ToString().Contains(queryParameters.Query));
+                    .Where(x => x.StartDateAndTimeOfAppointment.ToString().Contains(queryParameters.Query));
             }
 
             appointment = appointment.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
@@ -228,6 +228,9 @@ namespace Infrastructure.Data.Repositories
 
         public async Task CreateAppointment(Appointment appointment)
         {
+            appointment.StartDateAndTimeOfAppointment = appointment.StartDateAndTimeOfAppointment.ToLocalTime();
+            appointment.EndDateAndTimeOfAppointment = appointment.EndDateAndTimeOfAppointment.ToLocalTime();
+            
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
         }
@@ -235,7 +238,10 @@ namespace Infrastructure.Data.Repositories
         public async Task UpdateAppointment(Appointment appointment)
         {       
             _context.ChangeTracker.Clear();
-
+            
+            appointment.StartDateAndTimeOfAppointment = appointment.StartDateAndTimeOfAppointment.ToLocalTime();
+            appointment.EndDateAndTimeOfAppointment = appointment.EndDateAndTimeOfAppointment.ToLocalTime();
+            
              _context.Entry(appointment).State = EntityState.Modified;        
              await _context.SaveChangesAsync();
         }

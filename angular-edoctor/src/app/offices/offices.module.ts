@@ -15,7 +15,7 @@ import { InfoOfficeComponent } from './info-office/info-office.component';
     OfficesListDoctorComponent,
     EditOfficeDoctorComponent,
     OfficesComponent,
-    InfoOfficeComponent,
+    InfoOfficeComponent
   ],
   imports: [
     CommonModule,

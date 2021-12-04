@@ -63,8 +63,16 @@
             routerLink="/doctors/infodoctor/{{ item.doctorId }}"
             >{{ item.doctor }}</a
           >
-        </td>                <td>{{ item.patient }}</td>
-        <td>{{ item.officeAddress }}</td>
+        </td>                
+        <td>{{ item.patient }}</td>
+        <td>
+          <a
+            class="done"
+            href=""
+            routerLink="/offices/infooffice/{{ item.officeId }}"
+            >{{ item.officeAddress }}</a
+          >
+        </td>          
         <td>{{ item.city }}</td>
         <td>
           {{ item.startDateAndTimeOfAppointment | date: "dd.MM.yyyy HH:mm" }}
@@ -73,8 +81,8 @@
           {{ item.endDateAndTimeOfAppointment | date: "dd.MM.yyyy HH:mm" }}
         </td>
         <td>{{ item.status }}</td>
-       <td *ngIf="item.status === true && 
-       ((item.startDateAndTimeOfAppointment | date: 'dd.MM.yyyy HH:mm') > (currentDate | date: 'dd.MM.yyyy HH:mm'))" 
+       <td *ngIf=" 
+       ((item.startDateAndTimeOfAppointment | date: 'dd.MM.yyyy HH:mm') > (currentDate | date: 'dd.MM.yyyy HH:mm'))"
        class="text-center">
                   <button
                     (click)="cancelAppointment(item.id)"

@@ -56,6 +56,7 @@ namespace API.Helpers
                 .ForMember(d => d.Longitude, o => o.MapFrom(s => s.Location.X));
 
             CreateMap<OfficeCreateEditDto, Office>()
+                .ForMember(x => x.Picture, options => options.Ignore())
                 .ForMember(x => x.Location, x => x.MapFrom(dto =>
                 geometryFactory.CreatePoint(new Coordinate(dto.Longitude, dto.Latitude))));
 

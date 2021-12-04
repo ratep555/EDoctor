@@ -46,8 +46,8 @@
         <th style="font-size: large">Patient</th>
         <th style="font-size: large">Address</th>
         <th style="font-size: large">City</th>
-        <th style="font-size: large">Starts</th>
-        <th style="font-size: large">Ends</th>
+        <th style="font-size: large; width: 13%;">Starts</th>
+        <th style="font-size: large; width: 13%;">Ends</th>
         <th style="font-size: large; width: 2%;">Confirmed</th>
         <th></th>
       </tr>
@@ -94,6 +94,16 @@
                   item.id
                 }}"
                 type="button"
+                class="btn btn-info mr-3"
+              >
+                <i class="fa fa-ambulance mr-1"></i>
+                Add record
+              </button>
+              <button
+                routerLink="/appointments/confirmappointmentdoctor/{{
+                  item.id
+                }}"
+                type="button"
                 class="btn btn-success mr-3"
               >
                 <i class="fa fa-edit mr-1"></i>
@@ -101,7 +111,7 @@
               </button>
               <button (click)="onDelete(item.id)"
               type="button" class=" btn btn-danger">
-           <i class="fa fa-trash mr-1"></i>Delete</button>
+           <i class="fa fa-trash ml-1 mr-1"></i></button>
             </div>
           </td></ng-template
         >

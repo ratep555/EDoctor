@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CoordinatesMap } from 'src/app/shared/models/coordinate';
-import { OfficeCreateEdit } from 'src/app/shared/models/office';
+import { Office } from 'src/app/shared/models/office';
 import { OfficesService } from '../offices.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class AddOfficeDoctorComponent implements OnInit {
   officeForm: FormGroup;
   hospitalList = [];
   initialCoordinates: CoordinatesMap[] = [];
+  model: Office;
 
   constructor(public officesService: OfficesService,
               private router: Router,
@@ -36,7 +37,8 @@ export class AddOfficeDoctorComponent implements OnInit {
       description: ['', [Validators.required]],
       longitude: ['', [Validators.required]],
       latitude: ['', [Validators.required]],
-      hospitalId: [null]
+      hospitalId: [null],
+      picture: ''
     });
   }
 
@@ -45,7 +47,6 @@ export class AddOfficeDoctorComponent implements OnInit {
       this.officeForm.get('hospitalId').setValue(null);
     }
     this.officesService.createOffice(this.officeForm.value).subscribe(() => {
-      this.resetForm(this.officeForm);
       this.router.navigateByUrl('offices/officeslistdoctor');
     },
     error => {
@@ -53,9 +54,8 @@ export class AddOfficeDoctorComponent implements OnInit {
     });
   }
 
-   resetForm(form: FormGroup) {
-    form.reset();
-    this.officesService.formData = new OfficeCreateEdit();
+  onImageSelected(image){
+    this.officeForm.get('picture').setValue(image);
   }
 
   onSelectedLocation(coordinates: CoordinatesMap) {
@@ -63,3 +63,4 @@ export class AddOfficeDoctorComponent implements OnInit {
  }
 
 }
+

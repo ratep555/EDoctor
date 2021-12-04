@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Marker } from 'leaflet';
 import { first } from 'rxjs/operators';
 import { CoordinatesMap } from 'src/app/shared/models/coordinate';
+import { Office } from 'src/app/shared/models/office';
 import { OfficesService } from '../offices.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { OfficesService } from '../offices.service';
   styleUrls: ['./edit-office-doctor.component.css']
 })
 export class EditOfficeDoctorComponent implements OnInit {
+  model: Office;
   officeForm: FormGroup;
   hospitalList = [];
   id: number;
@@ -25,6 +27,9 @@ export class EditOfficeDoctorComponent implements OnInit {
 
 ngOnInit(): void {
   this.id = this.activatedRoute.snapshot.params['id'];
+  this.activatedRoute.params.subscribe(params => {
+    this.officesService.getOfficeById(params.id).subscribe(office => this.model = office);
+  });
 
   this.officesService.getHospitals()
   .subscribe(res => this.hospitalList = res as []);
@@ -39,7 +44,8 @@ ngOnInit(): void {
     description: ['', [Validators.required]],
     longitude: ['', [Validators.required]],
     latitude: ['', [Validators.required]],
-    hospitalId: [null]
+    hospitalId: [null],
+    picture: ''
   });
 
   this.officesService.getOfficeById(this.id)
@@ -64,9 +70,26 @@ this.officesService.updateOffice(this.id, this.officeForm.value)
       });
     }
 
-    onSelectedLocation(coordinates: CoordinatesMap) {
-      this.officeForm.patchValue(coordinates);
-      this.initialCoordinates.push({latitude: this.officesService.formData.latitude,
-        longitude: this.officesService.formData.longitude});
+onSelectedLocation(coordinates: CoordinatesMap) {
+  this.officeForm.patchValue(coordinates);
+  this.initialCoordinates.push({latitude: this.officesService.formData.latitude,
+    longitude: this.officesService.formData.longitude});
    }
+
+onImageSelected(image){
+  this.officeForm.get('picture').setValue(image);
 }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

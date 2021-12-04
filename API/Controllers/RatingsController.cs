@@ -3,10 +3,12 @@ using API.Extensions;
 using AutoMapper;
 using Core.Dtos;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize(Policy = "RequirePatientRole")]
     public class RatingsController : BaseApiController
     {
         private readonly IRatingRepository _ratingRepository;

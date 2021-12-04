@@ -96,16 +96,18 @@ namespace API.Controllers
             return _mapper.Map<AppointmentDto>(appointment);
         }
 
+        [Authorize(Policy = "RequireDoctorRole")]
         [HttpPost]
-        public async Task<ActionResult> CreateAppointmentByDoctor([FromBody] AppointmentCreateEditDto appointmentDto)
+        public async Task<ActionResult<AppointmentDto>> CreateAppointmentByDoctor([FromBody] AppointmentCreateEditDto appointmentDto)
         {
             var appointment = _mapper.Map<Appointment>(appointmentDto);
            
             await _appointmentRepository.CreateAppointment(appointment);
 
-            return NoContent();
+            return CreatedAtAction("GetAppointmentById", new {id = appointment.Id }, _mapper.Map<AppointmentDto>(appointment));
         }
 
+        [Authorize(Policy = "RequireDoctorRole")]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAppointmentByDoctor(int id, 
             [FromBody] AppointmentCreateEditDto appointmentDto)
@@ -119,15 +121,13 @@ namespace API.Controllers
                 appointment.PatientId = null;
                 appointment.Remarks = "";
             }
-            
-                appointment.StartDateAndTimeOfAppointment = appointmentDto.StartDateAndTimeOfAppointment.AddHours(1);
-                appointment.EndDateAndTimeOfAppointment = appointmentDto.EndDateAndTimeOfAppointment.AddHours(1);
 
                 await _appointmentRepository.UpdateAppointment(appointment);
                         
             return NoContent();
         }
 
+        [Authorize(Policy = "RequirePatientRole")]
         [HttpPut("bookappointment/{id}")]
         public async Task<ActionResult> BookAppointmentByPatient(int id,
              [FromBody] AppointmentCreateEditDto appointmentDto)
@@ -152,6 +152,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize(Policy = "RequirePatientRole")]
         [HttpPut("cancelappointment/{id}")]
         public async Task<ActionResult> CancelAppointmentByPatient(int id)
         {
@@ -176,6 +177,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize(Policy = "RequireDoctorRole")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAppointment(int id)
         {

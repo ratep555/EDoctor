@@ -145,16 +145,18 @@ namespace API.Controllers
             var nonSelectedHospitals = await _doctorRepository
                 .GetNonSelectedHospitals(hospitalsSelectedIds);
 
-            var nonSelectedSpecialtiesDto = _mapper.Map<List<SpecialtyDto>>(nonSelectedSpecialties);
+            var nonSelectedSpecialtiesDto = _mapper.Map<IEnumerable<SpecialtyDto>>
+                (nonSelectedSpecialties).OrderBy(x => x.SpecialtyName);
 
-            var nonSelectedHospitalsDto = _mapper.Map<List<HospitalDto>>(nonSelectedHospitals);
+            var nonSelectedHospitalsDto = _mapper.Map<IEnumerable<HospitalDto>>
+                (nonSelectedHospitals).OrderBy(x => x.HospitalName);
 
             var response = new DoctorPutGetDto();
 
             response.Doctor = doctorToReturn;
-            response.SelectedSpecialties = doctorToReturn.Specialties;
+            response.SelectedSpecialties = doctorToReturn.Specialties.OrderBy(x => x.SpecialtyName);
             response.NonSelectedSpecialties = nonSelectedSpecialtiesDto;
-            response.SelectedHospitals = doctorToReturn.Hospitals;
+            response.SelectedHospitals = doctorToReturn.Hospitals.OrderBy(x => x.HospitalName);
             response.NonSelectedHospitals = nonSelectedHospitalsDto;
 
             return response;
@@ -170,6 +172,7 @@ namespace API.Controllers
             return _mapper.Map<List<OfficeDto>>(list);
         }
 
+        [Authorize(Policy = "RequireDoctorRole")]
         [HttpPut("updatingdoctorsprofile/{id}")]
         public async Task<ActionResult> UpdatingDoctorsProfile(int id, [FromForm] DoctorEditDto doctorDto)
         {
@@ -237,8 +240,7 @@ namespace API.Controllers
             if (list.Count() > 0) return Ok(new { list });
 
             return BadRequest();        
-        }
-      
+        }     
     }
 }
 

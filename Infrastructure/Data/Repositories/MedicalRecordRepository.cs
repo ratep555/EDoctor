@@ -177,6 +177,8 @@ namespace Infrastructure.Data.Repositories
 
         public async Task CreateMedicalRecord(MedicalRecord medicalRecord)
         {
+            medicalRecord.Created = medicalRecord.Created.ToLocalTime();
+            
             _context.MedicalRecords.Add(medicalRecord);
             await _context.SaveChangesAsync();
         }

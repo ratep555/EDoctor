@@ -31,7 +31,7 @@
         <div class="form-group row">
           <div class="col-md-12">
             <select class="form-control" formControlName="hospitalId">
-              <option value="null">--Select Hospita if any--</option>
+              <option value="null">--Select Hospital if any--</option>
               <option
                 *ngFor="let hospital of hospitalList"
                 value="{{ hospital.id }}"
@@ -63,6 +63,11 @@
             Please enter a Description
           </span>
         </div>
+        
+        <app-img-input
+        [urlCurrentImage]="model?.picture"
+        (onImageSelected)="onImageSelected($event)"> 
+        </app-img-input>
 
         <label style="font-size: small"
           ><strong>Select Location:</strong></label

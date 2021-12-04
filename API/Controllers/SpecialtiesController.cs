@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class SpecialtiesController : BaseApiController
     {
         private readonly ISpecialtyRepository _specialtyRepository;
@@ -43,7 +44,7 @@ namespace API.Controllers
 
             return _mapper.Map<List<SpecialtyDto>>(list);
         }
-
+        
         [HttpGet("attributedtodoctors")]
         public async Task<ActionResult<List<SpecialtyDto>>> GetSpecialtiesAttributetToDoctors()
         {
@@ -62,16 +63,18 @@ namespace API.Controllers
             return _mapper.Map<SpecialtyDto>(specialty);
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost]
-        public async Task<ActionResult> CreateSpecialty([FromBody] SpecialtyDto specialtyDto)
+        public async Task<ActionResult<SpecialtyDto>> CreateSpecialty([FromBody] SpecialtyDto specialtyDto)
         {
             var specialty = _mapper.Map<Specialty>(specialtyDto);
 
             await _specialtyRepository.CreateSpecialty(specialty);
 
-            return NoContent();
+            return CreatedAtAction("GetSpecialtyById", new {id = specialty.Id }, _mapper.Map<SpecialtyDto>(specialty));
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateSpecialty(int id, [FromBody] SpecialtyDto specialtyDto)
         {
@@ -84,6 +87,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteSpecialty(int id)
         {

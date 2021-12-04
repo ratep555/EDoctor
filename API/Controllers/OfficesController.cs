@@ -16,14 +16,18 @@ namespace API.Controllers
     {
         private readonly IOfficeRepository _officeRepository;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly IFileStorageService _fileStorageService;
         private readonly IMapper _mapper;
+        private string containerName = "offices";
 
         public OfficesController(IOfficeRepository officeRepository,
             IDoctorRepository doctorRepository,
+            IFileStorageService fileStorageService,
             IMapper mapper)
         {
             _officeRepository = officeRepository;
             _doctorRepository = doctorRepository;
+            _fileStorageService = fileStorageService;
             _mapper = mapper;
         }
 
@@ -66,7 +70,7 @@ namespace API.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult> CreateOffice([FromBody] OfficeCreateEditDto officeDto)
+        public async Task<ActionResult> CreateOffice([FromForm] OfficeCreateEditDto officeDto)
         {
             var userId = User.GetUserId();
 
@@ -76,22 +80,35 @@ namespace API.Controllers
 
             office.DoctorId = doctor.Id;
 
+            if (officeDto.Picture != null)
+            {
+                office.Picture = await _fileStorageService.SaveFile(containerName, officeDto.Picture);
+            }
+
             await _officeRepository.CreateOffice(office);
            
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateOffice(int id, [FromBody] OfficeCreateEditDto officeDto)
+        public async Task<ActionResult> UpdateOffice(int id, [FromForm] OfficeCreateEditDto officeDto)
         {
             var userId = User.GetUserId();
-            var docor = await _officeRepository.FindDoctorByUserId(userId);
 
-            var office = _mapper.Map<Office>(officeDto);
+            var doctor = await _officeRepository.FindDoctorByUserId(userId);
 
-            if (id != office.Id) return BadRequest();
+            var office = await _officeRepository.GetOfficeById(id);
+
+            if (office == null) return NotFound();
+
+            office = _mapper.Map(officeDto, office);
             
-            office.DoctorId = docor.Id;
+            office.DoctorId = doctor.Id;
+
+            if (officeDto.Picture != null)
+            {
+                office.Picture = await _fileStorageService.EditFile(containerName, officeDto.Picture, office.Picture);
+            }
 
             await _officeRepository.UpdateOffice(office);
 

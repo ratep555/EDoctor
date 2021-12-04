@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class HospitalsController : BaseApiController
     {
         private readonly IHospitalRepository _hospitalRepository;
@@ -44,6 +45,7 @@ namespace API.Controllers
             return _mapper.Map<List<HospitalDto>>(list);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<HospitalDto>> GetHospitalById(int id)
         {
@@ -54,16 +56,18 @@ namespace API.Controllers
             return _mapper.Map<HospitalDto>(hospital);
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost]
-        public async Task<ActionResult> CreateHospital([FromBody] HospitalDto hospitalDTO)
+        public async Task<ActionResult<HospitalDto>> CreateHospital([FromBody] HospitalDto hospitalDTO)
         {
             var hospital = _mapper.Map<Hospital>(hospitalDTO);
 
             await _hospitalRepository.CreateHospital(hospital);
 
-            return NoContent();
+            return CreatedAtAction("GetHospitalById", new {id = hospital.Id }, _mapper.Map<HospitalDto>(hospital));
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateHospital(int id, [FromBody] HospitalDto hospitalDto)
         {
@@ -76,6 +80,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteHospital(int id)
         {

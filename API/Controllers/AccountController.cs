@@ -64,6 +64,7 @@ namespace API.Controllers
             };
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("registerdoctor")]
         public async Task<ActionResult<UserDto>> RegisterDoctor(DoctorCreateDto doctorCreateDto)
         {
@@ -116,11 +117,7 @@ namespace API.Controllers
         private async Task<bool> UserExists(string username)
         {
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
-        }
-        
-   
-
-        
+        }     
     }
 }
 

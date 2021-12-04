@@ -64,6 +64,11 @@
             Please enter a Description
           </span>
         </div>
+        <app-img-input
+        [urlCurrentImage]="model?.picture"
+        (onImageSelected)="onImageSelected($event)"
+      >
+      </app-img-input>
         <label style="font-size: small"
           ><strong>Select Location:</strong></label
         >

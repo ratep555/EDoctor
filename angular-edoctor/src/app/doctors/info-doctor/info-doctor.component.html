@@ -2,7 +2,9 @@
   <div class="row" *ngIf="doctor">
     <div class="col-4">
       <div class="card">
-        <img src="./assets/cover3.jpg" a class="card-img" />
+        <img 
+        src="{{ doctor.picture || './assets/cover3.jpg' }}"
+        a class="card-img" />
         <div class="card-body">
           <div>
             <strong>Doctor Name:</strong>

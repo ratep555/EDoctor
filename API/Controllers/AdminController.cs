@@ -5,11 +5,13 @@ using Core.Dtos;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize(Policy = "RequireAdminRole")]
     public class AdminController : BaseApiController
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -21,7 +23,6 @@ namespace API.Controllers
             _adminRepository = adminRepository;
         }
 
-     // [Authorize(Policy = "RequireAdminRole")]
         [HttpGet]
         public async Task<ActionResult<Pagination<UserToReturnDto>>> GetAllUsers(
             [FromQuery] QueryParameters queryParameters)
@@ -140,7 +141,6 @@ namespace API.Controllers
             return BadRequest();        
         }
     }
-
 }
 
 

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class PatientsController : BaseApiController
     {
         private readonly IPatientRepository _patientRepository;
@@ -27,7 +28,6 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<Pagination<PatientDto>>> GetAllPatientsOfDoctor(
                 [FromQuery] QueryParameters queryParameters)
@@ -42,7 +42,7 @@ namespace API.Controllers
             return Ok(new Pagination<PatientDto>
             (queryParameters.Page, queryParameters.PageCount, count, data));        
         }
-
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<PatientDto>> GetPatientById(int id)
         {
@@ -63,6 +63,7 @@ namespace API.Controllers
             return _mapper.Map<PatientDto>(patient);
         }
 
+        [Authorize(Policy = "RequirePatientRole")]
         [HttpPut("updatingpatientsprofile/{id}")]
         public async Task<ActionResult> UpdatingPatientsProfile(int id, [FromBody] PatientEditDto patientDto)
         {

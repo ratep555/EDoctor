@@ -4,15 +4,17 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EDoctorContext))]
-    partial class EDoctorContextModelSnapshot : ModelSnapshot
+    [Migration("20211129173416_AnotherPictureAttempt")]
+    partial class AnotherPictureAttempt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
