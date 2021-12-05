@@ -6,3 +6,4 @@ export function toBase64(file: File){
         reader.onerror = (error) => reject(error);
     });
 }
+

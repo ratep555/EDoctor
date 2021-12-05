@@ -34,7 +34,7 @@ namespace API.Controllers
             var data = _mapper.Map<IEnumerable<SpecialtyDto>>(list);
 
             return Ok(new Pagination<SpecialtyDto>
-            (queryParameters.Page, queryParameters.PageCount, count, data));
+                (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
         [HttpGet]
@@ -58,7 +58,7 @@ namespace API.Controllers
         {
             var specialty = await _specialtyRepository.GetSpecialtyById(id);
 
-            if (specialty == null) return NotFound();
+            if (specialty == null) return NotFound(new ServerResponse(404));
 
             return _mapper.Map<SpecialtyDto>(specialty);
         }
@@ -71,7 +71,8 @@ namespace API.Controllers
 
             await _specialtyRepository.CreateSpecialty(specialty);
 
-            return CreatedAtAction("GetSpecialtyById", new {id = specialty.Id }, _mapper.Map<SpecialtyDto>(specialty));
+            return CreatedAtAction("GetSpecialtyById", new {id = specialty.Id }, 
+                _mapper.Map<SpecialtyDto>(specialty));
         }
 
         [Authorize(Policy = "RequireAdminRole")]

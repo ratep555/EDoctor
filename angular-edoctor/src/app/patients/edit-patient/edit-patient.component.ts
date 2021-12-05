@@ -43,7 +43,7 @@ export class EditPatientComponent implements OnInit {
   }
 
   recordSubmit(fg: FormGroup) {
-    this.patientsService.updatingPatientssProfile(fg.value).subscribe(
+    this.patientsService.updatingPatientsProfile(fg.value).subscribe(
       (res: any) => {
         this.router.navigateByUrl('patients/infopatientmyprofile');
       }, error => {

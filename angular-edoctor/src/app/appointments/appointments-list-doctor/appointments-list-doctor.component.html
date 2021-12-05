@@ -71,8 +71,8 @@
           {{ item.endDateAndTimeOfAppointment | date: "dd.MM.yyyy HH:mm" }}
         </td>
         <td>{{ item.status }}</td>
-        <td *ngIf="item.patientId === 0; else elseBlock">
-          <div class="text-center">
+        <td>
+          <div *ngIf="item.patientId === 0" class="text-center">
             <button
               routerLink="/appointments/editappointmentdoctor/{{ item.id }}"
               type="button"
@@ -85,12 +85,25 @@
             type="button" class=" btn btn-danger">
          <i class="fa fa-trash mr-1"></i>Delete</button>
           </div>
-        </td>
-        <ng-template #elseBlock>
-          <td>
-            <div class="text-center">
+          <div class="text-center" *ngIf="item.status === null && item.patientId !== 0">
+            <button
+            routerLink="/appointments/confirmappointmentdoctor/{{
+              item.id
+            }}"
+            type="button"
+            class="btn btn-success mr-3"
+          >
+            <i class="fa fa-edit mr-1"></i>
+            Edit
+          </button>
+            <button (click)="onDelete(item.id)"
+            type="button" class=" btn btn-danger">
+         <i class="fa fa-trash mr-1"></i>Delete</button>
+          </div>
+          <div *ngIf="item.status === true && item.appointmentId === 0"
+             class="text-center">
               <button
-                routerLink="/appointments/confirmappointmentdoctor/{{
+                routerLink="/patients/addmedicalrecord/{{
                   item.id
                 }}"
                 type="button"
@@ -113,8 +126,20 @@
               type="button" class=" btn btn-danger">
            <i class="fa fa-trash ml-1 mr-1"></i></button>
             </div>
-          </td></ng-template
-        >
+            <div *ngIf="item.status === true && item.appointmentId !== 0"
+            class="text-center">
+            <button
+            routerLink="/patients/editmedicalrecord/{{
+              item.id
+            }}"
+            type="button"
+            class="btn btn-info mr-3"
+          >
+            <i class="fa fa-ambulance mr-1"></i>
+            Edit record
+          </button>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

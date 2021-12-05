@@ -9,6 +9,7 @@ import { MedicalrecordsListPatientComponent } from './medicalrecords-list-patien
 import { InfoPatientMyprofileComponent } from './info-patient-myprofile/info-patient-myprofile.component';
 import { EditPatientComponent } from './edit-patient/edit-patient.component';
 import { StatisticsPatientComponent } from './statistics-patient/statistics-patient.component';
+import { EditMedicalrecordComponent } from './edit-medicalrecord/edit-medicalrecord.component';
 
 
 
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'infopatientmyprofile', component: InfoPatientMyprofileComponent},
   {path: 'statisticspatient', component: StatisticsPatientComponent},
   {path: 'addmedicalrecord/:id', component: AddMedicalrecordComponent},
+  {path: 'editmedicalrecord/:id', component: EditMedicalrecordComponent},
   {path: 'editpatient/:id', component: EditPatientComponent},
   {path: 'infopatient/:id', component: InfoPatientComponent},
   {path: 'infomedicalrecord/:id', component: InfoMedicalrecordComponent}

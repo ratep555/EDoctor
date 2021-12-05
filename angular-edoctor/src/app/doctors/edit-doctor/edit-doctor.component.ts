@@ -64,8 +64,9 @@ createRegisterForm() {
   this.registerForm = this.fb.group({
     id: [this.id],
     applicationUserId: [this.user.userId],
-    name: [null, Validators.required],
-    resume: [null],
+    name: [null, [Validators.required,
+      Validators.minLength(5), Validators.maxLength(80)]],
+    resume: [null, Validators.maxLength(5000)],
     specialtiesIds: [null],
     hospitalsIds: [null],
     picture: ''

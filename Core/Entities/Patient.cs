@@ -22,6 +22,5 @@ namespace Core.Entities
         public string Street { get; set; }
         public string MBO { get; set; }
         public ICollection<Appointment> Appointments { get; set; }
-        public ICollection<MedicalRecord> MedicalRecords { get; set; }
     }
 }

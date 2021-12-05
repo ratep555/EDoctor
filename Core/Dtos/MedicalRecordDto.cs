@@ -5,7 +5,7 @@ namespace Core.Dtos
 {
     public class MedicalRecordDto
     {
-        public int Id { get; set; }
+        public int AppointmentId { get; set; }
         public string AnamnesisDiagnosisTherapy { get; set; }
 
         [DataType(DataType.Date)]

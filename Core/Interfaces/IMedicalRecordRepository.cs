@@ -17,6 +17,6 @@ namespace Core.Interfaces
         Task<int> GetCountForMedicalRecordsForOnePatientOfDoctor(int id, int userId);
         Task<MedicalRecord> FindMedicalRecordById(int id);
         Task CreateMedicalRecord(MedicalRecord medicalRecord);
-
+        Task UpdateMedicalRecord(MedicalRecord record);
     }
 }

@@ -217,7 +217,11 @@ namespace Infrastructure.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ApplicationUserId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MBO = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -292,7 +296,8 @@ namespace Infrastructure.Data.Migrations
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column<Point>(type: "geography", nullable: true)
+                    Location = table.Column<Point>(type: "geography", nullable: true),
+                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -371,34 +376,19 @@ namespace Infrastructure.Data.Migrations
                 name: "MedicalRecords",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PatientId = table.Column<int>(type: "int", nullable: false),
-                    OfficeId = table.Column<int>(type: "int", nullable: false),
+                    AppointmentId = table.Column<int>(type: "int", nullable: false),
                     AnamnesisDiagnosisTherapy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PatientId1 = table.Column<int>(type: "int", nullable: true)
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicalRecords", x => x.Id);
+                    table.PrimaryKey("PK_MedicalRecords", x => x.AppointmentId);
                     table.ForeignKey(
-                        name: "FK_MedicalRecords_Offices_OfficeId",
-                        column: x => x.OfficeId,
-                        principalTable: "Offices",
+                        name: "FK_MedicalRecords_Appointments_AppointmentId",
+                        column: x => x.AppointmentId,
+                        principalTable: "Appointments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MedicalRecords_Patients_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Patients",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_MedicalRecords_Patients_PatientId1",
-                        column: x => x.PatientId1,
-                        principalTable: "Patients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -466,21 +456,6 @@ namespace Infrastructure.Data.Migrations
                 column: "SpecialtyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicalRecords_OfficeId",
-                table: "MedicalRecords",
-                column: "OfficeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MedicalRecords_PatientId",
-                table: "MedicalRecords",
-                column: "PatientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MedicalRecords_PatientId1",
-                table: "MedicalRecords",
-                column: "PatientId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Offices_DoctorId",
                 table: "Offices",
                 column: "DoctorId");
@@ -508,9 +483,6 @@ namespace Infrastructure.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Appointments");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -543,6 +515,9 @@ namespace Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Specialties");
+
+            migrationBuilder.DropTable(
+                name: "Appointments");
 
             migrationBuilder.DropTable(
                 name: "Offices");

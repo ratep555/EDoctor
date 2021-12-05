@@ -23,6 +23,5 @@ namespace Core.Entities
         public Point Location { get; set; }
         public string Picture { get; set; }
         public ICollection<Appointment> Appointments { get; set; }
-        public ICollection<MedicalRecord> MedicalRecords { get; set; }
     }
 }

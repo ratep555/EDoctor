@@ -38,11 +38,14 @@ export class RegisterDoctorComponent implements OnInit {
 
   createRegisterForm() {
     this.registerForm = this.fb.group({
-      firstName: [null, [Validators.required]],
-      lastName: [null, [Validators.required]],
-      username: [null, [Validators.required]],
+      firstName: [null, [Validators.required,
+        Validators.minLength(2), Validators.maxLength(30)]],
+      lastName: [null, [Validators.required,
+        Validators.minLength(2), Validators.maxLength(60)]],
+      username: [null, [Validators.required,
+        Validators.minLength(2), Validators.maxLength(20)]],
       startedPracticing: [null],
-      resume: [null],
+      resume: [null, Validators.maxLength(5000)],
       specialtiesIds: [null],
       hospitalsIds: [null],
       email: [null,

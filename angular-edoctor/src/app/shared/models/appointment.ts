@@ -4,10 +4,12 @@ export interface Appointment {
     patientId: number;
     doctorId: number;
     officeId: number;
+    appointmentId: number;
     patient: string;
     country: string;
     officeAddress: string;
     city: string;
+    hospital: string;
     startDateAndTimeOfAppointment: Date;
     endDateAndTimeOfAppointment: Date;
     status: boolean;

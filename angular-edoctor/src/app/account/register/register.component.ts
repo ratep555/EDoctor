@@ -10,6 +10,7 @@ import { AccountService } from '../account.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  errors: string[] = [];
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) { }
 
@@ -19,15 +20,22 @@ export class RegisterComponent implements OnInit {
 
   createRegisterForm() {
     this.registerForm = this.fb.group({
-      firstName: [null, [Validators.required]],
-      lastName: [null, [Validators.required]],
-      username: [null, [Validators.required]],
-      street: [null, [Validators.required]],
-      city: [null, [Validators.required]],
-      country: [null, [Validators.required]],
-      mBO: [null],
+      firstName: [null, [Validators.required,
+        Validators.minLength(2), Validators.maxLength(30)]],
+      lastName: [null, [Validators.required,
+        Validators.minLength(2), Validators.maxLength(60)]],
+      username: [null, [Validators.required,
+        Validators.minLength(2), Validators.maxLength(20)]],
+      street: [null, [Validators.required,
+        Validators.minLength(2), Validators.maxLength(40)]],
+      city: [null, [Validators.required,
+        Validators.minLength(2), Validators.maxLength(40)]],
+      country: [null, [Validators.required,
+        Validators.minLength(3), Validators.maxLength(60)]],
+      mBO: [null, Validators.maxLength(9)],
       dateOfBirth: ['', Validators.required],
-      phoneNumber: [null, Validators.required],
+      phoneNumber: [null, Validators.required,
+        Validators.minLength(5), Validators.maxLength(25)],
       email: [null,
         [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')],
       ],
@@ -48,6 +56,7 @@ export class RegisterComponent implements OnInit {
     this.accountService.register(this.registerForm.value).subscribe(response => {
       this.router.navigateByUrl('/');
     }, error => {
+      this.errors = error.errors;
       console.log(error);
     });
   }

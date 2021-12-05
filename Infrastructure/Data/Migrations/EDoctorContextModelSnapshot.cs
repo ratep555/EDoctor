@@ -256,10 +256,8 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.MedicalRecord", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("AnamnesisDiagnosisTherapy")
                         .HasColumnType("nvarchar(max)");
@@ -267,17 +265,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OfficeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OfficeId");
-
-                    b.HasIndex("PatientId");
+                    b.HasKey("AppointmentId");
 
                     b.ToTable("MedicalRecords");
                 });
@@ -576,21 +564,13 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.MedicalRecord", b =>
                 {
-                    b.HasOne("Core.Entities.Office", "Office")
-                        .WithMany("MedicalRecords")
-                        .HasForeignKey("OfficeId")
+                    b.HasOne("Core.Entities.Appointment", "Appointment")
+                        .WithOne("MedicalRecord")
+                        .HasForeignKey("Core.Entities.MedicalRecord", "AppointmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.Patient", "Patient")
-                        .WithMany("MedicalRecords")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Office");
-
-                    b.Navigation("Patient");
+                    b.Navigation("Appointment");
                 });
 
             modelBuilder.Entity("Core.Entities.Office", b =>
@@ -681,6 +661,11 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("UserRoles");
                 });
 
+            modelBuilder.Entity("Core.Entities.Appointment", b =>
+                {
+                    b.Navigation("MedicalRecord");
+                });
+
             modelBuilder.Entity("Core.Entities.Doctor", b =>
                 {
                     b.Navigation("DoctorHospitals");
@@ -705,15 +690,11 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Core.Entities.Office", b =>
                 {
                     b.Navigation("Appointments");
-
-                    b.Navigation("MedicalRecords");
                 });
 
             modelBuilder.Entity("Core.Entities.Patient", b =>
                 {
                     b.Navigation("Appointments");
-
-                    b.Navigation("MedicalRecords");
                 });
 #pragma warning restore 612, 618
         }

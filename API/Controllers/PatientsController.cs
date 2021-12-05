@@ -48,7 +48,7 @@ namespace API.Controllers
         {
             var patient = await _patientRepository.FindPatientById(id);
 
-            if (patient == null) return NotFound();
+            if (patient == null) return NotFound(new ServerResponse(404));
 
             return _mapper.Map<PatientDto>(patient);
         }
@@ -58,7 +58,7 @@ namespace API.Controllers
         {
             var patient = await _patientRepository.FindPatientByUserId(id);
 
-            if (patient == null) return NotFound();
+            if (patient == null) return NotFound(new ServerResponse(404));
 
             return _mapper.Map<PatientDto>(patient);
         }
@@ -101,7 +101,7 @@ namespace API.Controllers
 
             if (list.Count() > 0) return Ok(new { list });
 
-            return BadRequest();        
+            return BadRequest(new ServerResponse(400));        
         }
 
         [HttpGet("patientcharts2")]
@@ -113,7 +113,7 @@ namespace API.Controllers
 
             if (list.Count() > 0) return Ok(new { list });
 
-            return BadRequest();        
+            return BadRequest(new ServerResponse(400));        
         }
 
         [HttpGet("patientcharts3")]
@@ -125,7 +125,7 @@ namespace API.Controllers
 
             if (list.Count() > 0) return Ok(new { list });
 
-            return BadRequest();        
+            return BadRequest(new ServerResponse(400));        
         }
     }
 }

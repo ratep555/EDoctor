@@ -13,6 +13,7 @@ import { EditPatientComponent } from './edit-patient/edit-patient.component';
 import { StatisticsPatientComponent } from './statistics-patient/statistics-patient.component';
 import { ChartOfficesPatientComponent } from './charts-patient/chart-offices-patient/chart-offices-patient.component';
 import { ChartAppointmentsPatientComponent } from './charts-patient/chart-appointments-patient/chart-appointments-patient.component';
+import { EditMedicalrecordComponent } from './edit-medicalrecord/edit-medicalrecord.component';
 
 
 
@@ -28,7 +29,8 @@ import { ChartAppointmentsPatientComponent } from './charts-patient/chart-appoin
     EditPatientComponent,
     StatisticsPatientComponent,
     ChartOfficesPatientComponent,
-    ChartAppointmentsPatientComponent
+    ChartAppointmentsPatientComponent,
+    EditMedicalrecordComponent
   ],
   imports: [
     CommonModule,

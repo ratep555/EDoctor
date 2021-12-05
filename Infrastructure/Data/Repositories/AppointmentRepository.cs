@@ -22,18 +22,18 @@ namespace Infrastructure.Data.Repositories
         public async Task<List<Appointment>> GetAllAvailableUpcomingAppointments(QueryParameters queryParameters)
         {                                 
             var doctorSpecialty = await _context.DoctorSpecialties.
-                                        Where(x => x.SpecialtyId == queryParameters.SpecialtyId) 
-                                        .FirstOrDefaultAsync();
+                Where(x => x.SpecialtyId == queryParameters.SpecialtyId).FirstOrDefaultAsync();
 
             IQueryable<Appointment> appointments = _context.Appointments.Include(x => x.Office)
-                    .ThenInclude(x => x.Doctor)
-                    .Where(x => x.PatientId == null && x.StartDateAndTimeOfAppointment > DateTime.Now)
-                    .AsQueryable().OrderByDescending(x => x.StartDateAndTimeOfAppointment);
+                .ThenInclude(x => x.Doctor)
+                .Include(x => x.Office).ThenInclude(x => x.Hospitals)
+                .Where(x => x.PatientId == null && x.StartDateAndTimeOfAppointment > DateTime.Now)
+                .AsQueryable();
             
             if (queryParameters.HasQuery())
             {
                 appointments = appointments
-                .Where(x => x.Office.City.Contains(queryParameters.Query));
+                    .Where(x => x.Office.City.Contains(queryParameters.Query));
             }
 
             if (queryParameters.SpecialtyId.HasValue)
@@ -42,7 +42,7 @@ namespace Infrastructure.Data.Repositories
             }
 
             appointments = appointments.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
-                           .Take(queryParameters.PageCount);
+                .Take(queryParameters.PageCount);
 
             if (!string.IsNullOrEmpty(queryParameters.Sort))
             {
@@ -50,6 +50,12 @@ namespace Infrastructure.Data.Repositories
                 {
                     case "dateDesc":
                         appointments = appointments.OrderByDescending(p => p.StartDateAndTimeOfAppointment);
+                        break;
+                    case "hospital":
+                        appointments = appointments.Where(p => p.Office.HospitalId != null);
+                        break;
+                    case "private":
+                        appointments = appointments.Where(p => p.Office.HospitalId == null);
                         break;
                     default:
                         appointments = appointments.OrderBy(n => n.StartDateAndTimeOfAppointment);
@@ -69,9 +75,9 @@ namespace Infrastructure.Data.Repositories
         public async Task<List<Appointment>> GetAppointmentsForSingleDoctor(QueryParameters queryParameters, int userId)
         {
             IQueryable<Appointment> appointment = _context.Appointments.Include(x => x.Patient)
-                                                   .Include(x => x.Office).ThenInclude(x => x.Doctor)
-                                                   .Where(x => x.Office.Doctor.ApplicationUserId == userId)
-                                                   .AsQueryable().OrderBy(x => x.StartDateAndTimeOfAppointment);
+                .Include(x => x.MedicalRecord).Include(x => x.Office)
+                .ThenInclude(x => x.Doctor).Include(x => x.Office).ThenInclude(x => x.Hospitals)
+                .Where(x => x.Office.Doctor.ApplicationUserId == userId).AsQueryable().OrderBy(x => x.StartDateAndTimeOfAppointment);
             
             if (queryParameters.HasQuery())
             {
@@ -223,6 +229,7 @@ namespace Infrastructure.Data.Repositories
         public async Task<Appointment> GetApointmentById(int id)
         {
             return await _context.Appointments.Include(x => x.Office).ThenInclude(x => x.Doctor)
+            .Include(x => x.MedicalRecord)
                          .Include(x => x.Patient).Where(x => x.Id == id)
                          .FirstOrDefaultAsync();        }
 

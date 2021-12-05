@@ -66,6 +66,17 @@
               rows="20"
             ></textarea>
           </div>
+          <span
+          style="font-size: 14px"
+          class="text-danger ml-3"
+          *ngIf="
+            registerForm.get('resume').invalid &&
+            registerForm.get('resume').touched &&
+            registerForm.get('resume').errors['maxlength']
+          "
+        >
+          Please enter at most 5000 characters
+        </span>
         </div>
         <div class="form-group text-center">
           <button

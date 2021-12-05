@@ -11,13 +11,6 @@
           <hr />
           <hr />
           <hr />
-          <div class="btn-group d-flex">
-            <button
-              routerLink="/patients/addmedicalrecord/{{ patient.id }}"
-              class="btn btn-primary"           >
-              Add New Medical Record
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -107,7 +100,7 @@
                     <td>{{ item.office }}</td>
                     <td class="text-center">
                       <button
-                        routerLink="/patients/infomedicalrecord/{{ item.id }}"
+                        routerLink="/patients/infomedicalrecord/{{ item.appointmentId }}"
                         type="button"
                         class="btn btn-info d-inline"
                       >

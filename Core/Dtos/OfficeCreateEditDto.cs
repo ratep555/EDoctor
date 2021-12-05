@@ -10,6 +10,7 @@ namespace Core.Dtos
     {
         public int Id { get; set; }
 
+
         [ModelBinder(BinderType = typeof(TypeBinder<int?>))]
         public int? HospitalId { get; set; }
 
@@ -17,11 +18,24 @@ namespace Core.Dtos
         [ModelBinder(BinderType = typeof(TypeBinder<decimal>))]
         public decimal InitialExaminationFee { get; set; }
 
+
         [ModelBinder(BinderType = typeof(TypeBinder<decimal>))]
         public decimal FollowUpExaminationFee { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
+
+        
+        [Required, MinLength(3), MaxLength(60)]
         public string Country { get; set; }
+
+
+        [Required, MinLength(2), MaxLength(40)]
+        public string City { get; set; }
+
+
+        [Required, MinLength(2), MaxLength(40)]
+        public string Street { get; set; }
+
+
+        [Required, MinLength(100), MaxLength(2000)]
         public string Description { get; set; }
 
         [Range(-90, 90)]

@@ -12,10 +12,12 @@ namespace API.Helpers
         {
             CreateMap<Appointment, AppointmentDto>()
             .ForMember(d => d.OfficeAddress, o => o.MapFrom(s => s.Office.Street))
+            .ForMember(d => d.AppointmentId, o => o.MapFrom(s => s.MedicalRecord.AppointmentId))
             .ForMember(d => d.City, o => o.MapFrom(s => s.Office.City))
             .ForMember(d => d.Country, o => o.MapFrom(s => s.Office.Country))
             .ForMember(d => d.Patient, o => o.MapFrom(s => s.Patient.Name))
             .ForMember(d => d.Doctor, o => o.MapFrom(s => s.Office.Doctor.Name))
+            .ForMember(d => d.Hospital, o => o.MapFrom(s => s.Office.Hospitals.HospitalName))
             .ForMember(d => d.DoctorId, o => o.MapFrom(s => s.Office.DoctorId));
 
             CreateMap<AppointmentCreateEditDto, Appointment>().ReverseMap();
@@ -41,12 +43,13 @@ namespace API.Helpers
             CreateMap<Hospital, HospitalDto>().ReverseMap();
 
             CreateMap<MedicalRecord, MedicalRecordDto>()
-                .ForMember(d => d.Doctor, o => o.MapFrom(s => s.Office.Doctor.Name))
-                .ForMember(d => d.DoctorId, o => o.MapFrom(s => s.Office.Doctor.Id))
-                .ForMember(d => d.Hospital, o => o.MapFrom(s => s.Office.Hospitals.HospitalName))
-                .ForMember(d => d.Office, o => o.MapFrom(s => s.Office.Street))
-                .ForMember(d => d.Patient, o => o.MapFrom(s => s.Patient.Name))
-                .ForMember(d => d.PatientId, o => o.MapFrom(s => s.Patient.Id));
+                .ForMember(d => d.AppointmentId, o => o.MapFrom(s => s.AppointmentId))
+                .ForMember(d => d.Doctor, o => o.MapFrom(s => s.Appointment.Office.Doctor.Name))
+                .ForMember(d => d.DoctorId, o => o.MapFrom(s => s.Appointment.Office.Doctor.Id))
+                .ForMember(d => d.Hospital, o => o.MapFrom(s => s.Appointment.Office.Hospitals.HospitalName))
+                .ForMember(d => d.Office, o => o.MapFrom(s => s.Appointment.Office.Street))
+                .ForMember(d => d.Patient, o => o.MapFrom(s => s.Appointment.Patient.Name))
+                .ForMember(d => d.PatientId, o => o.MapFrom(s => s.Appointment.Patient.Id));
 
             CreateMap<MedicalRecordCreateEditDto, MedicalRecord>().ReverseMap();
 

@@ -31,7 +31,7 @@
         <div class="form-group row">
           <div class="col-md-12">
             <select class="form-control" formControlName="hospitalId">
-              <option value="null">--Select Hospital if any--</option>
+              <option value="null">--Select hospital if any--</option>
               <option
                 *ngFor="let hospital of hospitalList"
                 value="{{ hospital.id }}"
@@ -61,6 +61,28 @@
             "
           >
             Please enter a Description
+          </span>
+          <span
+            style="font-size: 14px"
+            class="text-danger ml-3"
+            *ngIf="
+              officeForm.get('description').invalid &&
+              officeForm.get('description').touched &&
+              officeForm.get('description').errors['minlength']
+            "
+          >
+            Please enter at least 100 characters
+          </span>
+          <span
+            style="font-size: 14px"
+            class="text-danger ml-3"
+            *ngIf="
+              officeForm.get('description').invalid &&
+              officeForm.get('description').touched &&
+              officeForm.get('description').errors['maxlength']
+            "
+          >
+            Please enter at most 2000 characters
           </span>
         </div>
         

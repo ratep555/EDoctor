@@ -51,7 +51,7 @@ namespace API.Controllers
         {
             var hospital = await _hospitalRepository.GetHospitalById(id);
 
-            if (hospital == null) return NotFound();
+            if (hospital == null) return NotFound(new ServerResponse(404));
 
             return _mapper.Map<HospitalDto>(hospital);
         }
@@ -64,7 +64,8 @@ namespace API.Controllers
 
             await _hospitalRepository.CreateHospital(hospital);
 
-            return CreatedAtAction("GetHospitalById", new {id = hospital.Id }, _mapper.Map<HospitalDto>(hospital));
+            return CreatedAtAction("GetHospitalById", new {id = hospital.Id }, 
+                _mapper.Map<HospitalDto>(hospital));
         }
 
         [Authorize(Policy = "RequireAdminRole")]

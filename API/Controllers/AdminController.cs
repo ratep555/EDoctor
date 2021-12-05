@@ -41,7 +41,7 @@ namespace API.Controllers
 
             var user = await _userManager.FindByNameAsync(username);
 
-            if (user == null) return NotFound("Could not find user");
+            if (user == null) return NotFound(new ServerResponse(404));
 
             var userRoles = await _userManager.GetRolesAsync(user);
               
@@ -108,7 +108,7 @@ namespace API.Controllers
 
             if (list.Count() > 0) return Ok(new { list });
 
-            return BadRequest();        
+            return BadRequest(new ServerResponse(400));        
         }
 
         [HttpGet("charts2")]
@@ -118,7 +118,7 @@ namespace API.Controllers
 
             if (list.Count() > 0) return Ok(new { list });
 
-            return BadRequest();        
+            return BadRequest(new ServerResponse(400));        
         }
 
         [HttpGet("charts3")]
@@ -128,7 +128,7 @@ namespace API.Controllers
 
             if (list.Count() > 0) return Ok(new { list });
 
-            return BadRequest();        
+            return BadRequest(new ServerResponse(400));        
         }
 
         [HttpGet("charts4")]
@@ -138,7 +138,7 @@ namespace API.Controllers
 
             if (list.Count() > 0) return Ok(new { list });
 
-            return BadRequest();        
+            return BadRequest(new ServerResponse(400));        
         }
     }
 }

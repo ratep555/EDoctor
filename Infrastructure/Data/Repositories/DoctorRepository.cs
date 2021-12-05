@@ -116,10 +116,11 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<List<DoctorDto>> GetAllDoctorsOfPatient(int userId, QueryParameters queryParameters)
         {
-            var medicalrecords = await _context.MedicalRecords.Include(x => x.Patient)
-                .Include(x => x.Office).Where(x => x.Patient.ApplicationUserId == userId).ToListAsync();
+            var medicalrecords = await _context.MedicalRecords.Include(x => x.Appointment)
+                .ThenInclude(x => x.Patient).Include(x => x.Appointment)
+                .ThenInclude(x => x.Office).Where(x => x.Appointment.Patient.ApplicationUserId == userId).ToListAsync();
             
-            IEnumerable<int> ids = medicalrecords.Select(x => x.Office.DoctorId);
+            IEnumerable<int> ids = medicalrecords.Select(x => x.Appointment.Office.DoctorId);
             
             IEnumerable<DoctorDto> doctors = await GetAllDoctors(queryParameters);
 
@@ -130,10 +131,11 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<int> GetCountForAllDoctorsOfPatient(int userId, QueryParameters queryParameters)
         {
-            var medicalrecords = await _context.MedicalRecords.Include(x => x.Patient)
-                .Include(x => x.Office).Where(x => x.Patient.ApplicationUserId == userId).ToListAsync();
+            var medicalrecords = await _context.MedicalRecords.Include(x => x.Appointment)
+                .ThenInclude(x => x.Patient).Include(x => x.Appointment)
+                .ThenInclude(x => x.Office).Where(x => x.Appointment.Patient.ApplicationUserId == userId).ToListAsync();
             
-            IEnumerable<int> ids = medicalrecords.Select(x => x.Office.DoctorId);
+            IEnumerable<int> ids = medicalrecords.Select(x => x.Appointment.Office.DoctorId);
             
             IEnumerable<DoctorDto> doctors = await GetAllDoctors(queryParameters);
 
@@ -195,10 +197,11 @@ namespace Infrastructure.Data.Repositories
         {
             var doctorstatistics = new DoctorStatisticsDto();
 
-            var medicalrecords = await _context.MedicalRecords.Include(x => x.Office).ThenInclude(x => x.Doctor)
-                                 .Where(x => x.Office.Doctor.ApplicationUserId == userId).ToListAsync();
+            var medicalrecords = await _context.MedicalRecords.Include(x => x.Appointment)
+                .ThenInclude(x => x.Office).ThenInclude(x => x.Doctor)
+                .Where(x => x.Appointment.Office.Doctor.ApplicationUserId == userId).ToListAsync();
 
-            IEnumerable<int> patientsids = medicalrecords.Select(x => x.PatientId);
+            IEnumerable<int?> patientsids = medicalrecords.Select(x => x.Appointment.PatientId);
 
             doctorstatistics.AvailableAppointmentsCount = await _context. Appointments
                 .Where(p => p.Status == null & p.PatientId == null && p.Office.Doctor.ApplicationUserId == userId
@@ -209,7 +212,7 @@ namespace Infrastructure.Data.Repositories
                 && x.Office.Doctor.ApplicationUserId == userId).CountAsync();
 
             doctorstatistics.MedicalRecordsCount = await _context.MedicalRecords
-                .Where(x => x.Office.Doctor.ApplicationUserId == userId).CountAsync();           
+                .Where(x => x.Appointment.Office.Doctor.ApplicationUserId == userId).CountAsync();           
 
             doctorstatistics.PatientsCount = await _context.Patients
                 .Where(x => patientsids.Contains(x.Id)).CountAsync();
@@ -258,17 +261,19 @@ namespace Infrastructure.Data.Repositories
         {
             List<DoctorChartDto2> list = new List<DoctorChartDto2>();
 
-            var hospitalmedicalrecords = await _context.MedicalRecords
-                .Where(x => x.Office.Doctor.ApplicationUserId == userId 
-                && x.Office.HospitalId != null).ToListAsync();
+            var hospitalmedicalrecords = await _context.MedicalRecords.Include(x => x.Appointment)
+                .ThenInclude(x => x.Office).ThenInclude(x => x.Doctor)
+                .Where(x => x.Appointment.Office.Doctor.ApplicationUserId == userId 
+                && x.Appointment.Office.HospitalId != null).ToListAsync();
 
-            IEnumerable<int> hospitalpatientsids = hospitalmedicalrecords.Select(x => x.PatientId);
+            IEnumerable<int?> hospitalpatientsids = hospitalmedicalrecords.Select(x => x.Appointment.PatientId);
 
-            var privatepracticemedicalrecords = await _context.MedicalRecords
-                .Where(x => x.Office.Doctor.ApplicationUserId == userId 
-                && x.Office.HospitalId == null).ToListAsync();
+            var privatepracticemedicalrecords = await _context.MedicalRecords.Include(x => x.Appointment)
+                .ThenInclude(x => x.Office).ThenInclude(x => x.Doctor)
+                .Where(x => x.Appointment.Office.Doctor.ApplicationUserId == userId 
+                && x.Appointment.Office.HospitalId == null).ToListAsync();
 
-            IEnumerable<int> privatepracticepatientsids = privatepracticemedicalrecords.Select(x => x.PatientId);
+            IEnumerable<int?> privatepracticepatientsids = privatepracticemedicalrecords.Select(x => x.Appointment.PatientId);
           
             list.Add(new DoctorChartDto2 { PracticeType = "Hospital examination", 
                 NumberOfPatients = await _context.Patients.Where(x => hospitalpatientsids.Contains(x.Id)).CountAsync()  });
@@ -285,14 +290,16 @@ namespace Infrastructure.Data.Repositories
             List<DoctorChartDto3> list = new List<DoctorChartDto3>();
 
             list.Add(new DoctorChartDto3 { MedicalRecordType = "Hospital medical records", 
-                NumberOfMedicalRecords = await _context.MedicalRecords.Include(x => x.Office).
-                ThenInclude(x => x.Doctor).Where(x => x.Office.HospitalId != null &&
-                x.Office.Doctor.ApplicationUserId == userId).CountAsync()  });
+                NumberOfMedicalRecords = await _context.MedicalRecords.Include(x => x.Appointment)
+                .ThenInclude(x => x.Office).ThenInclude(x => x.Doctor)
+                .Where(x => x.Appointment.Office.HospitalId != null &&
+                x.Appointment.Office.Doctor.ApplicationUserId == userId).CountAsync()  });
 
             list.Add(new DoctorChartDto3 { MedicalRecordType = "Private practice medical records", 
-                NumberOfMedicalRecords = await _context.MedicalRecords.Include(x => x.Office).
-                ThenInclude(x => x.Doctor).Where(x => x.Office.HospitalId == null &&
-                x.Office.Doctor.ApplicationUserId == userId).CountAsync()  });
+                NumberOfMedicalRecords = await _context.MedicalRecords.Include(x => x.Appointment)
+                .ThenInclude(x => x.Office).
+                ThenInclude(x => x.Doctor).Where(x => x.Appointment.Office.HospitalId == null &&
+                x.Appointment.Office.Doctor.ApplicationUserId == userId).CountAsync()  });
             
             return list;
         }

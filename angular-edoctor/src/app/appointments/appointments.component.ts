@@ -20,8 +20,11 @@ export class AppointmentsComponent implements OnInit {
   specialties: Specialty[];
 
   sortOptions = [
-    {name: 'Earliest', value: 'city'},
+    {name: 'All appointments', value: 'city'},
+    {name: 'Hospital', value: 'hospital'},
+    {name: 'Private', value: 'private'},
     {name: 'Latest', value: 'dateDesc'}
+
   ];
 
   constructor(private appointmentsService: AppointmentsService,

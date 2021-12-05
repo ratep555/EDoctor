@@ -55,7 +55,7 @@ namespace API.Controllers
             var data = _mapper.Map<IEnumerable<AppointmentDto>>(list);
 
             return Ok(new Pagination<AppointmentDto>
-            (queryParameters.Page, queryParameters.PageCount, count, data));
+                (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
         [HttpGet("singlepatient")]
@@ -70,7 +70,7 @@ namespace API.Controllers
             var data = _mapper.Map<IEnumerable<AppointmentDto>>(list);
 
             return Ok(new Pagination<AppointmentDto>
-            (queryParameters.Page, queryParameters.PageCount, count, data));
+                (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
         [HttpGet("availableappointments/{id}")]
@@ -83,7 +83,7 @@ namespace API.Controllers
             var data = _mapper.Map<IEnumerable<AppointmentDto>>(list);
 
             return Ok(new Pagination<AppointmentDto>
-            (queryParameters.Page, queryParameters.PageCount, count, data));
+                (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
         [HttpGet("{id}")]
@@ -91,7 +91,7 @@ namespace API.Controllers
         {
             var appointment = await _appointmentRepository.GetApointmentById(id);
 
-            if (appointment == null) return NotFound();
+            if (appointment == null) return NotFound(new ServerResponse(404));
 
             return _mapper.Map<AppointmentDto>(appointment);
         }
@@ -104,7 +104,8 @@ namespace API.Controllers
            
             await _appointmentRepository.CreateAppointment(appointment);
 
-            return CreatedAtAction("GetAppointmentById", new {id = appointment.Id }, _mapper.Map<AppointmentDto>(appointment));
+            return CreatedAtAction("GetAppointmentById", new {id = appointment.Id }, 
+                _mapper.Map<AppointmentDto>(appointment));
         }
 
         [Authorize(Policy = "RequireDoctorRole")]
@@ -114,7 +115,7 @@ namespace API.Controllers
         {
             var appointment = _mapper.Map<Appointment>(appointmentDto);
 
-            if (id != appointment.Id) return BadRequest();
+            if (id != appointment.Id) return BadRequest(new ServerResponse(400));
 
             if (appointmentDto.Status == null) 
             {
@@ -122,7 +123,7 @@ namespace API.Controllers
                 appointment.Remarks = "";
             }
 
-                await _appointmentRepository.UpdateAppointment(appointment);
+            await _appointmentRepository.UpdateAppointment(appointment);
                         
             return NoContent();
         }
@@ -138,7 +139,7 @@ namespace API.Controllers
 
             var appointment = _mapper.Map<Appointment>(appointmentDto);
 
-            if (id != appointment.Id) return BadRequest();
+            if (id != appointment.Id) return BadRequest(new ServerResponse(400));
 
             var office = await _appointmentRepository.GetOfficeByAppointment(appointment);
 
@@ -162,7 +163,7 @@ namespace API.Controllers
 
             var appointment = await _appointmentRepository.GetApointmentById(id);
 
-            if (appointment == null) return NotFound();
+            if (appointment == null) return NotFound(new ServerResponse(404));
 
             if (appointment.Status == true) 
             {

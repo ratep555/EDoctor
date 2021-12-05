@@ -29,12 +29,16 @@ export class AddOfficeDoctorComponent implements OnInit {
 
   createOfficeForm() {
     this.officeForm = this.fb.group({
-      street: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      country: ['', [Validators.required]],
+      street: [null, [Validators.required,
+        Validators.minLength(2), Validators.maxLength(40)]],
+      city: [null, [Validators.required,
+        Validators.minLength(2), Validators.maxLength(40)]],
+      country: [null, [Validators.required,
+        Validators.minLength(3), Validators.maxLength(60)]],
       initialExaminationFee: ['', [Validators.required]],
       followUpExaminationFee: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      description: ['', [Validators.required,
+        Validators.minLength(10), Validators.maxLength(2000)]],
       longitude: ['', [Validators.required]],
       latitude: ['', [Validators.required]],
       hospitalId: [null],

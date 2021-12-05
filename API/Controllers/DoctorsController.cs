@@ -45,7 +45,7 @@ namespace API.Controllers
             var list = await _doctorRepository.GetAllDoctors(queryParameters);
 
             return Ok(new Pagination<DoctorDto>
-            (queryParameters.Page, queryParameters.PageCount, count, list));
+                (queryParameters.Page, queryParameters.PageCount, count, list));
         }
 
         [HttpGet("doctorsofpatient")]
@@ -67,7 +67,7 @@ namespace API.Controllers
         {
             var doctor = await _doctorRepository.FindDoctorById(id);
 
-            if (doctor == null) return NotFound();
+            if (doctor == null) return NotFound(new ServerResponse(404));
 
             var averageVote = 0.0;
             var userVote = 0;
@@ -106,7 +106,7 @@ namespace API.Controllers
         {
             var doctor = await _doctorRepository.FindDoctorByUserId(id);
 
-            if (doctor == null) return NotFound();
+            if (doctor == null) return NotFound(new ServerResponse(404));
 
             var averageVote = 0.0;
 
@@ -131,7 +131,7 @@ namespace API.Controllers
         {
             var doctor = await _doctorRepository.FindDoctorById(id);
 
-            if (doctor == null) return NotFound();
+            if (doctor == null) return NotFound(new ServerResponse(404));
 
             var doctorToReturn = _mapper.Map<DoctorDto>(doctor);
 
@@ -178,7 +178,7 @@ namespace API.Controllers
         {
             var doctor = await _doctorRepository.FindDoctorById(id);
 
-            if (doctor == null) return NotFound();
+            if (doctor == null) return NotFound(new ServerResponse(404));
 
             doctor =  _mapper.Map(doctorDto, doctor);
 
@@ -215,7 +215,7 @@ namespace API.Controllers
 
             if (list.Count() > 0) return Ok(new { list });
 
-            return BadRequest();        
+            return BadRequest(new ServerResponse(400));        
         }
 
         [HttpGet("doctorcharts2")]
@@ -227,7 +227,7 @@ namespace API.Controllers
 
             if (list.Count() > 0) return Ok(new { list });
 
-            return BadRequest();        
+            return BadRequest(new ServerResponse(400));        
         }
 
         [HttpGet("doctorcharts3")]
@@ -239,7 +239,7 @@ namespace API.Controllers
 
             if (list.Count() > 0) return Ok(new { list });
 
-            return BadRequest();        
+            return BadRequest(new ServerResponse(400));        
         }     
     }
 }

@@ -24,6 +24,9 @@ namespace Core.Entities
         public bool? Status { get; set; }
         public string Remarks { get; set; }
 
+        public MedicalRecord MedicalRecord { get; set; }
+
+
 
 
     }

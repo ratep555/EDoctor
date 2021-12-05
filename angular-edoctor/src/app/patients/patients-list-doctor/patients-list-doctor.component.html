@@ -39,13 +39,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of patients" style="color: black">
-        <td>
-          <a
-            class="done"
-            href=""
-            routerLink="/patients/infopatient/{{ item.id }}"
-            >{{ item.name }}</a
-          >
+        <td>    
+            {{ item.name }}          
         </td>
         <td>{{ item.dateOfBirth | date: "dd.MM.yyyy" }}</td>
         <td>{{ item.email }}</td>
@@ -53,13 +48,13 @@
         <td>
           <div class="text-center">
             <button
-              routerLink="/patients/addmedicalrecord/{{ item.id }}"
-              type="button"
-              class="btn btn-success mr-3"
-            >
-              <i class="fa fa-info-circle mr-1"></i>
-              Add Record
-            </button>
+            routerLink="/patients/infopatient/{{ item.id }}"
+            type="button"
+            class="btn btn-info d-inline"
+          >
+            <i class="fa fa-info-circle mr-1"></i>
+            Patient info
+          </button>
           </div>
         </td>
       </tr>

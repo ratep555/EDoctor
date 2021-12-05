@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.ErrorHandling;
 using API.Extensions;
 using AutoMapper;
 using Core.Dtos;
@@ -40,7 +42,7 @@ namespace API.Controllers
             var data = _mapper.Map<List<MedicalRecordDto>>(list);
 
             return Ok(new Pagination<MedicalRecordDto>
-            (queryParameters.Page, queryParameters.PageCount, count, data));
+                (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
         [HttpGet("allrecordsforpatientasuser")]
@@ -56,7 +58,7 @@ namespace API.Controllers
             var data = _mapper.Map<List<MedicalRecordDto>>(list);
 
             return Ok(new Pagination<MedicalRecordDto>
-            (queryParameters.Page, queryParameters.PageCount, count, data));
+                (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
         [HttpGet("onepatientofdoctor/{id}")]
@@ -67,7 +69,7 @@ namespace API.Controllers
 
             var patient = await _patientRepository.FindPatientById(id);
 
-            if (patient == null) return NotFound();
+            if (patient == null) return NotFound(new ServerResponse(404));
 
             var count = await _medicalRecordRepository
                 .GetCountForMedicalRecordsForOnePatientOfDoctor(id, userId);
@@ -78,7 +80,7 @@ namespace API.Controllers
             var data = _mapper.Map<List<MedicalRecordDto>>(list);
 
             return Ok(new Pagination<MedicalRecordDto>
-            (queryParameters.Page, queryParameters.PageCount, count, data));
+                (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
         [HttpGet("{id}")]
@@ -86,7 +88,7 @@ namespace API.Controllers
         {
             var record = await _medicalRecordRepository.FindMedicalRecordById(id);
 
-            if (record == null) return NotFound();
+            if (record == null) return NotFound(new ServerResponse(404));
 
             return _mapper.Map<MedicalRecordDto>(record);         
         }
@@ -98,13 +100,27 @@ namespace API.Controllers
         {
             var medicalrecord = _mapper.Map<MedicalRecord>(medicalRecordDto);
 
-            medicalrecord.PatientId = id;
+            medicalrecord.AppointmentId = id;
 
             await _medicalRecordRepository.CreateMedicalRecord(medicalrecord);
            
-            return CreatedAtAction("GetMedicalRecordById", new {id = medicalrecord.Id }, 
+            return CreatedAtAction("GetMedicalRecordById", new {id = medicalrecord.AppointmentId }, 
                 _mapper.Map<MedicalRecordDto>(medicalrecord));
         }    
+
+        [Authorize(Policy = "RequireDoctorRole")]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateMedicalRecord(int id, 
+            [FromBody] MedicalRecordCreateEditDto medicalRecordDto)
+        {
+            var medicalrecord = _mapper.Map<MedicalRecord>(medicalRecordDto);
+
+            if (id != medicalrecord.AppointmentId) return BadRequest(new ServerResponse(400));
+
+            await _medicalRecordRepository.UpdateMedicalRecord(medicalrecord);
+           
+            return NoContent();
+        }
     }
 }
 

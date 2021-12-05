@@ -42,9 +42,11 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<bool> CheckIfThisIsDoctorsPatient(int id, int userId)
         {
-            var records = await _context.MedicalRecords.Include(x => x.Office).ThenInclude(x => x.Doctor)
-                .Include(x => x.Patient)
-                .Where(x => x.Office.Doctor.Id == id && x.Patient.ApplicationUserId == userId).ToListAsync();
+            var records = await _context.MedicalRecords.Include(x => x.Appointment)
+                .ThenInclude(x => x.Office).ThenInclude(x => x.Doctor)
+                .Include(x => x.Appointment).ThenInclude(x => x.Patient)
+                .Where(x => x.Appointment.Office.Doctor.Id == id &&
+                 x.Appointment.Patient.ApplicationUserId == userId).ToListAsync();
 
            if (!records.Any())
            {

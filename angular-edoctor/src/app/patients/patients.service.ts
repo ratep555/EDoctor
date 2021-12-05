@@ -57,7 +57,7 @@ export class PatientsService {
     );
   }
 
-  GetMedicalRecordsForAllPatientsOfDoctor(userParams: UserParams) {
+  getMedicalRecordsForAllPatientsOfDoctor(userParams: UserParams) {
     let params = new HttpParams();
     if (userParams.officeId !== 0) {
       params = params.append('officeId', userParams.officeId.toString());
@@ -115,6 +115,10 @@ export class PatientsService {
     return this.http.get<MedicalRecord>(this.baseUrl + 'medicalRecords/' + id);
   }
 
+  getMedicalRecordForEditing(id: number) {
+    return this.http.get<MedicalrecordCreateEdit>(this.baseUrl + 'medicalRecords/' + id);
+  }
+
   getPatient(id: number) {
     return this.http.get<Patient>(this.baseUrl + 'patients/' + id);
   }
@@ -123,12 +127,16 @@ export class PatientsService {
     return this.http.get<Patient>(this.baseUrl + 'patients/userid/' + id);
   }
 
-  updatingPatientssProfile(formData1){
+  updatingPatientsProfile(formData1){
     return this.http.put(this.baseUrl + 'patients/updatingpatientsprofile/' + formData1.id, formData1);
   }
 
   createMedicalRecord(values: any) {
-    return this.http.post(this.baseUrl + 'medicalRecords/' + this.formData.patientId, values);
+    return this.http.post(this.baseUrl + 'medicalRecords/' + this.formData.appointmentId, values);
+  }
+
+  updateMedicalRecord(formData) {
+    return this.http.put(this.baseUrl + 'medicalrecords/' + formData.appointmentId, formData);
   }
 
   getCountForEntitiesForPatient() {

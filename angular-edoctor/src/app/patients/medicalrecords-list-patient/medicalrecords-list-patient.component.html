@@ -49,11 +49,18 @@
           </td>        
         <td>{{ item.office }}</td>
         <td>{{ item.created | date: "dd.MM.yyyy HH:mm" }}</td>
-        <td>{{item.hospital}}</td>
+        <td>
+          <div  *ngIf="item.hospital !== null">
+            {{item.hospital}}
+          </div>
+          <div  *ngIf="item.hospital === null">
+            Private practice
+          </div>
+        </td>
         <td>
           <div class="text-center">
             <button
-              routerLink="/patients/infomedicalrecord/{{ item.id }}"
+              routerLink="/patients/infomedicalrecord/{{item.appointmentId}}"
               type="button"
               class="btn btn-info mr-3"
             >

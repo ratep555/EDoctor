@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.ErrorHandling;
 using API.Extensions;
 using AutoMapper;
 using Core.Dtos;
@@ -41,7 +42,7 @@ namespace API.Controllers
             var data = _mapper.Map<IEnumerable<OfficeDto>>(list);
 
             return Ok(new Pagination<OfficeDto>
-            (queryParameters.Page, queryParameters.PageCount, count, data));
+                (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
         [HttpGet("singledoctor")]
@@ -56,7 +57,7 @@ namespace API.Controllers
             var data = _mapper.Map<IEnumerable<OfficeDto>>(list);
 
             return Ok(new Pagination<OfficeDto>
-            (queryParameters.Page, queryParameters.PageCount, count, data));
+                (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
         [HttpGet("{id}")]
@@ -64,11 +65,12 @@ namespace API.Controllers
         {
             var office = await _officeRepository.GetOfficeById(id);
 
-            if (office == null) return NotFound();
+            if (office == null) return NotFound(new ServerResponse(404));
 
             return _mapper.Map<OfficeDto>(office);
         }
         
+        [Authorize(Policy = "RequireDoctorRole")]
         [HttpPost]
         public async Task<ActionResult> CreateOffice([FromForm] OfficeCreateEditDto officeDto)
         {
@@ -90,6 +92,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [Authorize(Policy = "RequireDoctorRole")]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateOffice(int id, [FromForm] OfficeCreateEditDto officeDto)
         {
@@ -99,7 +102,7 @@ namespace API.Controllers
 
             var office = await _officeRepository.GetOfficeById(id);
 
-            if (office == null) return NotFound();
+            if (office == null) return NotFound(new ServerResponse(404));
 
             office = _mapper.Map(officeDto, office);
             

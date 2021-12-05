@@ -39,7 +39,7 @@ export class MedicalrecordsListDoctorComponent implements OnInit {
 
   getMedicalRecords() {
     this.patientsService.setUserParams(this.userParams);
-    this.patientsService.GetMedicalRecordsForAllPatientsOfDoctor(this.userParams)
+    this.patientsService.getMedicalRecordsForAllPatientsOfDoctor(this.userParams)
     .subscribe(response => {
       this.medicalrecords = response.data;
       this.userParams.page = response.page;

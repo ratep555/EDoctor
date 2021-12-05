@@ -10,8 +10,10 @@ namespace Core.Dtos
         public int PatientId { get; set; } 
         public int DoctorId { get; set; } 
         public int OfficeId { get; set; } 
+        public int AppointmentId { get; set; }
         public string Doctor { get; set; } 
         public string OfficeAddress { get; set; }     
+        public string Hospital { get; set; }     
         public string City { get; set; } 
         public string Country { get; set; } 
             

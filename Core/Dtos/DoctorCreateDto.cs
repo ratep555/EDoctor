@@ -6,13 +6,15 @@ namespace Core.Dtos
 {
     public class DoctorCreateDto
     {
-        [Required]
+        [Required, MinLength(2), MaxLength(30)]
         public string FirstName { get; set; }
 
-        [Required]
+
+        [Required, MinLength(2), MaxLength(60)]
         public string LastName { get; set; }
+
         
-        [Required]
+        [Required, MinLength(2), MaxLength(20)]
         public string Username { get; set; }
 
         [Required]
@@ -22,7 +24,9 @@ namespace Core.Dtos
         [Required]
         public string Password { get; set; }
 
+        [MaxLength(5000)]
         public string Resume { get; set; }
+
 
         [DataType(DataType.Date)]
         public DateTime? StartedPracticing { get; set; }

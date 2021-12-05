@@ -19,7 +19,7 @@
       #filter
       (change)="onSpecialtySelected($event.target.value)"
     >
-      <option value="" disabled selected>Filtey by Specialties</option>
+      <option value="" disabled selected>Filtey by specialties</option>
       <option *ngFor="let specialty of specialties" [value]="specialty.id">
         {{ specialty.specialtyName }}
       </option>
