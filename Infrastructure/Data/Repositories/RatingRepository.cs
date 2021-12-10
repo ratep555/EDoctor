@@ -18,13 +18,12 @@ namespace Infrastructure.Data.Repositories
         public async Task<Rating> FindCurrentRate(int doctorId, int userId)
         {
             return await _context.Ratings.Include(x => x.Patient)
-                         .Where(x => x.DoctorId == doctorId && x.Patient.ApplicationUserId == userId).FirstOrDefaultAsync();
+                .Where(x => x.DoctorId == doctorId && x.Patient.ApplicationUserId == userId).FirstOrDefaultAsync();
         }
 
         public async Task AddRating(RatingDto ratingDto, int userId)
         {
-            var patient = await _context.Patients.Where(x => x.ApplicationUserId == userId)
-                                .FirstOrDefaultAsync();
+            var patient = await _context.Patients.Where(x => x.ApplicationUserId == userId).FirstOrDefaultAsync();
 
             var rating = new Rating();
             rating.DoctorId = ratingDto.DoctorId;
@@ -75,7 +74,7 @@ namespace Infrastructure.Data.Repositories
         public async Task<double> AverageVoteForDoctorByUserId(int id)
         {
             var average = await _context.Ratings
-                          .Where(x => x.Doctor.ApplicationUserId == id).AverageAsync(x => x.Rate);
+                .Where(x => x.Doctor.ApplicationUserId == id).AverageAsync(x => x.Rate);
 
             return average;
         }

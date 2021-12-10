@@ -46,6 +46,7 @@ export class RegisterDoctorComponent implements OnInit {
         Validators.minLength(2), Validators.maxLength(20)]],
       startedPracticing: [null],
       resume: [null, Validators.maxLength(5000)],
+      qualifications: [null, Validators.maxLength(1000)],
       specialtiesIds: [null],
       hospitalsIds: [null],
       email: [null,

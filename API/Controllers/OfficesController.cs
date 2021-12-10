@@ -33,10 +33,11 @@ namespace API.Controllers
         }
 
         [HttpGet]
-         public async Task<ActionResult<Pagination<OfficeDto>>> GetAllOffices(
+        public async Task<ActionResult<Pagination<OfficeDto>>> GetAllOffices(
             [FromQuery] QueryParameters queryParameters)
         {
             var count = await _officeRepository.GetCountForAllOffices();
+
             var list = await _officeRepository.GetAllOffices(queryParameters);
 
             var data = _mapper.Map<IEnumerable<OfficeDto>>(list);
@@ -56,8 +57,7 @@ namespace API.Controllers
 
             var data = _mapper.Map<IEnumerable<OfficeDto>>(list);
 
-            return Ok(new Pagination<OfficeDto>
-                (queryParameters.Page, queryParameters.PageCount, count, data));
+            return Ok(new Pagination<OfficeDto>(queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
         [HttpGet("{id}")]
@@ -127,7 +127,6 @@ namespace API.Controllers
 
             return _mapper.Map<List<HospitalDto>>(list);
         }
-
     }
 }
 

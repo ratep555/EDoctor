@@ -29,6 +29,7 @@ namespace API.Controllers
             [FromQuery] QueryParameters queryParameters)
         {
             var count = await _specialtyRepository.GetCountForAllSpecialtieForAdminList();
+
             var list = await _specialtyRepository.GetAllSpecialtiesForAdminList(queryParameters);
 
             var data = _mapper.Map<IEnumerable<SpecialtyDto>>(list);
@@ -71,7 +72,7 @@ namespace API.Controllers
 
             await _specialtyRepository.CreateSpecialty(specialty);
 
-            return CreatedAtAction("GetSpecialtyById", new {id = specialty.Id }, 
+            return CreatedAtAction("GetSpecialtyById", new {id = specialty.Id },
                 _mapper.Map<SpecialtyDto>(specialty));
         }
 

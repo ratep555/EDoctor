@@ -115,6 +115,9 @@ export class DoctorsService {
     if (doctor.resume){
     formData.append('resume', doctor.resume);
     }
+    if (doctor.qualifications){
+    formData.append('qualifications', doctor.qualifications);
+    }
     if (doctor.picture){
       formData.append('picture', doctor.picture);
     }
@@ -151,6 +154,15 @@ export class DoctorsService {
 
   showNumberOfMedicalRecordsForDoctor() {
     return this.http.get<any>(this.baseUrl + 'doctors/doctorcharts3').pipe(
+    map( result => {
+      console.log(result);
+      return result;
+    })
+    );
+  }
+
+  showNumberOfPatientsWithGenderForDoctor() {
+    return this.http.get<any>(this.baseUrl + 'doctors/doctorcharts4').pipe(
     map( result => {
       console.log(result);
       return result;

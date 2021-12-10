@@ -16,7 +16,5 @@ namespace Core.Interfaces
         Task UpdateOffice(Office office);
         Task<Doctor> FindDoctorByUserId(int userId);
         Task<List<Hospital>> GetHospitalsForDoctor(int userId);
-
-
     }
 }

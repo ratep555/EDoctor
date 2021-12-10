@@ -13,7 +13,6 @@ namespace Core.Interfaces
         Task<Hospital> GetHospitalById(int id);
         Task CreateHospital(Hospital hospital);
         Task UpdateHospital(Hospital hospital);     
-        Task DeleteHospital(Hospital hospital);
-       
+        Task DeleteHospital(Hospital hospital);   
     }
 }

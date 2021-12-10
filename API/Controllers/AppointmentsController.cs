@@ -33,13 +33,14 @@ namespace API.Controllers
             [FromQuery] QueryParameters queryParameters)
         {
             var count = await _appointmentRepository.GetCountForAllAvailableUpcomingAppointments();
+
             var list = await _appointmentRepository
                 .GetAllAvailableUpcomingAppointments(queryParameters);
 
             var data = _mapper.Map<IEnumerable<AppointmentDto>>(list);
 
             return Ok(new Pagination<AppointmentDto>
-            (queryParameters.Page, queryParameters.PageCount, count, data));
+                (queryParameters.Page, queryParameters.PageCount, count, data));
         }
 
         [HttpGet("singledoctor")]
@@ -49,6 +50,7 @@ namespace API.Controllers
             var userId = User.GetUserId();
 
             var count = await _appointmentRepository.GetCountForAppointmentsForSingleDoctor(userId);
+
             var list = await _appointmentRepository
                 .GetAppointmentsForSingleDoctor(queryParameters, userId);
 
@@ -65,6 +67,7 @@ namespace API.Controllers
             var userId = User.GetUserId();
 
             var count = await _appointmentRepository.GetCountForAppointmentsForSinglePatient(userId);
+
             var list = await _appointmentRepository.GetAppointmentsForSinglePatient(userId, queryParameters);
 
             var data = _mapper.Map<IEnumerable<AppointmentDto>>(list);
@@ -78,6 +81,7 @@ namespace API.Controllers
             int id, [FromQuery] QueryParameters queryParameters)
         {
             var count = await _appointmentRepository.GetCountForAvailableAppointmentsForOffice(id);
+
             var list = await _appointmentRepository.GetAvailableAppointmentsForOffice(id, queryParameters);
 
             var data = _mapper.Map<IEnumerable<AppointmentDto>>(list);
@@ -98,7 +102,8 @@ namespace API.Controllers
 
         [Authorize(Policy = "RequireDoctorRole")]
         [HttpPost]
-        public async Task<ActionResult<AppointmentDto>> CreateAppointmentByDoctor([FromBody] AppointmentCreateEditDto appointmentDto)
+        public async Task<ActionResult<AppointmentDto>> CreateAppointmentByDoctor(
+                [FromBody] AppointmentCreateEditDto appointmentDto)
         {
             var appointment = _mapper.Map<Appointment>(appointmentDto);
            

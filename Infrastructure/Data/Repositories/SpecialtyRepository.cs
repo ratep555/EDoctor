@@ -19,8 +19,7 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<List<Specialty>> GetAllSpecialtiesForAdminList(QueryParameters queryParameters)
         {
-            IQueryable<Specialty> specialties = _context.Specialties.AsQueryable()
-                                                .OrderBy(x => x.SpecialtyName);
+            IQueryable<Specialty> specialties = _context.Specialties.AsQueryable().OrderBy(x => x.SpecialtyName);
             
             if (queryParameters.HasQuery())
             {
@@ -28,7 +27,7 @@ namespace Infrastructure.Data.Repositories
             }
 
             specialties = specialties.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
-                                     .Take(queryParameters.PageCount);
+                .Take(queryParameters.PageCount);
             
             return await specialties.ToListAsync();        
         }
@@ -50,7 +49,7 @@ namespace Infrastructure.Data.Repositories
             IEnumerable<int> ids = doctorSpecialties.Select(x => x.SpecialtyId);
 
             var specialties = await _context.Specialties.Where(x => ids.Contains(x.Id))
-                                    .OrderBy(x => x.SpecialtyName).ToListAsync();
+                .OrderBy(x => x.SpecialtyName).ToListAsync();
 
             return specialties;
         }

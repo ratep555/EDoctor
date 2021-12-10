@@ -50,6 +50,18 @@ namespace Infrastructure.Data
         {
             try
             {
+                if (!context.Genders.Any())
+                {
+                    var gendersData = File.ReadAllText("../Infrastructure/Data/SeedData/genders.json");
+                    var genders = JsonSerializer.Deserialize<List<Gender>>(gendersData);
+
+                    foreach (var item in genders)
+                    {
+                        context.Genders.Add(item);
+                    }
+                    await context.SaveChangesAsync();
+                } 
+
                 if (!context.Hospitals.Any())
                 {
                     var hospitalsData = File.ReadAllText("../Infrastructure/Data/SeedData/hospitals.json");

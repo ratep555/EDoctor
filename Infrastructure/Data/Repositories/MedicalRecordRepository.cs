@@ -28,8 +28,7 @@ namespace Infrastructure.Data.Repositories
                 .AsQueryable().OrderByDescending(x => x.Created);
 
             var office = await _context.Offices.Include(x => x.Doctor)
-                          .Where(x => x.Doctor.ApplicationUserId == userId && x.Id == queryParameters.OfficeId) 
-                          .FirstOrDefaultAsync();
+                .Where(x => x.Doctor.ApplicationUserId == userId && x.Id == queryParameters.OfficeId).FirstOrDefaultAsync();
             
             if (queryParameters.HasQuery())
             {
@@ -43,7 +42,7 @@ namespace Infrastructure.Data.Repositories
             }
 
             records = records.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
-                           .Take(queryParameters.PageCount);
+                .Take(queryParameters.PageCount);
             
             if (!string.IsNullOrEmpty(queryParameters.Sort))
             {
@@ -94,12 +93,11 @@ namespace Infrastructure.Data.Repositories
 
             if (queryParameters.HasQuery())
             {
-                records = records
-                .Where(x => x.Appointment.Office.Doctor.Name.Contains(queryParameters.Query));
+                records = records.Where(x => x.Appointment.Office.Doctor.Name.Contains(queryParameters.Query));
             }
 
             records = records.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
-                           .Take(queryParameters.PageCount);
+                .Take(queryParameters.PageCount);
             
             if (!string.IsNullOrEmpty(queryParameters.Sort))
             {
@@ -132,12 +130,11 @@ namespace Infrastructure.Data.Repositories
             
             if (queryParameters.HasQuery())
             {
-                records = records
-                .Where(x => x.Appointment.Office.Street.Contains(queryParameters.Query));
+                records = records.Where(x => x.Appointment.Office.Street.Contains(queryParameters.Query));
             }
 
             records = records.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
-                           .Take(queryParameters.PageCount);
+                .Take(queryParameters.PageCount);
             
             if (!string.IsNullOrEmpty(queryParameters.Sort))
             {

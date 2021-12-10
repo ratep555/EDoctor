@@ -13,6 +13,7 @@ namespace Core.Interfaces
         Task<int> GetCountForAllPatientsOfDoctor(int userId);
         Task<Patient> FindPatientById(int id);
         Task<Patient> FindPatientByUserId(int userId);
+        Task<List<Gender>> GetGendersForPatient();
         Task CreatePatient(ApplicationUser user, RegisterDto registerDto);
         Task Save();
         Task<PatientStatisticsDto> ShowCountForEntitiesForPatient(int userId);

@@ -7,6 +7,7 @@ namespace Core.Dtos
     {
         public int Id { get; set; }
         public int ApplicationUserId { get; set; }     
+        public int GenderId { get; set; }     
         public string Name { get; set; }
 
         [DataType(DataType.Date)]
@@ -15,6 +16,7 @@ namespace Core.Dtos
         public string Country { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
+        public string PhoneNumber { get; set; }
         public string MBO { get; set; }
     }
 }

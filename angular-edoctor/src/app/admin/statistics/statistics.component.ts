@@ -24,8 +24,8 @@ export class StatisticsComponent implements OnInit {
   data = [];
   columnNames: Column[] = ['Hospital and Private', 'Hospital'];
   options = {
-    width: 1000,
-    height: 700,
+    width: 700,
+    height: 500,
    // backgroundColor: '#ffff00',
     hAxis: { title: '' },
   };

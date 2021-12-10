@@ -67,6 +67,7 @@ createRegisterForm() {
     name: [null, [Validators.required,
       Validators.minLength(5), Validators.maxLength(80)]],
     resume: [null, Validators.maxLength(5000)],
+    qualifications: [null, Validators.maxLength(1000)],
     specialtiesIds: [null],
     hospitalsIds: [null],
     picture: ''

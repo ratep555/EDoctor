@@ -14,6 +14,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { ChartOfficesComponent } from './charts/chart-offices/chart-offices.component';
 import { ChartAppointmentsComponent } from './charts/chart-appointments/chart-appointments.component';
 import { ChartPatientsComponent } from './charts/chart-patients/chart-patients.component';
+import { ChartGendersComponent } from './charts/chart-genders/chart-genders.component';
 
 
 
@@ -31,6 +32,7 @@ import { ChartPatientsComponent } from './charts/chart-patients/chart-patients.c
     ChartOfficesComponent,
     ChartAppointmentsComponent,
     ChartPatientsComponent,
+    ChartGendersComponent,
   ],
   imports: [
     CommonModule,

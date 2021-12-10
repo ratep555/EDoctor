@@ -7,6 +7,7 @@ import { User } from '../shared/models/user';
 import { map } from 'rxjs/operators';
 import { Specialty } from '../shared/models/specialty';
 import { Hospital } from '../shared/models/hospital';
+import { Gender } from '../shared/models/gender';
 
 
 @Injectable({
@@ -31,8 +32,8 @@ export class AccountService {
     );
   }
 
-  register(values: any) {
-    return this.http.post(this.baseUrl + 'account/register', values).pipe(
+  registerAsPatient(formData) {
+    return this.http.post(this.baseUrl + 'account/register', formData).pipe(
       map((user: User) => {
         if (user) {
           this.setCurrentUser(user);
@@ -57,6 +58,10 @@ export class AccountService {
 
   getAllHospitals() {
     return this.http.get<Hospital[]>(this.baseUrl + 'hospitals/office');
+  }
+
+  getAllGenders() {
+    return this.http.get<Gender[]>(this.baseUrl + 'patients/genders');
   }
 
   setCurrentUser(user: User) {

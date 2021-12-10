@@ -21,8 +21,8 @@ export class ChartOfficesPatientComponent implements OnInit {
   data = [];
   columnNames: Column[] = ['Hospital', 'Private'];
   options = {
-    width: 1000,
-    height: 700,
+    width: 700,
+    height: 500,
     hAxis: { title: '' },
   };
   width = 777;

@@ -40,8 +40,7 @@ namespace API.Controllers
         {
             if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
 
-            if (await CheckEmailExistsAsync(registerDto.Email)) 
-            return BadRequest("Please provide valid email");
+            if (await CheckEmailExistsAsync(registerDto.Email)) return BadRequest("This email is taken");
 
             var user = _mapper.Map<ApplicationUser>(registerDto);
 
@@ -57,6 +56,7 @@ namespace API.Controllers
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
             await _patientRepository.CreatePatient(user, registerDto);
+
             return new UserDto
             {
                 Username = user.UserName,
@@ -73,8 +73,7 @@ namespace API.Controllers
         {
             if (await UserExists(doctorCreateDto.Username)) return BadRequest("Username is taken");
 
-            if (await CheckEmailExistsAsync(doctorCreateDto.Email)) 
-            return BadRequest("Please provide valid email");
+            if (await CheckEmailExistsAsync(doctorCreateDto.Email)) return BadRequest("This email is taken");
 
             var user = _mapper.Map<ApplicationUser>(doctorCreateDto);
             

@@ -27,6 +27,9 @@ namespace Core.Dtos
         [MaxLength(5000)]
         public string Resume { get; set; }
 
+        [MaxLength(1000)]
+        public string Qualifications { get; set; }
+
 
         [DataType(DataType.Date)]
         public DateTime? StartedPracticing { get; set; }

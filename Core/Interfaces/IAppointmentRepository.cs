@@ -21,7 +21,5 @@ namespace Core.Interfaces
         Task UpdateAppointment(Appointment appointment);
         Task DeleteAppointment(Appointment apponitment);
         Task<Office> GetOfficeByAppointment(Appointment appointment);
-
-
     }
 }

@@ -23,8 +23,7 @@ namespace Infrastructure.Data.Repositories
         public async Task<List<DoctorDto>> GetAllDoctors(QueryParameters queryParameters)
         {                             
             var doctorSpecialty = await _context.DoctorSpecialties.
-                                        Where(x => x.SpecialtyId == queryParameters.SpecialtyId) 
-                                        .FirstOrDefaultAsync();
+                Where(x => x.SpecialtyId == queryParameters.SpecialtyId).FirstOrDefaultAsync();
 
             IQueryable<DoctorDto> doctors = (from d in _context.Doctors
                         select new DoctorDto
@@ -39,7 +38,7 @@ namespace Infrastructure.Data.Repositories
             if (queryParameters.HasQuery())
             {
                 doctors = doctors
-                .Where(x => x.Name.Contains(queryParameters.Query));
+                    .Where(x => x.Name.Contains(queryParameters.Query));
             }
 
             if (queryParameters.SpecialtyId.HasValue)
@@ -48,7 +47,7 @@ namespace Infrastructure.Data.Repositories
             }
 
             doctors = doctors.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
-                           .Take(queryParameters.PageCount);
+                .Take(queryParameters.PageCount);
 
             var list = await doctors.ToListAsync();
             
@@ -57,7 +56,7 @@ namespace Infrastructure.Data.Repositories
                 if (item.RateSum.HasValue && item.RateSum > 0)
                 {
                     item.AverageVote = await _context.Ratings.Where(x => x.DoctorId == item.Id)
-                                       .AverageAsync(x => x.Rate);
+                        .AverageAsync(x => x.Rate);
                 }
                 else
                 {
@@ -147,15 +146,15 @@ namespace Infrastructure.Data.Repositories
         public async Task<Doctor> FindDoctorById(int id)
         {
             return await _context.Doctors.Include(x => x.DoctorSpecialties).ThenInclude(x => x.Specialties)
-                         .Include(x => x.DoctorHospitals).ThenInclude(x => x.Hospital)
-                         .Where(x => x.Id == id).FirstOrDefaultAsync();
+                .Include(x => x.DoctorHospitals).ThenInclude(x => x.Hospital)
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<Doctor> FindDoctorByUserId(int userId)
         {
             return await _context.Doctors.Include(x => x.DoctorSpecialties).ThenInclude(x => x.Specialties)
-                         .Include(x => x.DoctorHospitals).ThenInclude(x => x.Hospital)
-                         .Where(x => x.ApplicationUserId == userId).FirstOrDefaultAsync();
+                .Include(x => x.DoctorHospitals).ThenInclude(x => x.Hospital)
+                .Where(x => x.ApplicationUserId == userId).FirstOrDefaultAsync();
         }
 
         public async Task CreateDoctor(int userId, Doctor doctor, string lastname, string firstname)
@@ -175,7 +174,7 @@ namespace Infrastructure.Data.Repositories
         public async Task<List<Office>> GetAllOfficesForDoctorByUserId(int userId)
         {
             return await _context.Offices.Include(x => x.Doctor)
-                         .Where(x => x.Doctor.ApplicationUserId == userId).ToListAsync();
+                .Where(x => x.Doctor.ApplicationUserId == userId).ToListAsync();
         }
 
         public async Task<List<Specialty>> GetNonSelectedSpecialties(List<int> ids)
@@ -202,6 +201,9 @@ namespace Infrastructure.Data.Repositories
                 .Where(x => x.Appointment.Office.Doctor.ApplicationUserId == userId).ToListAsync();
 
             IEnumerable<int?> patientsids = medicalrecords.Select(x => x.Appointment.PatientId);
+
+            doctorstatistics.AllAppointmentsCount = await _context. Appointments
+                .Where(p => p.Office.Doctor.ApplicationUserId == userId).CountAsync();
 
             doctorstatistics.AvailableAppointmentsCount = await _context. Appointments
                 .Where(p => p.Status == null & p.PatientId == null && p.Office.Doctor.ApplicationUserId == userId
@@ -300,6 +302,35 @@ namespace Infrastructure.Data.Repositories
                 .ThenInclude(x => x.Office).
                 ThenInclude(x => x.Doctor).Where(x => x.Appointment.Office.HospitalId == null &&
                 x.Appointment.Office.Doctor.ApplicationUserId == userId).CountAsync()  });
+            
+            return list;
+        }
+
+        public async Task<IEnumerable<DoctorChartDto4>> GetNumberAndTypeOfPatientsGenderForDoctorForChart(
+                int userId)
+        {
+            List<DoctorChartDto4> list = new List<DoctorChartDto4>();
+
+            list.Add(new DoctorChartDto4 { GenderType = "Female", 
+                NumberOfPatients = await _context.MedicalRecords
+                .Include(x => x.Appointment).ThenInclude(x => x.Patient).ThenInclude(x => x.Gender)
+                .Include(x => x.Appointment).ThenInclude(x => x.Office).ThenInclude(x => x.Doctor)
+                .Where(x => x.Appointment.Office.Doctor.ApplicationUserId == userId
+                && x.Appointment.Patient.Gender.GenderType == "Female").CountAsync()  });
+
+            list.Add(new DoctorChartDto4 { GenderType = "Male", 
+                NumberOfPatients = await _context.MedicalRecords
+                .Include(x => x.Appointment).ThenInclude(x => x.Patient).ThenInclude(x => x.Gender)
+                .Include(x => x.Appointment).ThenInclude(x => x.Office).ThenInclude(x => x.Doctor)
+                .Where(x => x.Appointment.Office.Doctor.ApplicationUserId == userId
+                && x.Appointment.Patient.Gender.GenderType == "Male").CountAsync()  });
+
+            list.Add(new DoctorChartDto4 { GenderType = "Other", 
+                NumberOfPatients = await _context.MedicalRecords
+                .Include(x => x.Appointment).ThenInclude(x => x.Patient).ThenInclude(x => x.Gender)
+                .Include(x => x.Appointment).ThenInclude(x => x.Office).ThenInclude(x => x.Doctor)
+                .Where(x => x.Appointment.Office.Doctor.ApplicationUserId == userId
+                && x.Appointment.Patient.Gender.GenderType == "Other").CountAsync()  });
             
             return list;
         }

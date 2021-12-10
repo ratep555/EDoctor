@@ -29,6 +29,7 @@ namespace API.Controllers
             [FromQuery] QueryParameters queryParameters)
         {
             var count = await _hospitalRepository.GetCountForAllHospitalsForAdminList();
+            
             var list = await _hospitalRepository.GetAllHospitalsForAdminList(queryParameters);
 
             var data = _mapper.Map<IEnumerable<HospitalDto>>(list);

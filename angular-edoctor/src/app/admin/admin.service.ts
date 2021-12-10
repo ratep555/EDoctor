@@ -147,6 +147,15 @@ export class AdminService {
   );
 }
 
+showNumberOfPatientsWithGender() {
+  return this.http.get<any>(this.baseUrl + 'admin/charts5').pipe(
+  map( result => {
+    console.log(result);
+    return result;
+  })
+  );
+}
+
 }
 
 

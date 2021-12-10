@@ -39,6 +39,8 @@ namespace API.Helpers
                 .ForMember(x => x.Picture, options => options.Ignore())
                 .ForMember(x => x.DoctorSpecialties, options => options.MapFrom(MapDoctorSpecialties1))
                 .ForMember(x => x.DoctorHospitals, options => options.MapFrom(MapDoctorHospitals1));
+
+            CreateMap<Gender, GenderDto>().ReverseMap();
            
             CreateMap<Hospital, HospitalDto>().ReverseMap();
 
@@ -64,6 +66,7 @@ namespace API.Helpers
                 geometryFactory.CreatePoint(new Coordinate(dto.Longitude, dto.Latitude))));
 
             CreateMap<Patient, PatientDto>()
+                .ForMember(d => d.Gender, o => o.MapFrom(s => s.Gender.GenderType))
                 .ForMember(d => d.PhoneNumber, o => o.MapFrom(s => s.ApplicationUser.PhoneNumber))
                 .ForMember(d => d.Email, o => o.MapFrom(s => s.ApplicationUser.Email));
             

@@ -30,14 +30,7 @@ namespace Infrastructure.Data
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
             
-           /*  modelBuilder.Entity<MedicalRecord>()
-                .HasOne<Patient>(s => s.Patient)
-                .WithMany(s => s.MedicalRecords)
-                .HasForeignKey(s => s.PatientId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);  */
-            
-             modelBuilder.Entity<MedicalRecord>(entity =>
+            modelBuilder.Entity<MedicalRecord>(entity =>
             {
                 entity.HasKey(z => z.AppointmentId);
                 entity.HasOne(p => p.Appointment)
@@ -61,6 +54,7 @@ namespace Infrastructure.Data
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<DoctorSpecialty> DoctorSpecialties { get; set; }
         public DbSet<DoctorHospital> DoctorHospitals { get; set; }
+        public DbSet<Gender> Genders { get; set; }
         public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<Office> Offices { get; set; }

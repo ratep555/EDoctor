@@ -57,15 +57,25 @@
             </div>
         </div>        
     </div>
-    <app-chart-appointments-patient></app-chart-appointments-patient>
-    <google-chart #chart
-    [title]="title"
-    [type]="type"
-    [data]="data"
-    [columns]="columnNames"
-    [options]="options"
-    [width]="width"
-    [height]="height">
- </google-chart>
- <app-chart-offices-patient></app-chart-offices-patient>
+    <div class="text-center">
+        <div>
+            <div *ngIf="patientstatistics?.allAppointmentsCount > 0">
+                <app-chart-appointments-patient></app-chart-appointments-patient>
+            </div>
+            <div *ngIf="patientstatistics?.medicalRecordsCount > 0">
+                <google-chart #chart
+                [title]="title"
+                [type]="type"
+                [data]="data"
+                [columns]="columnNames"
+                [options]="options"
+                [width]="width"
+                [height]="height">
+             </google-chart>
+            </div>
+            <div *ngIf="patientstatistics?.officesCount > 0">
+                <app-chart-offices-patient></app-chart-offices-patient>
+            </div>
+        </div> 
+  
 </div>

@@ -143,6 +143,9 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("Picture")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Qualifications")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Resume")
                         .HasColumnType("nvarchar(max)");
 
@@ -184,6 +187,21 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("SpecialtyId");
 
                     b.ToTable("DoctorSpecialties");
+                });
+
+            modelBuilder.Entity("Core.Entities.Gender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("GenderType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genders");
                 });
 
             modelBuilder.Entity("Core.Entities.Hospital", b =>
@@ -335,6 +353,9 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("GenderId")
+                        .HasColumnType("int");
+
                     b.Property<string>("MBO")
                         .HasColumnType("nvarchar(max)");
 
@@ -347,6 +368,8 @@ namespace Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("GenderId");
 
                     b.ToTable("Patients");
                 });
@@ -598,7 +621,15 @@ namespace Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Entities.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("ApplicationUser");
+
+                    b.Navigation("Gender");
                 });
 
             modelBuilder.Entity("Core.Entities.Rating", b =>

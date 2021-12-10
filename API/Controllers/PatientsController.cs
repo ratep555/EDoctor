@@ -35,12 +35,12 @@ namespace API.Controllers
             var userId = User.GetUserId();
 
             var count = await _patientRepository.GetCountForAllPatientsOfDoctor(userId);
+            
             var list = await _patientRepository.GetAllPatientsOfDoctor(userId, queryParameters);
 
             var data = _mapper.Map<IEnumerable<PatientDto>>(list);
 
-            return Ok(new Pagination<PatientDto>
-            (queryParameters.Page, queryParameters.PageCount, count, data));        
+            return Ok(new Pagination<PatientDto>(queryParameters.Page, queryParameters.PageCount, count, data));        
         }
         
         [HttpGet("{id}")]
@@ -61,6 +61,17 @@ namespace API.Controllers
             if (patient == null) return NotFound(new ServerResponse(404));
 
             return _mapper.Map<PatientDto>(patient);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("genders")]
+        public async Task<ActionResult<IEnumerable<GenderDto>>> GetGenders()
+        {
+            var list = await _patientRepository.GetGendersForPatient();
+
+            var genders = _mapper.Map<IEnumerable<GenderDto>>(list);
+
+            return Ok(genders);        
         }
 
         [Authorize(Policy = "RequirePatientRole")]

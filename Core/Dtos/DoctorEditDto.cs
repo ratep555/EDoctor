@@ -18,6 +18,11 @@ namespace Core.Dtos
 
         [MaxLength(5000)]
         public string Resume { get; set; }
+        
+
+        [MaxLength(1000)]
+        public string Qualifications { get; set; }
+
 
         public IFormFile Picture { get; set; }
         

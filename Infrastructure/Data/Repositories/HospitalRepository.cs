@@ -21,8 +21,7 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<List<Hospital>> GetAllHospitalsForAdminList(QueryParameters queryParameters)
         {
-            IQueryable<Hospital> hospitals = _context.Hospitals.AsQueryable()
-                                            .OrderBy(x => x.HospitalName);
+            IQueryable<Hospital> hospitals = _context.Hospitals.AsQueryable().OrderBy(x => x.HospitalName);
             
             if (queryParameters.HasQuery())
             {
@@ -30,7 +29,7 @@ namespace Infrastructure.Data.Repositories
             }
 
             hospitals = hospitals.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
-                                 .Take(queryParameters.PageCount);
+                .Take(queryParameters.PageCount);
             
             return await hospitals.ToListAsync();        
         }

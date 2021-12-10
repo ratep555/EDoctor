@@ -14,11 +14,13 @@ namespace Core.Dtos
         public int? Count { get; set; }
         public double? AverageVote { get; set; }
         public int UserVote { get; set; }
+        public string Picture { get; set; }
+        public string Qualifications { get; set; }
+        
         
         [DataType(DataType.Date)]
         public DateTime? StartedPracticing { get; set; }
-        public string Picture { get; set; }
-        
+  
         public List<SpecialtyDto> Specialties { get; set; }
         public List<HospitalDto> Hospitals { get; set; }        
         public List<OfficeDto> Offices { get; set; }        

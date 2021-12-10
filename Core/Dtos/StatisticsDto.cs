@@ -6,5 +6,6 @@ namespace Core.Dtos
         public int DoctorsCount { get; set; }
         public int OfficesCount { get; set; }
         public int AppointmentsCount { get; set; }
+        public int AllAppointmentsCount { get; set; }
     }
 }

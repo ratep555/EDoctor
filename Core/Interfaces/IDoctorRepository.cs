@@ -24,6 +24,7 @@ namespace Core.Interfaces
         Task<IEnumerable<DoctorChartDto1>> GetNumberAndTypeOfAppointmentsForDoctorForChart(int userId);
         Task<IEnumerable<DoctorChartDto2>> GetNumberAndTypeOfPatientsForDoctorForChart(int userId);
         Task<IEnumerable<DoctorChartDto3>> GetNumberAndTypeOfMedicalRecordsForDoctorForChart(int userId);
+        Task<IEnumerable<DoctorChartDto4>> GetNumberAndTypeOfPatientsGenderForDoctorForChart(int userId);
     }
 }
 

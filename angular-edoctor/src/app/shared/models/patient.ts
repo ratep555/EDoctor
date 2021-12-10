@@ -1,8 +1,10 @@
 export interface Patient {
     id: number;
     applicationUserId: number;
+    genderId: number;
     name: string;
     dateOfBirth: Date;
+    gender: string;
     phoneNumber: string;
     email: string;
     country: string;
@@ -14,6 +16,7 @@ export interface Patient {
 export class PatientEdit {
     id: number;
     applicationUserId: number;
+    genderId: number;
     name: string;
     dateOfBirth: Date;
     phoneNumber: string;

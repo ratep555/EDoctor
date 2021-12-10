@@ -14,11 +14,12 @@ namespace Core.Entities
         
         public string Name { get; set; }
         public string Resume { get; set; }
+        public string Picture { get; set; }
+        public string Qualifications { get; set; }
         
 
         [DataType(DataType.Date)]
         public DateTime? StartedPracticing { get; set; }
-        public string Picture { get; set; }
         
         public ICollection<Office> Offices { get; set; }
         public ICollection<Rating> Ratings { get; set; }       

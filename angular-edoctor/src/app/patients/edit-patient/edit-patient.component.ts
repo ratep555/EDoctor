@@ -14,6 +14,7 @@ import { PatientsService } from '../patients.service';
 })
 export class EditPatientComponent implements OnInit {
   patientForms: FormArray = this.fb.array([]);
+  genderList = [];
   user: User;
   id: number;
 
@@ -27,6 +28,9 @@ export class EditPatientComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params['id'];
 
+    this.accountService.getAllGenders()
+    .subscribe(res => this.genderList = res as []);
+
     this.patientsService.getPatient(+this.activatedRoute.snapshot.paramMap.get('id')).subscribe(
       (patient: PatientEdit) => {
       this.patientForms.push(this.fb.group({
@@ -37,6 +41,9 @@ export class EditPatientComponent implements OnInit {
         street: [patient.street, Validators.required],
         city: [patient.city, Validators.required],
         country: [patient.country, Validators.required],
+        genderId: [patient.genderId, Validators.required],
+        phoneNumber: [patient.phoneNumber, [Validators.required,
+          Validators.minLength(5), Validators.maxLength(25)]],
         mBO: [patient.mbo],
         }));
       });

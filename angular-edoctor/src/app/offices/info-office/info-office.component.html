@@ -91,12 +91,13 @@
                           | date: "dd.MM.yyyy HH:mm"
                       }}
                     </td>
-                    <td
+                    <ng-container *appHasRole="['Patient']">
+                      <td
                       class="text-center"
                       *ngIf="item.patient === null; else elseBlock"
                     >
                       <button
-                        routerLink="/patient-appointments/editappointment/{{
+                        routerLink="/appointments/bookappointmentpatient/{{
                           item.id
                         }}"
                         type="button"
@@ -114,6 +115,8 @@
                         </button>
                       </td></ng-template
                     >
+                    </ng-container>
+                   
                   </tr>
                 </tbody>
               </table>

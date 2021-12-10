@@ -21,7 +21,6 @@ namespace Core.Interfaces
         Task<IEnumerable<ChartDto2>> GetNumberAndTypeOfOfficesForChart();
         Task<IEnumerable<ChartDto3>> GetNumberAndTypeOfAppointmentsForChart();
         Task<IEnumerable<ChartDto4>> GetNumberAndTypeOfPatientsForChart();
-
-
+        Task<IEnumerable<ChartDto5>> GetNumberAndTypeOfPatientsGenderForChart();
     }
 }

@@ -43,5 +43,8 @@ namespace Core.Dtos
         
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
+
+        public int GenderId { get; set; }
+
     }
 }

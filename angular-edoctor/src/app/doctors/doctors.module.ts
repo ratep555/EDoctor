@@ -10,6 +10,7 @@ import { DoctorsListPatientComponent } from './doctors-list-patient/doctors-list
 import { StatisticsDoctorComponent } from './statistics-doctor/statistics-doctor.component';
 import { ChartPatientsDoctorComponent } from './charts-doctor/chart-patients-doctor/chart-patients-doctor.component';
 import { ChartRecordsDoctorComponent } from './charts-doctor/chart-records-doctor/chart-records-doctor.component';
+import { ChartGendersDoctorComponent } from './charts-doctor/chart-genders-doctor/chart-genders-doctor.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ChartRecordsDoctorComponent } from './charts-doctor/chart-records-docto
     DoctorsListPatientComponent,
     StatisticsDoctorComponent,
     ChartPatientsDoctorComponent,
-    ChartRecordsDoctorComponent  ],
+    ChartRecordsDoctorComponent,
+    ChartGendersDoctorComponent  ],
   imports: [
     CommonModule,
     SharedModule,

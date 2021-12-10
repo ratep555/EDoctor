@@ -23,18 +23,16 @@ namespace Infrastructure.Data.Repositories
         {
                                  
             var doctorSpecialty = await _context.DoctorSpecialties.
-                                        Where(x => x.SpecialtyId == queryParameters.SpecialtyId) 
-                                        .FirstOrDefaultAsync();
+                Where(x => x.SpecialtyId == queryParameters.SpecialtyId).FirstOrDefaultAsync();
 
             IQueryable<Office> offices = _context.Offices.Include(x => x.Doctor)
-                                         .ThenInclude(x => x.DoctorSpecialties).ThenInclude(x => x.Doctor)
-                                         .AsQueryable().OrderBy(x => x.City);
+                .ThenInclude(x => x.DoctorSpecialties).ThenInclude(x => x.Doctor)
+                .AsQueryable().OrderBy(x => x.City);
             
             if (queryParameters.HasQuery())
             {
-                offices = offices
-                .Where(x => x.City.Contains(queryParameters.Query)
-                || x.Doctor.Name.Contains(queryParameters.Query));
+                offices = offices.Where(x => x.City.Contains(queryParameters.Query)
+                    || x.Doctor.Name.Contains(queryParameters.Query));
             }
 
             if (queryParameters.SpecialtyId.HasValue)
@@ -43,7 +41,7 @@ namespace Infrastructure.Data.Repositories
             }
 
             offices = offices.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
-                             .Take(queryParameters.PageCount);
+                .Take(queryParameters.PageCount);
 
             if (!string.IsNullOrEmpty(queryParameters.Sort))
             {
@@ -77,10 +75,10 @@ namespace Infrastructure.Data.Repositories
         public async Task<List<Office>> GetOfficesForDoctor(QueryParameters queryParameters, int userId)
         {
             var doctor = await _context.Doctors.Where(x => x.ApplicationUserId == userId)
-                               .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync();
 
             IQueryable<Office> office = _context.Offices.Where(x => x.DoctorId == doctor.Id)
-                                        .AsQueryable().OrderBy(x => x.City);
+                .AsQueryable().OrderBy(x => x.City);
             
             if (queryParameters.HasQuery())
             {
@@ -88,7 +86,7 @@ namespace Infrastructure.Data.Repositories
             }
 
             office = office.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
-                           .Take(queryParameters.PageCount);
+                .Take(queryParameters.PageCount);
             
             if (!string.IsNullOrEmpty(queryParameters.Sort))
             {
@@ -111,14 +109,13 @@ namespace Infrastructure.Data.Repositories
         public async Task<int> GetCountForOfficesForDoctor(int userId)
         {
             return await _context.Offices.Include(x => x.Doctor)
-                         .Where(x => x.Doctor.ApplicationUserId == userId).CountAsync();
+                .Where(x => x.Doctor.ApplicationUserId == userId).CountAsync();
         }
 
         public async Task<Office> GetOfficeById(int id)
         {
             return await _context.Offices.Include(x => x.Doctor).Where(x => x.Id == id).FirstOrDefaultAsync();
         }
-
 
         public async Task CreateOffice(Office office)
         {
@@ -134,16 +131,13 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<Doctor> FindDoctorByUserId(int userId)
         {
-            return await _context.Doctors.Where(x => x.ApplicationUserId == userId)
-                         .FirstOrDefaultAsync();
+            return await _context.Doctors.Where(x => x.ApplicationUserId == userId).FirstOrDefaultAsync();
         }
-
 
         public async Task<List<Hospital>> GetHospitalsForDoctor(int userId)
         {
             var doctorhospitals = await _context.DoctorHospitals
-                                  .Where(x => x.Doctor.ApplicationUserId == userId)
-                                  .ToListAsync();
+                .Where(x => x.Doctor.ApplicationUserId == userId).ToListAsync();
 
             IEnumerable<int> ids = doctorhospitals.Select(x => x.HospitalId);
 
@@ -151,8 +145,6 @@ namespace Infrastructure.Data.Repositories
 
             return hospitals;
         }
-
-
     }
 }
 

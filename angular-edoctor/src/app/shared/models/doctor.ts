@@ -12,6 +12,7 @@ export interface Doctor {
     count: number;
     startedPracticing: Date;
     picture: string;
+    qualifications: string;
     specialties: Specialty[];
     hospitals: Hospital[];
     offices: Office[];
@@ -22,6 +23,7 @@ export interface DoctorEditDto {
     name: string;
     applicationUserId: number;
     resume: string;
+    qualifications: string;
     specialtiesIds: number[];
     hospitalsIds: number[];
     picture: File;

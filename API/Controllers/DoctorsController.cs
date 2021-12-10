@@ -58,8 +58,7 @@ namespace API.Controllers
 
             var list = await _doctorRepository.GetAllDoctorsOfPatient(userId, queryParameters);
 
-            return Ok(new Pagination<DoctorDto>
-            (queryParameters.Page, queryParameters.PageCount, count, list));
+            return Ok(new Pagination<DoctorDto>(queryParameters.Page, queryParameters.PageCount, count, list));
         }
 
         [HttpGet("{id}")]
@@ -236,6 +235,18 @@ namespace API.Controllers
             var userId = User.GetUserId();
 
             var list = await _doctorRepository.GetNumberAndTypeOfMedicalRecordsForDoctorForChart(userId);
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest(new ServerResponse(400));        
+        } 
+
+        [HttpGet("doctorcharts4")]
+        public async Task<ActionResult> ShowNumberAndTypeOfPatientsGenderForDoctor()
+        {
+            var userId = User.GetUserId();
+
+            var list = await _doctorRepository.GetNumberAndTypeOfPatientsGenderForDoctorForChart(userId);
 
             if (list.Count() > 0) return Ok(new { list });
 

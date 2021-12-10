@@ -140,6 +140,16 @@ namespace API.Controllers
 
             return BadRequest(new ServerResponse(400));        
         }
+
+        [HttpGet("charts5")]
+        public async Task<ActionResult> ShowNumberAndTypeOfPatientsGenderForChart()
+        {
+            var list = await _adminRepository.GetNumberAndTypeOfPatientsGenderForChart();
+
+            if (list.Count() > 0) return Ok(new { list });
+
+            return BadRequest(new ServerResponse(400));        
+        }
     }
 }
 

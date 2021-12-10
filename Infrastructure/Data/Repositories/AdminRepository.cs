@@ -30,16 +30,15 @@ namespace Infrastructure.Data.Repositories
                                                    LockoutEnd = u.LockoutEnd,
                                                    Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
 
-                                            }).AsQueryable().OrderBy(x => x.Username);
+                                                }).AsQueryable().OrderBy(x => x.Username);
             
             if (queryParameters.HasQuery())
             {
-                users = users
-                .Where(x => x.Username.Contains(queryParameters.Query));
+                users = users.Where(x => x.Username.Contains(queryParameters.Query));
             }
 
             users = users.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
-                           .Take(queryParameters.PageCount);
+                .Take(queryParameters.PageCount);
             
             return await users.ToListAsync();       
         }
@@ -103,6 +102,7 @@ namespace Infrastructure.Data.Repositories
             string[] fullname = patientDto.Name.Split(' ');
             user.LastName = fullname[0];
             user.FirstName = fullname[1];
+            user.PhoneNumber = patientDto.PhoneNumber;
 
             _context.Entry(user).State = EntityState.Modified;     
         }
@@ -114,6 +114,7 @@ namespace Infrastructure.Data.Repositories
             statistics.PatientsCount = await _context.Patients.CountAsync();
             statistics.DoctorsCount = await _context.Doctors.CountAsync();
             statistics.OfficesCount = await _context.Offices.CountAsync();
+            statistics.AllAppointmentsCount = await _context.Appointments.CountAsync();
             statistics.AppointmentsCount = await _context.Appointments
                 .Where(x => x.Status == true && x.PatientId != null
                 && x.EndDateAndTimeOfAppointment > DateTime.Now).CountAsync();
@@ -198,7 +199,25 @@ namespace Infrastructure.Data.Repositories
             
             return list;
         }
- 
+
+         public async Task<IEnumerable<ChartDto5>> GetNumberAndTypeOfPatientsGenderForChart()
+        {
+            List<ChartDto5> list = new List<ChartDto5>();
+
+            list.Add(new ChartDto5 { GenderType = "Female", 
+                NumberOfPatients = await _context.Patients.Include(x => x.Gender)
+                .Where(x => x.Gender.GenderType == "Female").CountAsync()  });
+
+            list.Add(new ChartDto5 { GenderType = "Male", 
+                NumberOfPatients = await _context.Patients.Include(x => x.Gender)
+                .Where(x => x.Gender.GenderType == "Male").CountAsync()  });
+
+            list.Add(new ChartDto5 { GenderType = "Other", 
+                NumberOfPatients = await _context.Patients.Include(x => x.Gender)
+                .Where(x => x.Gender.GenderType == "Other").CountAsync()  });
+            
+            return list;
+        }
     }
 }
 

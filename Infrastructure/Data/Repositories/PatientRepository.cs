@@ -34,17 +34,15 @@ namespace Infrastructure.Data.Repositories
             IEnumerable<int?> ids2 = appointments.Select(x => x.PatientId);
 
             IQueryable<Patient> patients =  _context.Patients.Include(x => x.ApplicationUser)
-                                            .Where(x => ids2.Contains(x.Id))
-                                            .AsQueryable().OrderBy(x => x.Name);
+                .Where(x => ids2.Contains(x.Id)).AsQueryable().OrderBy(x => x.Name);
 
             if (queryParameters.HasQuery())
             {
-                patients = patients
-                .Where(x => x.Name.Contains(queryParameters.Query));
+                patients = patients.Where(x => x.Name.Contains(queryParameters.Query));
             }
 
             patients = patients.Skip(queryParameters.PageCount * (queryParameters.Page - 1))
-                               .Take(queryParameters.PageCount);
+                .Take(queryParameters.PageCount);
             
             if (!string.IsNullOrEmpty(queryParameters.Sort))
             {
@@ -78,21 +76,26 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<Patient> FindPatientByUserId(int userId)
         {
-            return await _context.Patients.Include(x => x.ApplicationUser)
-                         .Where(x => x.ApplicationUserId == userId)
-                         .FirstOrDefaultAsync();
+            return await _context.Patients.Include(x => x.ApplicationUser).Include(x => x.Gender)
+                .Where(x => x.ApplicationUserId == userId).FirstOrDefaultAsync();
         }
 
         public async Task<Patient> FindPatientById(int id)
         {
-            return await _context.Patients.Include(x => x.ApplicationUser)
-                         .Where(x => x.Id == id).FirstOrDefaultAsync();
+            return await _context.Patients.Include(x => x.ApplicationUser).Include(x => x.Gender)
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Gender>> GetGendersForPatient()
+        {
+            return await _context.Genders.OrderBy(x => x.GenderType).ToListAsync();
         }
 
         public async Task CreatePatient(ApplicationUser user, RegisterDto registerDto)
         {
             var patient = new Patient();
             patient.ApplicationUserId = user.Id;
+            patient.GenderId = registerDto.GenderId;
             patient.Name = string.Format("{0} {1}", user.FirstName, user.LastName);
             patient.DateOfBirth = registerDto.DateOfBirth;
             patient.Street = registerDto.Street;
@@ -124,6 +127,9 @@ namespace Infrastructure.Data.Repositories
             patientstatistics.AppointmentsCount = await _context.Appointments.Include(x => x.Patient)
                 .Where(x => x.Patient.ApplicationUserId == userId && x.Status == true 
                 && x.StartDateAndTimeOfAppointment > DateTime.Now).CountAsync();
+
+            patientstatistics.AllAppointmentsCount = await _context.Appointments.Include(x => x.Patient)
+                .Where(x => x.Patient.ApplicationUserId == userId).CountAsync();
         
             patientstatistics.DoctorsCount = await _context.Doctors
                 .Where(x => doctorids.Contains(x.Id)).CountAsync();
