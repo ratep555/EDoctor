@@ -32,17 +32,11 @@ export class AddHospitalAdminComponent implements OnInit {
 
   onSubmit() {
     this.adminService.createHospital(this.hospitalForm.value).subscribe(() => {
-      this.resetForm(this.hospitalForm);
       this.router.navigateByUrl('admin/hospitalslistadmin');
     },
     error => {
       console.log(error);
     });
-  }
-
-   resetForm(form: FormGroup) {
-    form.reset();
-    this.adminService.formData = new HospitalCreateEdit();
   }
 
 }

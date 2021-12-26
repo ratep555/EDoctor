@@ -1,8 +1,7 @@
 <div class="container" style="margin-top: 100px; margin-bottom: 100px">
   <div class="d-flex justify-content-center mt-5">
     <div class="col-4">
-      <h2 class="text-center text-primary">Edit Appointment</h2>
-      <hr />
+      <h2 class="kiki text-center text-primary">Edit Appointment</h2>
       <div class="form-group row">
         <div class="col-md-12">
           <input
@@ -70,14 +69,13 @@
           />
         </div>
       </div>
-      <hr />
       <form
         [formGroup]="fg"
         *ngFor="let fg of appointmentForms.controls"
         (submit)="recordSubmit(fg)"
       >
         <input formControlName="id" id="id" class="form-control" hidden />
-        <div class="form-group row">
+        <div class="kiki form-group row">
           <div class="col-md-12">
             <label style="font-size: small"
               ><strong>Special Remarks:</strong></label

@@ -4,5 +4,6 @@ namespace Core.Dtos
     {
         public int Id { get; set; }
         public string GenderType { get; set; }
+
     }
 }

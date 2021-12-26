@@ -10,14 +10,20 @@ import { SpecialtiesListAdminComponent } from './specialties/specialties-list-ad
 import { AddSpecialtyAdminComponent } from './specialties/add-specialty-admin/add-specialty-admin.component';
 import { EditSpecialtyAdminComponent } from './specialties/edit-specialty-admin/edit-specialty-admin.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { GendersListAdminComponent } from './genders/genders-list-admin/genders-list-admin.component';
+import { AddGenderAdminComponent } from './genders/add-gender-admin/add-gender-admin.component';
+import { EditGenderAdminComponent } from './genders/edit-gender-admin/edit-gender-admin.component';
 
 
 const routes: Routes = [
   {path: 'userslist', component: UsersListComponent},
   {path: 'register-doctor', component: RegisterDoctorComponent},
   {path: 'statistics', component: StatisticsComponent},
+  {path: 'genderslistadmin', component: GendersListAdminComponent},
   {path: 'hospitalslistadmin', component: HospitalsListAdminComponent},
   {path: 'specialtieslistadmin', component: SpecialtiesListAdminComponent},
+  {path: 'addgenderadmin', component: AddGenderAdminComponent},
+  {path: 'editgenderadmin/:id', component: EditGenderAdminComponent},
   {path: 'addhospitaladmin', component: AddHospitalAdminComponent},
   {path: 'edithospitaladmin/:id', component: EditHospitalAdminComponent},
   {path: 'addspecialtyadmin', component: AddSpecialtyAdminComponent},

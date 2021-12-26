@@ -33,7 +33,10 @@ namespace API.Extensions
                 .AddRoleManager<RoleManager<ApplicationRole>>()
                 .AddSignInManager<SignInManager<ApplicationUser>>()
                 .AddRoleValidator<RoleValidator<ApplicationRole>>()
-                .AddEntityFrameworkStores<EDoctorContext>();
+                .AddEntityFrameworkStores<EDoctorContext>().AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+                opt.TokenLifespan = TimeSpan.FromHours(2));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 

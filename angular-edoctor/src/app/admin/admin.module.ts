@@ -15,6 +15,9 @@ import { ChartOfficesComponent } from './charts/chart-offices/chart-offices.comp
 import { ChartAppointmentsComponent } from './charts/chart-appointments/chart-appointments.component';
 import { ChartPatientsComponent } from './charts/chart-patients/chart-patients.component';
 import { ChartGendersComponent } from './charts/chart-genders/chart-genders.component';
+import { AddGenderAdminComponent } from './genders/add-gender-admin/add-gender-admin.component';
+import { EditGenderAdminComponent } from './genders/edit-gender-admin/edit-gender-admin.component';
+import { GendersListAdminComponent } from './genders/genders-list-admin/genders-list-admin.component';
 
 
 
@@ -33,6 +36,9 @@ import { ChartGendersComponent } from './charts/chart-genders/chart-genders.comp
     ChartAppointmentsComponent,
     ChartPatientsComponent,
     ChartGendersComponent,
+    AddGenderAdminComponent,
+    EditGenderAdminComponent,
+    GendersListAdminComponent,
   ],
   imports: [
     CommonModule,

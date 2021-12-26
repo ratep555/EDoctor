@@ -5,14 +5,13 @@
           [formGroup]="specialtyForm"
           (ngSubmit)="specialtyForm.valid && onSubmit()"
         >
-          <h2 class="text-center text-primary">Add Specialty</h2>
-          <hr />
+          <h2 class="kiki text-center text-primary">Add Specialty</h2>
           <app-text-input
           [formControl]="specialtyForm.controls['specialtyName']"
           [label]="'Specialty Name'"
         ></app-text-input>         
           <div
-            style="margin-top: 50px; margin-bottom: 40px"
+            style="margin-top: 40px;"
             class="form-group text-center"
           >
             <button

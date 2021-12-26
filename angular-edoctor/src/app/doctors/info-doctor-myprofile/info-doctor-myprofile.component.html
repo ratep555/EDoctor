@@ -16,10 +16,9 @@
             <strong>Practicing from:</strong>
             <p>{{ doctor.startedPracticing | date: "dd.MM.yyyy" }}</p>
           </div>
-          <div>
+          <div class="kiki">
             <strong>Average vote: {{ doctor.averageVote }}</strong>
           </div>
-          <hr />
           <div class="btn-group d-flex">
             <button
               routerLink="/doctors/editdoctor/{{ doctor.id }}"
@@ -34,12 +33,10 @@
     <div class="col-8">
       <tabset class="member-tabset">
         <tab heading="Resume">
-          <hr />
-          <p>{{ doctor.resume }}</p>
+          <p class="kiki1">{{ doctor.resume }}</p>
         </tab>
         <tab heading="Qualifications">
-          <hr />
-          <p>{{ doctor.qualifications }}</p>
+          <p class="kiki1">{{ doctor.qualifications }}</p>
           <hr />
           <div *ngIf="doctor.specialties">
             <p><strong>Specialty(ies):</strong></p>
@@ -51,8 +48,7 @@
             </ul>
           </div>
           <hr />
-          <hr />
-          <div *ngIf="doctor.hospitals">
+          <div class="kiki1" *ngIf="doctor.hospitals">
             <p><strong>Hospitals:</strong></p>
             <ul
               style="list-style-type: none"
@@ -61,12 +57,10 @@
               <li>- {{ item.hospitalName }}</li>
             </ul>
           </div>
-          <hr />
         </tab>
         <tab heading="Offices">
-          <hr />
           <table
-            class="
+            class="kiki1
               table table-bordered table-striped table-condensed table-hover
             "
           >

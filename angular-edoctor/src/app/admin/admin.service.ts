@@ -2,11 +2,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MyParams } from '../shared/models/userparams';
-import { PaginationForHospitals, PaginationForSpecialties, PaginationForUsers } from '../shared/models/pagination';
+import { PaginationForGenders, PaginationForHospitals, PaginationForSpecialties, PaginationForUsers } from '../shared/models/pagination';
 import { map } from 'rxjs/operators';
 import { Hospital, HospitalCreateEdit } from '../shared/models/hospital';
 import { Specialty, SpecialtyCreateEdit } from '../shared/models/specialty';
 import { Statistics } from '../shared/models/statistics';
+import { Gender, GenderCreateEdit } from '../shared/models/gender';
 
 
 @Injectable({
@@ -16,6 +17,7 @@ export class AdminService {
   baseUrl = environment.apiUrl;
   formData: HospitalCreateEdit = new HospitalCreateEdit();
   formData1: SpecialtyCreateEdit = new SpecialtyCreateEdit();
+  formData2: GenderCreateEdit = new GenderCreateEdit();
 
   constructor(private http: HttpClient) { }
 
@@ -27,6 +29,21 @@ export class AdminService {
     params = params.append('page', myparams.page.toString());
     params = params.append('pageCount', myparams.pageCount.toString());
     return this.http.get<PaginationForUsers>(this.baseUrl + 'admin', {observe: 'response', params})
+    .pipe(
+      map(response  => {
+        return response.body;
+      })
+    );
+  }
+
+  getAllGenders(myparams: MyParams) {
+    let params = new HttpParams();
+    if (myparams.query) {
+      params = params.append('query', myparams.query);
+    }
+    params = params.append('page', myparams.page.toString());
+    params = params.append('pageCount', myparams.pageCount.toString());
+    return this.http.get<PaginationForGenders>(this.baseUrl + 'genders/adminlist', {observe: 'response', params})
     .pipe(
       map(response  => {
         return response.body;
@@ -63,6 +80,22 @@ export class AdminService {
       })
     );
   }
+
+  createGender(formData2) {
+    return this.http.post(this.baseUrl + 'genders', formData2);
+  }
+
+  updateGender(id: number, params: any) {
+    return this.http.put(this.baseUrl + 'genders/' + id, params);
+  }
+
+  getGenderById(id: number) {
+    return this.http.get<Gender>(this.baseUrl + 'genders/' + id);
+  }
+
+  deleteGender(id: number) {
+    return this.http.delete(this.baseUrl + 'genders/' + id);
+}
 
   createHospital(formData) {
     return this.http.post(this.baseUrl + 'hospitals', formData);

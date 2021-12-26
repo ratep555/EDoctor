@@ -5,8 +5,7 @@
           [formGroup]="hospitalForm"
           (ngSubmit)="hospitalForm.valid && onSubmit()"
         >
-          <h2 class="text-center text-primary">Add Hospital</h2>
-          <hr />
+          <h2 class="kiki text-center text-primary">Add Hospital</h2>
           <app-text-input
           [formControl]="hospitalForm.controls['hospitalName']"
           [label]="'Hospital Name'"

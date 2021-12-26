@@ -36,19 +36,12 @@ export class AddAppointmentDoctorComponent implements OnInit {
 
   onSubmit() {
     this.appointmentsService.createAppointment(this.appointmentForm.value).subscribe(() => {
-      this.resetForm(this.appointmentForm);
       this.router.navigateByUrl('appointments/appointmentslistdoctor');
     },
     error => {
       console.log(error);
     });
   }
-
-   resetForm(form: FormGroup) {
-    form.reset();
-    this.appointmentsService.formData = new AppointmentCreateEdit();
-  }
-
 
 }
 

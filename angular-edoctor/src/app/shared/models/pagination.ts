@@ -6,6 +6,7 @@ import { Patient } from './patient';
 import { User } from './user';
 import { Hospital } from './hospital';
 import { Specialty } from './specialty';
+import { Gender } from './gender';
 
 export interface PaginationForOffices {
     page: number;
@@ -62,6 +63,14 @@ export interface PaginationForSpecialties {
     pageCount: number;
     count: number;
     data: Specialty[];
+
+  }
+
+export interface PaginationForGenders {
+    page: number;
+    pageCount: number;
+    count: number;
+    data: Gender[];
   }
 
 

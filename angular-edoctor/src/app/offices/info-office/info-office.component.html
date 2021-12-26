@@ -32,8 +32,7 @@
     <div class="col-8">
       <tabset class="member-tabset">
         <tab heading="Location">
-          <hr />
-          <div *ngIf="coordinates.length > 0">
+          <div class="kiki" *ngIf="coordinates.length > 0">
             <p>
               <strong>Location: </strong>{{ office.street }}, {{ office.city }},
               {{ office.country }}
@@ -45,12 +44,12 @@
           </div>
         </tab>
         <tab heading="Description">
-          <hr />
-          {{ office.description }}
+          <div class="kiki">
+            {{ office.description }}
+          </div>
         </tab>
         <tab heading="Availability">
-          <hr />
-          <div class="container">
+          <div class="kiki container">
             <div class="text-center" *ngIf="totalCount === 0">
               <h4 style="color: #6666ff">No appointments available!</h4>
             </div>

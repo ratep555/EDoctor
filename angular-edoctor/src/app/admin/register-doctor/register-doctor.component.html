@@ -5,8 +5,7 @@
         [formGroup]="registerForm"
         (ngSubmit)="registerForm.valid && onSubmit()"
       >
-        <h2 class="text-center text-primary">Register Doctor</h2>
-        <hr />
+        <h2 class="kiki text-center text-primary">Register Doctor</h2>
         <app-text-input
           [formControl]="registerForm.controls['username']"
           [label]="'Username'"

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../account.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private accountService: AccountService,
-              private router: Router) { }
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.accountService.getAllGenders()
@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
   recordSubmit(fg: FormGroup) {
     this.accountService.registerAsPatient(fg.value).subscribe(
       (res: any) => {
-        this.router.navigateByUrl('/doctors');
+        this.toastr.success('Confirmation link has been sent to your mail');
       }, error => {
           console.log(error);
         });

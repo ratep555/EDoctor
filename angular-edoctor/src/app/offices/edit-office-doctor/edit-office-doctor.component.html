@@ -5,8 +5,7 @@
         [formGroup]="officeForm"
         (ngSubmit)="officeForm.valid && onSubmit()"
       >
-        <h2 class="text-center text-primary">Edit Office</h2>
-        <hr />
+        <h2 class="kiki text-center text-primary">Edit Office</h2>
         <input formControlName="id" id="id" class="form-control" hidden />
         <app-text-input
           [formControl]="officeForm.controls['street']"

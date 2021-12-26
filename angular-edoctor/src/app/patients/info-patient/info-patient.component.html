@@ -8,9 +8,6 @@
             <strong>Patient Name:</strong>
             <p>{{ patient.name }}</p>
           </div>
-          <hr />
-          <hr />
-          <hr />
         </div>
       </div>
     </div>
@@ -18,7 +15,7 @@
     <div class="col-8">
       <tabset class="member-tabset">
         <tab heading="Personal Details">
-          <div>
+          <div class="kiki">
             <strong>Date of Birth:</strong>
             <p>{{ patient.dateOfBirth | date: "dd.MM.yyyy" }}</p>
           </div>
@@ -52,8 +49,7 @@
           </div>
         </tab>
         <tab heading="History of Medical Records">
-          <hr />
-          <div class="container">
+          <div class="kiki container">
             <div class="text-center" *ngIf="totalCount === 0">
               <h4 style="color: #6666ff">No records available!</h4>
             </div>

@@ -2,8 +2,7 @@
     <div class="d-flex justify-content-center mt-5">
         <div class="col-4">
             <form [formGroup]="fg" *ngFor="let fg of patientForms.controls"(submit)="recordSubmit(fg)">                     
-               <h2 class="text-center text-primary">Sign up</h2>
-                <hr>           
+               <h2 class="kiki text-center text-primary">Sign up</h2>
                 <app-text-input formControlName="username" [label]='"Username"'></app-text-input>
                 <app-text-input formControlName="firstName" [label]='"First Name"'></app-text-input>
                 <app-text-input formControlName="lastName" [label]='"Last Name"'></app-text-input>
@@ -17,6 +16,16 @@
                         </option>
                       </select>
                     </div>
+                    <span
+                    style="font-size: 14px"
+                    class="text-danger ml-3"
+                    *ngIf="
+                      fg.get('genderId').invalid &&
+                      fg.get('genderId').touched
+                    "
+                  >
+                    Please enter a gender
+                  </span>
                   </div>
                 <app-text-input formControlName="country" [label]='"Country"'></app-text-input>
                 <app-text-input formControlName="city" [label]='"City"'></app-text-input>

@@ -5,15 +5,14 @@
           [formGroup]="specialtyForm"
           (ngSubmit)="specialtyForm.valid && onSubmit()"
         >
-          <h2 class="text-center text-primary">Edit Specialty</h2>
-          <hr />
+          <h2 class="kiki text-center text-primary">Edit Specialty</h2>
           <input formControlName="id" id="id" class="form-control" hidden />
           <app-text-input
           [formControl]="specialtyForm.controls['specialtyName']"
-          [label]="'Hospital Name'"
+          [label]="'Specialty Name'"
         ></app-text-input>
           <div
-            style="margin-top: 50px; margin-bottom: 40px"
+            style="margin-top: 40px;"
             class="form-group text-center"
           >
             <button

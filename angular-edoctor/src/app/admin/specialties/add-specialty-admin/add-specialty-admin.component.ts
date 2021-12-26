@@ -29,17 +29,11 @@ export class AddSpecialtyAdminComponent implements OnInit {
 
   onSubmit() {
     this.adminService.createSpecialty(this.specialtyForm.value).subscribe(() => {
-      this.resetForm(this.specialtyForm);
       this.router.navigateByUrl('admin/specialtieslistadmin');
     },
     error => {
       console.log(error);
     });
-  }
-
-   resetForm(form: FormGroup) {
-    form.reset();
-    this.adminService.formData1 = new SpecialtyCreateEdit();
   }
 
 }

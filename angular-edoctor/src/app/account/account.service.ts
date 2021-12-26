@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 import { Specialty } from '../shared/models/specialty';
 import { Hospital } from '../shared/models/hospital';
 import { Gender } from '../shared/models/gender';
+import { ForgotPassword } from '../shared/models/forgotpassword';
+import { ResetPassword } from '../shared/models/resetpassword';
 
 
 @Injectable({
@@ -50,6 +52,14 @@ export class AccountService {
         }
       })
     );
+  }
+
+  forgotPassword(forgotpassword: ForgotPassword) {
+    return this.http.post(this.baseUrl + 'account/forgotpassword', forgotpassword);
+  }
+
+  resetPassword(resetpassword: ResetPassword) {
+    return this.http.post(this.baseUrl + 'account/resetpassword', resetpassword);
   }
 
   getAllSpecialties() {

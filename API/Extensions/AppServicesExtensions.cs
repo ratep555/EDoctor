@@ -23,14 +23,16 @@ namespace API.Extensions
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IGenderRepository, GenderRepository>();
             services.AddScoped<IHospitalRepository, HospitalRepository>();
             services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
             services.AddScoped<IOfficeRepository, OfficeRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IRatingRepository, RatingRepository>();
             services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
-
+    
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IFileStorageService, InAppStorageService>();
             services.AddHttpContextAccessor();
 

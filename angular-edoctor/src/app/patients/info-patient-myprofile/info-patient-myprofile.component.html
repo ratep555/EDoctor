@@ -8,8 +8,7 @@
               <strong>Patient Name:</strong>
               <p>{{ patient.name }}</p>
             </div>
-            <hr/>
-            <div class="btn-group d-flex">
+            <div class="kiki btn-group d-flex">
               <button
                 routerLink="/patients/editpatient/{{ patient.id }}"
                 class="btn btn-primary"
@@ -24,7 +23,7 @@
       <div class="col-8">
         <tabset class="member-tabset">
           <tab heading="Personal Details">
-            <div>
+            <div class="kiki1">
               <strong>Date of Birth:</strong>
               <p>{{ patient.dateOfBirth | date: "dd.MM.yyyy" }}</p>
             </div>

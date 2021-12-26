@@ -21,12 +21,10 @@
     <div class="col-8">
       <tabset class="member-tabset">
         <tab heading="Resume">
-          <hr />
-          <p>{{ doctor.resume }}</p>
+          <p class="kiki">{{ doctor.resume }}</p>
         </tab>
         <tab heading="Qualifications">
-          <hr />
-          <p>{{ doctor.qualifications }}</p>
+          <p class="kiki">{{ doctor.qualifications }}</p>
           <hr />
           <div *ngIf="doctor.specialties !== null">
             <p><strong>Specialty(ies):</strong></p>
@@ -47,12 +45,10 @@
               <li>- {{ item.hospitalName }}</li>
             </ul>
           </div>
-          <hr />
         </tab>
         <tab heading="Offices">
-          <hr />
           <table
-            class="
+            class="kiki
               table table-bordered table-striped table-condensed table-hover
             "
           >
@@ -86,7 +82,7 @@
           </table>
         </tab>
         <tab heading="Ratings">
-          <p>
+          <p class="kiki">
             Average vote: {{ doctor.averageVote }} | Your vote:
             {{ doctor.userVote }}
           </p>
